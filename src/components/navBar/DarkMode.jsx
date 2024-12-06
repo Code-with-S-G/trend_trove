@@ -2,7 +2,11 @@ import React from 'react';
 
 const DarkMode = () => {
   return (
-    <div>DarkMode</div>
+    <div>
+      <div>
+        <p>darkmode</p>
+      </div>
+    </div>
   )
 }
 
