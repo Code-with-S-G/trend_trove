@@ -24,7 +24,8 @@
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "trend_trove": "file:"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
