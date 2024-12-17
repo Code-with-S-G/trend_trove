@@ -77,12 +77,12 @@ const productData = [
 
 const HomePageProductCard = () => {
   return (
-    <div className="mt-10">
+    <div className="bg-slate-100 dark:bg-slate-900 pt-5 mt-10">
       {/* heading */}
-      <h1 className="text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
+      <h1 className="text-center mb-2 text-2xl font-bold">Bestselling Products</h1>
 
       {/* main */}
-      <section className="text-gray-600 body-font">
+      <section className="text-gray-600 body-font ">
         <div className="container px-5 py-5 mx-auto">
           <div className="flex flex-wrap -m-4">
             {productData.map((item, index) => {
@@ -91,12 +91,12 @@ const HomePageProductCard = () => {
                 <div key={id} className="p-4 w-full md:w-1/4">
                   <div className="border border-gray-300 h-full rounded-xl overflow-hidden shadow-md cursor-pointer">
                     <img src={image} className="lg:h-80 h-96 w-full" alt="blog" />
-                    <div className="p-6">
+                    <div className="p-6 dark:bg-gray-900/80">
                       <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 dark:text-gray-300/80 mb-1">TrendTrove</h2>
                       <h1 className="title-font text-lg font-medium text-gray-900 mb-6 line-clamp-1 dark:text-gray-300/90">{title}</h1>
                       <div className="flex justify-between  items-center">
                         <h1 className="title-font text-lg font-medium text-gray-900 dark:text-gray-300/90">₹{price}</h1>
-                        <button className="bg-pink-500 text-lg hover:bg-pink-600  text-white py-[5px] rounded-lg font-semibold px-3">Add To Cart</button>
+                        <button className="bg-yellow-500 text-lg hover:bg-amber-500  text-white py-[5px] rounded-lg font-semibold px-3">Add To Cart</button>
                       </div>
                     </div>
                   </div>
