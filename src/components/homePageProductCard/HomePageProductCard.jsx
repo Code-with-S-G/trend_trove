@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const productData = [
   {
@@ -76,6 +77,7 @@ const productData = [
 ];
 
 const HomePageProductCard = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-slate-100 dark:bg-slate-900 pt-5 mt-10">
       {/* heading */}
@@ -90,12 +92,12 @@ const HomePageProductCard = () => {
               return (
                 <div key={id} className="p-4 w-full md:w-1/4">
                   <div className="border border-gray-300 h-full rounded-xl overflow-hidden shadow-md cursor-pointer">
-                    <img src={image} className="lg:h-80 h-96 w-full" alt="blog" />
+                    <img onClick={() => navigate('/productinfo')} src={image} className="lg:h-80 h-96 w-full" alt="blog" />
                     <div className="p-6 dark:bg-gray-900/80">
                       <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 dark:text-gray-300/80 mb-1">TrendTrove</h2>
-                      <h1 className="title-font text-lg font-medium text-gray-900 mb-6 line-clamp-1 dark:text-gray-300/90">{title}</h1>
+                      <h1 onClick={() => navigate('/productinfo')} className="title-font text-lg font-medium text-gray-900 mb-6 line-clamp-1 dark:text-gray-300/90">{title}</h1>
                       <div className="flex justify-between  items-center">
-                        <h1 className="title-font text-lg font-medium text-gray-900 dark:text-gray-300/90">₹{price}</h1>
+                        <h1 onClick={() => navigate('/productinfo')} className="title-font text-lg font-medium text-gray-900 dark:text-gray-300/90">₹{price}</h1>
                         <button className="bg-yellow-500 text-lg hover:bg-amber-500  text-white py-[5px] rounded-lg font-semibold px-3">Add To Cart</button>
                       </div>
                     </div>
