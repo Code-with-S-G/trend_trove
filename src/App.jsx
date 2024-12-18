@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <ScrollTop/>
+        <ScrollTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/*" element={<NoPage />} />

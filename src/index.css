@@ -72,4 +72,20 @@
   }
 }
 
+.slider-container .slick-track {
+  display: flex;
+  align-items: center;
+}
 
+
+.slider-container .slick-dots {
+  bottom: -80px;
+  display: flex;
+  align-items: center;
+}
+
+/* Target individual dot items */
+.slick-dots.slick-thumb li {
+  width: 60px; /* Customize size */
+  height: auto; /* Maintain aspect ratio */
+}
