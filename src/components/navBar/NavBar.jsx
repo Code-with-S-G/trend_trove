@@ -9,16 +9,31 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 const MenuLinks = [
   {
     id: 1,
+    name: "Login",
+    link: "/login",
+  },
+  {
+    id: 2,
+    name: "SignUp",
+    link: "/signup",
+  },
+  {
+    id: 3,
     name: "Home",
     link: "/",
   },
   {
-    id: 2,
+    id: 4,
+    name: "User Dashboard",
+    link: "/user-dashboard",
+  },
+  {
+    id: 5,
     name: "Shop",
     link: "/#shop",
   },
   {
-    id: 3,
+    id: 6,
     name: "About",
     link: "/#about",
   },
