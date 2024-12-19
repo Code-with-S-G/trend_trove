@@ -45,7 +45,7 @@ const SearchBar = () => {
       {/* serach input */}
       <div className="relative group hidden sm:block">
         <input type="text" placeholder="Search" onChange={(e) => setSearch(e.target.value)} className="search-bar focus:w-[300px] focus:pr-10 focus:text-[#f42c37] focus:dark:text-[#f42c37] duration-200" />
-        <IoMdSearch className="text-xl text-gray-600 group-hover:text-[#f42c37] dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
+        <IoMdSearch className="text-xl text-gray-100 group-hover:text-[#f42c37] absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
       </div>
       {/* search drop-down */}
       <div className="flex justify-center">

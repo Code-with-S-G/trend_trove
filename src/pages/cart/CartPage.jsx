@@ -41,18 +41,18 @@ const products = [
 const CartPage = () => {
   return (
     <Layout>
-      <div className="container mx-auto px-4 max-w-7xl lg:px-0">
+      <div className="container px-4 max-w-full lg:px-0 bg-stone-50 dark:bg-[#2c2c2c]">
         <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">Shopping Cart</h1>
           <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-            <section aria-labelledby="cart-heading" className="rounded-lg bg-white lg:col-span-8">
-              <h2 id="cart-heading" className="border-b border-gray-200 px-4 py-3 text-lg font-medium text-gray-900 sm:p-4">
+            <section aria-labelledby="cart-heading" className="rounded-lg bg-white shadow-md dark:bg-[#1c1c1c] lg:col-span-8">
+              <h2 id="cart-heading" className="border-b border-gray-400 dark:border-gray-300 px-4 py-3 text-lg font-medium text-gray-900 dark:text-gray-300  sm:p-4">
                 Items in your shopping cart
               </h2>
-              <ul role="list" className="divide-y divide-gray-200">
+              <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-400 divide-dashed ">
                 {products.map((product) => (
                   <div key={product.id} className="">
-                    <li className="py-6 flex sm:py-8">
+                    <li className="py-6 flex sm:py-8 px-4">
                       <div className="flex-shrink-0">
                         <img src={product.imageSrc} alt={product.name} className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center" />
                       </div>
@@ -61,18 +61,18 @@ const CartPage = () => {
                           <div>
                             <div className="flex justify-between">
                               <h3 className="text-sm">
-                                <a href={product.href} className="font-semibold text-black">
+                                <a href={product.href} className="font-semibold text-black dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-200 transition ">
                                   {product.name}
                                 </a>
                               </h3>
                             </div>
                             <div className="flex mt-1 text-sm">
-                              <p className="text-sm text-gray-500">{product.color}</p>
-                              {product.size ? <p className="ml-4 border-l border-gray-200 pl-4 text-sm text-gray-500">{product.size}</p> : null}
+                              <p className="text-gray-500 dark:text-gray-400 text-sm">{product.color}</p>
+                              {product.size ? <p className="ml-4 border-l border-gray-200 dark:border-gray-600 pl-4 text-sm text-gray-500 dark:text-gray-400">{product.size}</p> : null}
                             </div>
                             <div className="flex mt-1 items-end">
-                              <p className="text-xs font-medium line-through text-gray-500">{product.originalPrice}</p>
-                              <p className="ml-2 text-sm font-medium text-gray-900"> &nbsp;&nbsp;{product.price}</p>
+                              <p className="text-xs font-medium line-through text-gray-500 dark:text-gray-600">{product.originalPrice}</p>
+                              <p className="ml-2 text-sm font-medium text-gray-900 dark:text-white"> &nbsp;&nbsp;{product.price}</p>
                               &nbsp;&nbsp;
                               <p className="ml-2 text-sm font-medium text-green-500">{product.discount}</p>
                             </div>
@@ -81,17 +81,17 @@ const CartPage = () => {
                       </div>
                     </li>
                     <div className="flex mb-2">
-                      <div className="flex min-w-24">
-                        <button type="button" className="h-7 w-7">
+                      <div className="flex min-w-24 px-3">
+                        <button type="button" className="h-7 w-7 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 flex items-center justify-center">
                           -
                         </button>
-                        <input type="text" className="mx-1 h-7 w-9 rounded-md border text-center" defaultValue={1} />
-                        <button type="button" className="flex items-center justify-center h-7 w-7">
+                        <input type="text" className="mx-1 h-7 w-9 rounded-md border border-gray-300 dark:border-gray-600 text-center text-black dark:text-gray-100 dark:bg-gray-800" defaultValue={1} />
+                        <button type="button" className="h-7 w-7 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 flex items-center justify-center">
                           +
                         </button>
                       </div>
                       <div className="flex text-sm ml-6">
-                        <button type="button" className="flex items-center space-x-1 px-2 py-1 pl-0">
+                        <button type="button" className="flex items-center space-x-1 px-2 py-1">
                           <Trash size={12} className="text-red-500" />
                           <span className="text-xs font-medium text-red-500">Remove</span>
                         </button>
@@ -102,36 +102,36 @@ const CartPage = () => {
               </ul>
             </section>
             {/* Order summary */}
-            <section aria-labelledby="summary-heading" className="mt-16 rounded-md bg-white lg:col-span-4 lg:mt-0 lg:p-0">
-              <h2 id="summary-heading" className="border-b border-gray-200 px-4 py-3 text-lg font-medium text-gray-900 sm:p-4">
+            <section aria-labelledby="summary-heading" className="mt-16 rounded-lg bg-white shadow-sm dark:bg-[#1c1c1c] lg:col-span-4 lg:mt-0 lg:p-0">
+              <h2 id="summary-heading" className="border-b border-gray-400 dark:border-gray-300 px-4 py-3 text-lg font-medium text-gray-900 dark:text-gray-100 sm:p-4">
                 Order summary
               </h2>
               <div>
-                <dl className="space-y-1 px-2 py-4">
+                <dl className="space-y-1 px-4 py-4 text-gray-800 dark:text-gray-300">
                   <div className="flex items-center justify-between">
-                    <dt className="text-sm text-gray-800">Price (3 item)</dt>
-                    <dd className="text-sm font-medium text-gray-900">₹ 52,398</dd>
+                    <dt className="text-sm">Price (3 item)</dt>
+                    <dd className="text-sm font-medium">₹ 52,398</dd>
                   </div>
                   <div className="flex items-center justify-between pt-4">
-                    <dt className="flex items-center text-sm text-gray-800">
+                    <dt className="flex items-center text-sm">
                       <span>Discount</span>
                     </dt>
-                    <dd className="text-sm font-medium text-green-700">- ₹ 3,431</dd>
+                    <dd className="text-sm font-medium text-green-500">- ₹ 3,431</dd>
                   </div>
                   <div className="flex items-center justify-between py-4">
-                    <dt className="flex text-sm text-gray-800">
+                    <dt className="flex text-sm">
                       <span>Delivery Charges</span>
                     </dt>
-                    <dd className="text-sm font-medium text-green-700">Free</dd>
+                    <dd className="text-sm font-medium text-green-500">Free</dd>
                   </div>
-                  <div className="flex items-center justify-between border-y border-dashed py-4 ">
-                    <dt className="text-base font-medium text-gray-900">Total Amount</dt>
-                    <dd className="text-base font-medium text-gray-900">₹ 48,967</dd>
+                  <div className="flex items-center justify-between border-y border-dashed border-gray-400 dark:border-gray-200 py-4 ">
+                    <dt className="text-base font-medium ">Total Amount</dt>
+                    <dd className="text-base font-medium ">₹ 48,967</dd>
                   </div>
                 </dl>
-                <div className="px-2 pb-4 font-medium text-green-700">
-                  <div className="flex gap-4 mb-6">
-                    <button className="w-full px-4 py-3 text-center text-gray-100 bg-pink-600 border border-transparent dark:border-gray-700 hover:border-pink-500 hover:text-pink-700 hover:bg-pink-100 rounded-xl">Buy now</button>
+                <div className="px-4 pb-4 font-medium text-green-700">
+                  <div className="flex gap-4 mb-1">
+                    <button className="w-full px-4 py-3 text-center text-gray-100 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] border border-transparent hover:opacity-90 shadow-sm rounded-xl">Buy now</button>
                   </div>
                 </div>
               </div>

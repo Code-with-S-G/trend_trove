@@ -68,7 +68,7 @@
 /* for searchbar */
 @layer components {
   .search-bar {
-    @apply w-0 group-hover:w-[300px] focus:w-[300px] transition-all duration-300 rounded-full group-hover:border focus:border group-hover:border-gray-500 focus:border-gray-500 px-3 py-1 focus:outline-none dark:border-gray-800 dark:bg-gray-900 group-hover:dark:bg-gray-800 focus:dark:bg-gray-800;
+    @apply w-0 group-hover:w-[300px] focus:w-[300px] bg-[#191919] transition-all duration-300 rounded-full focus:border group-hover:border-gray-500 focus:border-gray-500 px-3 py-1 focus:outline-none dark:border-gray-800 group-hover:bg-white focus:bg-white;
   }
 }
 

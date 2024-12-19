@@ -9,6 +9,7 @@ import KidsWear from "./pages/KidsWear";
 import ProductInfo from "./pages/productInfo/ProductInfo";
 import ScrollTop from "./components/scrollTop/ScrollTop";
 import CartPage from "./pages/cart/CartPage";
+import AllProduct from "./pages/allproduct/AllProduct";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/kidswear" element={<KidsWear />} />
           <Route path="/productinfo" element={<ProductInfo />} />
           <Route path="/cart" element={<CartPage/>} />
+          <Route path="/allproduct" element={<AllProduct/>} />
         </Routes>
       </BrowserRouter>
     </>
