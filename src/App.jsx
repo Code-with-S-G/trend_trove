@@ -10,6 +10,8 @@ import ProductInfo from "./pages/productInfo/ProductInfo";
 import ScrollTop from "./components/scrollTop/ScrollTop";
 import CartPage from "./pages/cart/CartPage";
 import AllProduct from "./pages/allproduct/AllProduct";
+import Signup from "./pages/registration/Signup";
+import Login from "./pages/registration/Login";
 
 function App() {
   return (
@@ -23,8 +25,10 @@ function App() {
           <Route path="/womenswear" element={<WomensWear />} />
           <Route path="/kidswear" element={<KidsWear />} />
           <Route path="/productinfo" element={<ProductInfo />} />
-          <Route path="/cart" element={<CartPage/>} />
-          <Route path="/allproduct" element={<AllProduct/>} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/allproduct" element={<AllProduct />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </>
