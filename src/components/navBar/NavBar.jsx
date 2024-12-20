@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import DarkMode from "./DarkMode";
 import navbarImg from "../../assets/navbarImg.png";
 import { FaCartShopping } from "react-icons/fa6";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
+import SideBar from "./SideBar";
 
 const MenuLinks = [
   // {
@@ -84,21 +86,24 @@ const BannerImg = {
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
   height: "100%",
-  width: "100%", 
+  width: "100%",
 };
 
 const NavBar = () => {
+  const [showSideBar, setShowSideBar] = useState(false);
+
   return (
     <div style={BannerImg} className=" border-b-white border-b-4 dark:text-white transition-all duration-200 z-40 sticky top-0">
-      <div className="py-2 sm:py-4 px-2">
-        <div className="hidden sm:flex justify-between items-center">
+      <div className="py-2 md:py-4 px-2">
+        {/* dekstop view */}
+        <div className="hidden md:flex justify-between items-center">
           {/* Logo and link section */}
           <div className="flex items-center gap-4">
             <Link to={"/"} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">
               TrendTrove
             </Link>
             {/* Menu Items */}
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               <ul className="flex items-center gap-4">
                 {MenuLinks.map((data, index) => (
                   <li key={index}>
@@ -148,28 +153,33 @@ const NavBar = () => {
           </div>
         </div>
         {/* Mobile view */}
-        <div className="sm:hidden flex flex-col justify-between items-center gap-2">
+        <div className="md:hidden flex flex-col justify-between items-center gap-2">
           {/* Logo, cart and dark mode section */}
-          <div className="flex flex-row justify-between items-center gap-20">
-            <Link to={"/"} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">
-              TrendTrove
-            </Link>
+          <div className="flex flex-row justify-between items-center gap-20 sm:space-x-60">
             <div className="flex justify-between items-center">
-           
-            {/* cart icon section */}
-            <button className="relative p-3">
-              <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
-              <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">4</div>
-            </button>
-            {/* Dark Mode secttion */}
-            <div>
-              <DarkMode />
+              <GiHamburgerMenu onClick={() => { setShowSideBar(!showSideBar) }} className="text-white text-2xl mr-2 mt-1 cursor-pointer" />
+              <Link to={"/"} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">
+                TrendTrove
+              </Link>
             </div>
-          </div>
+
+            <div className="flex justify-between items-center">
+
+              {/* cart icon section */}
+              <button className="relative p-3">
+                <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
+                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">4</div>
+              </button>
+              {/* Dark Mode secttion */}
+              <div>
+                <DarkMode />
+              </div>
+            </div>
           </div>
           {/*Down Navbar section */}
           {/* Search Bar section */}
           <SearchBar />
+          {showSideBar && <SideBar setShowSideBar={setShowSideBar} />}
         </div>
       </div>
     </div>
