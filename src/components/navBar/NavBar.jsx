@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
 import SideBar from "./SideBar";
+import Login from "@/pages/registration/Login";
 
 const MenuLinks = [
   // {
@@ -41,45 +42,6 @@ const MenuLinks = [
   },
 ];
 
-const DropdownMenu = [
-  {
-    id: "Fashion",
-    title: "Fashion",
-    list: [
-      { id: "Mens wear", name: "Mens wear", to: "/menswear" },
-      { id: "Womens wear", name: "Womens wear", to: "/womenswear" },
-      { id: "Kids wear", name: "Kids wear", to: "/kidswear" },
-    ],
-  },
-  {
-    id: "Electronics",
-    title: "Electronics",
-    list: [
-      { id: "Laptops", name: "Laptops", to: "/laptop" },
-      { id: "Mobiles", name: "Mobiles", to: "/mobiles" },
-      { id: "Home Appliences", name: "Home Appliences", to: "/homeappliences" },
-    ],
-  },
-  {
-    id: "Furnitures",
-    title: "Furnitures",
-    list: [
-      { id: "Sofas", name: "Sofas", to: "/sofas" },
-      { id: "Tables", name: "Dinning Tables", to: "/tables" },
-      { id: "Beds", name: "Beds", to: "/beds" },
-    ],
-  },
-  {
-    id: "user",
-    title: <img src="https://www.svgrepo.com/show/192244/man-user.svg" alt="" className="w-8 h-8" />,
-    list: [
-      { id: "LogIn", name: "LogIn", onClick: () => console.log("login") },
-      { id: "SignUp", name: "SignUp", onClick: () => console.log("Signup") },
-      { id: "Userdashboard", name: "User Dashboard", to: "/user-dashboard" },
-    ],
-  },
-];
-
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
   backgroundPosition: "bottom",
@@ -91,8 +53,50 @@ const BannerImg = {
 
 const NavBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
+  const [showLogIn, setShowLogIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+
+  const DropdownMenu = [
+    {
+      id: "Fashion",
+      title: "Fashion",
+      list: [
+        { id: "Mens wear", name: "Mens wear", to: "/menswear" },
+        { id: "Womens wear", name: "Womens wear", to: "/womenswear" },
+        { id: "Kids wear", name: "Kids wear", to: "/kidswear" },
+      ],
+    },
+    {
+      id: "Electronics",
+      title: "Electronics",
+      list: [
+        { id: "Laptops", name: "Laptops", to: "/laptop" },
+        { id: "Mobiles", name: "Mobiles", to: "/mobiles" },
+        { id: "Home Appliences", name: "Home Appliences", to: "/homeappliences" },
+      ],
+    },
+    {
+      id: "Furnitures",
+      title: "Furnitures",
+      list: [
+        { id: "Sofas", name: "Sofas", to: "/sofas" },
+        { id: "Tables", name: "Dinning Tables", to: "/tables" },
+        { id: "Beds", name: "Beds", to: "/beds" },
+      ],
+    },
+    {
+      id: "user",
+      title: <img src="https://www.svgrepo.com/show/192244/man-user.svg" alt="" className="w-8 h-8" />,
+      list: [
+        { id: "LogIn", name: "LogIn", onClick: () => {setShowLogIn(!showLogIn)} },
+        { id: "SignUp", name: "SignUp", onClick: () => {setShowSignUp(!showSignUp)} },
+        { id: "Userdashboard", name: "User Dashboard", to: "/user-dashboard" },
+      ],
+    },
+  ];
 
   return (
+    <>
     <div style={BannerImg} className=" border-b-white border-b-4 dark:text-white transition-all duration-200 z-40 sticky top-0">
       <div className="py-2 md:py-4 px-2">
         {/* dekstop view */}
@@ -179,10 +183,12 @@ const NavBar = () => {
           {/*Down Navbar section */}
           {/* Search Bar section */}
           <SearchBar />
-          {showSideBar && <SideBar setShowSideBar={setShowSideBar} />}
         </div>
       </div>
     </div>
+    {showSideBar && <SideBar setShowSideBar={setShowSideBar} />}
+    {showLogIn && <Login setShowLogIn={setShowLogIn} />}
+    </>
   );
 };
 

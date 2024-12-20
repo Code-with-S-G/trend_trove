@@ -28,8 +28,8 @@ function App() {
           <Route path="/productinfo" element={<ProductInfo />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/allproduct" element={<AllProduct />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} /> */}
           <Route path="/user-dashboard" element={<UserDashboard />} />
         </Routes>
       </BrowserRouter>
