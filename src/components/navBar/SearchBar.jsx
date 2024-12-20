@@ -43,14 +43,14 @@ const SearchBar = () => {
   return (
     <>
       {/* serach input */}
-      <div className="relative group hidden sm:block">
-        <input type="text" placeholder="Search" onChange={(e) => setSearch(e.target.value)} className="search-bar focus:w-[300px] focus:pr-10 focus:text-[#f42c37] focus:dark:text-[#f42c37] duration-200" />
-        <IoMdSearch className="text-xl text-gray-100 group-hover:text-[#f42c37] absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
+      <div className="relative group sm:block">
+        <input type="text" placeholder="Search" onChange={(e) => setSearch(e.target.value)} className="search-bar focus:w-[300px] focus:pr-10 focus:text-black focus:dark:text-[#f42c37] hover:placeholder-[#f42c37] duration-200" />
+        <IoMdSearch className="text-xl text-gray-500 sm:text-gray-100 group-hover:text-[#f42c37] absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
       </div>
       {/* search drop-down */}
       <div className="flex justify-center">
         {search && (
-          <div className="absolute block right-14 top-14 bg-gray-200 w-96 md:w-96 lg:w-96 z-50 my-1 rounded-lg px-2 py-2 dark-text-black">
+          <div className="absolute block sm:right-14 sm:top-14 bg-gray-200 w-80 md:w-96 lg:w-96 z-50 my-1 rounded-lg px-2 py-2 dark-text-black">
             {filterSearchData.length > 0 ? (
               <>
                 {filterSearchData.map((item, index) => {

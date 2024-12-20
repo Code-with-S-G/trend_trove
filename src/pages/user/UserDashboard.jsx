@@ -15,7 +15,7 @@ const products = [
 const UserDashboard = () => {
   return (
     <Layout>
-      <div className=" container mx-auto px-4 py-5 lg:py-8 dark:bg-[#2c2c2c]">
+      <div className="w-full px-10 py-5 lg:py-8 dark:bg-[#2c2c2c]">
         {/* Top  */}
         <div className="top ">
           {/* main  */}
@@ -39,7 +39,7 @@ const UserDashboard = () => {
         {/* bottom  */}
         <div className="bottom">
           {/* main 1 */}
-          <div className="mx-auto my-4 max-w-6xl px-2 md:my-6 md:px-0">
+          <div className="mx-auto my-4 px-2 md:my-6 md:px-0">
             {/* text  */}
             <h2 className=" text-2xl lg:text-3xl font-bold">Order Details</h2>
 
