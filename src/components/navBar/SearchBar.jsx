@@ -43,7 +43,7 @@ const SearchBar = () => {
   return (
     <>
       {/* serach input */}
-      <div className="relative group sm:block">
+      <div className="relative group sm:block w-full md:w-auto">
         <input type="text" placeholder="Search" onChange={(e) => setSearch(e.target.value)} className="search-bar focus:pr-10 focus:text-black focus:dark:text-black hover:placeholder-[#f42c37] duration-200" />
         <IoMdSearch className="text-xl text-gray-500 md:text-gray-100 group-hover:text-[#f42c37] absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
       </div>
@@ -53,9 +53,9 @@ const SearchBar = () => {
           <div className="absolute block md:right-14 md:top-14 bg-gray-200 w-80 sm:w-[500px] lg:w-96 z-50 my-1 rounded-lg px-2 py-2 dark-text-black">
             {filterSearchData.length > 0 ? (
               <>
-                {filterSearchData.map((item, index) => {
+                {filterSearchData.map((item) => {
                   return (
-                    <div key={index} className="py-2 px-2">
+                    <div key={item.name} className="py-2 px-2">
                       <div className="flex items-center gap-2">
                         <img src={item.image} alt="image" className="w-10" />
                         {item.name}

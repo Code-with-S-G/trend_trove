@@ -5,21 +5,21 @@ import Image2 from "../../assets/heroSection/menShopping.png";
 
 const ImageList = [
   {
-    id: 1,
+    id: "heroImage1",
     img: "https://www.pngkey.com/png/full/284-2844044_fashion-toys-electrical-items-and-more-girl-with.png",
     title: "Your Wardrobe, Reimagined",
     description:
       "Discover a collection that blends timeless elegance with modern trends. From everyday essentials to statement pieces, we bring you styles that reflect your unique personality. Shop now and elevate your wardrobe with fashion designed to inspire confidence and redefine your look.",
   },
   {
-    id: 2,
+    id: "heroImage2",
     img: Image2,
     title: "Smart Choices for Smart Living",
     description:
       "Upgrade your lifestyle with cutting-edge gadgets and innovative solutions designed to simplify your everyday life. From smart home devices to the latest tech essentials, discover products that combine functionality with modern design. Start living smarter today!",
   },
   {
-    id: 3,
+    id: "heroImage3",
     img: "Image3",
     title: "Turn Your House into a Home",
     description:

@@ -1,104 +1,114 @@
-import React from "react";
-import logo from "../../assets/logo.png";
-import navbarImg from "../../assets/navbarImg.png";
-import { Link } from "react-router-dom";
-
-const SideBarMenu = [
-    {
-        id: "sUserdashboard",
-        name: "User Dashboard",
-        link: "/user-dashboard",
-    },
-    {
-        id: "sMen Wear",
-        name: "Men Wear",
-        link: "/menswear"
-    },
-    {
-        id: "sWomen Wear",
-        name: "Women Wear",
-        link: "/womenswear"
-    },
-    {
-        id: "sKids Wear",
-        name: "Kids Wear",
-        link: "/kidswear"
-    },
-    {
-        id: "slaptops",
-        name: "Laptops",
-        link: "/laptop"
-    },
-    {
-        id: "smobiles",
-        name: "Mobiles",
-        link: "/mobiles"
-    },
-    {
-        id: "shomeappliences",
-        name: "Home Appliences",
-        link: "/homeappliences"
-    },
-    {
-        id: "ssofas",
-        name: "Sofas",
-        link: "/sofas"
-    },
-    {
-        id: "stables",
-        name: "Dinning Tables",
-        link: "/tables"
-    },
-    {
-        id: "sbeds",
-        name: "Beds",
-        link: "/beds"
-    },
-    {
-        id: "sLogIn",
-        name: "LogIn",
-        link: "/login",
-    },
-    {
-        id: "sSignUp",
-        name: "SignUp",
-        link: "/signup",
-    }
-]
+import React from 'react';
+import logo from '../../assets/logo.png';
+import navbarImg from '../../assets/navbarImg.png';
+import { Link } from 'react-router-dom';
+import { RxCross1 } from 'react-icons/rx';
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
-  backgroundPosition: "bottom",
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  height: "10%",
-  width: "100%", 
+  backgroundPosition: 'bottom',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  height: '10%',
+  width: '100%',
 };
-const SideBar = ({setShowSideBar}) => {
-    return <>
-        <div
-            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-            onClick={() => setShowSideBar(false)}
-        ></div>
-        <div className="lg:hidden fixed top-0 left-0 h-full w-64 bg-slate-100 z-50 shadow-lg">
-            <div style={BannerImg} className="flex items-center space-x-3">
-                <img src={logo} alt="logo" className="h-10 w-10 ml-2" />
-                <Link to={"/"} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">
+const SideBar = ({ setShowSideBar, setShowLogIn, setShowSignUp }) => {
+
+  const SideBarMenu = [
+    {
+      id: 'sUserdashboard',
+      name: 'User Dashboard',
+      to: '/user-dashboard',
+    },
+    {
+      id: 'sMen Wear',
+      name: 'Men Wear',
+      to: '/menswear',
+    },
+    {
+      id: 'sWomen Wear',
+      name: 'Women Wear',
+      to: '/womenswear',
+    },
+    {
+      id: 'sKids Wear',
+      name: 'Kids Wear',
+      to: '/kidswear',
+    },
+    {
+      id: 'slaptops',
+      name: 'Laptops',
+      to: '/laptop',
+    },
+    {
+      id: 'smobiles',
+      name: 'Mobiles',
+      to: '/mobiles',
+    },
+    {
+      id: 'shomeappliences',
+      name: 'Home Appliences',
+      to: '/homeappliences',
+    },
+    {
+      id: 'ssofas',
+      name: 'Sofas',
+      to: '/sofas',
+    },
+    {
+      id: 'stables',
+      name: 'Dinning Tables',
+      to: '/tables',
+    },
+    {
+      id: 'sbeds',
+      name: 'Beds',
+      to: '/beds',
+    },
+    {
+      id: 'sLogIn',
+      name: 'LogIn',
+      onClick: () => {
+        setShowLogIn(true);
+        setShowSideBar(false);
+      },
+    },
+    {
+      id: 'sSignUp',
+      name: 'SignUp',
+      onClick: () => {
+        setShowSignUp(true);
+        setShowSideBar(false);
+      },
+    },
+  ];
+
+  return (
+    <>
+      <div className="lg:hidden fixed inset-0 bg-black backdrop-filter backdrop-blur-lg bg-opacity-50 z-40" onClick={() => setShowSideBar(false)}></div>
+      <div className="lg:hidden fixed top-0 left-0 h-full  backdrop-filter backdrop-blur w-3/4 sm:w-1/2 bg-slate-50/60 z-50 shadow-2xl">
+        <div style={BannerImg} className="flex items-center justify-between w-full">
+          <div className="flex items-center space-x-3">
+            <img src={logo} alt="logo" className="h-8 w-10 ml-2" />
+            <Link to={'/'} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">
               TrendTrove
             </Link>
-            </div>
-            <ul className="divide-y divide-gray-300 mt-2">
-                {SideBarMenu.map((data, index) => (
-                    <li key={data.id}>
-                        <a href={data.link} className="block px-4 py-2 font-semibold text-gray-700 hover:text-amber-400 transition-all duration-200">
-                            {" "}
-                            {data.name}
-                        </a>
-                    </li>
-                ))}
-            </ul>
+          </div>
+          <RxCross1 size={28} onClick={() => setShowSideBar(false)} className="text-white pt-2 hover:text-amber-400 cursor-pointer" />
         </div>
+        <ul className="divide-y divide-gray-300">
+          {SideBarMenu.map((data, index) => (
+            <li key={data.id} className="hover:bg-amber-200/60 text-gray-700 transition-all  duration-300">
+              <Link {...data} className="block px-4 py-2 font-semibold">
+                {' '}
+                {data.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
-}
+  );
+};
 
 export default SideBar;
