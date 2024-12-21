@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../../components/layout/Layout";
 import { Trash } from "lucide-react";
+import Layout from "@/components/Layout/Layout";
 
 const products = [
   {
