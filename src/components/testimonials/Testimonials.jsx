@@ -3,31 +3,31 @@ import Slider from 'react-slick';
 
 const testimonialData = [
   {
-    id: 1,
+    id: "testimonialData1",
     name: 'John Doe',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     image: 'https://picsum.photos/200/300',
   },
   {
-    id: 2,
+    id: "testimonialData2",
     name: 'Jane Doe',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     image: 'https://picsum.photos/200/300',
   },
   {
-    id: 3,
+    id: "testimonialData3",
     name: 'John Doe',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     image: 'https://picsum.photos/200/300',
   },
   {
-    id: 4,
+    id: "testimonialData4",
     name: 'Jane Doe',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     image: 'https://picsum.photos/200/300',
   },
   {
-    id: 5,
+    id: "testimonialData5",
     name: 'John Doe',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     image: 'https://picsum.photos/200/300',

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const productData = [
     {
-        id: 1,
+        id: "product1",
         image: 'https://i.pinimg.com/564x/3e/05/ce/3e05cefbc7eec79ac175ea8490a67939.jpg',
         title: 'Hand Painted Blue Kaushalam Tea Pot in Aluminium',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -13,7 +13,7 @@ const productData = [
         quantity: 1,
     },
     {
-        id: 2,
+        id: "product2",
         image: 'https://i.pinimg.com/736x/e4/61/f2/e461f2246b6ad93e2099d98780626396.jpg',
         title: 'Kaushalam kalash Copper Pot',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -22,7 +22,7 @@ const productData = [
         quantity: 1,
     },
     {
-        id: 3,
+        id: "product3",
         image: 'https://i.pinimg.com/564x/fd/50/68/fd50688767adb47aba7204f034554cbd.jpg',
         title: 'Hand Painted Blue Kaushalam Tea Pot in Aluminium',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -31,7 +31,7 @@ const productData = [
         quantity: 1,
     },
     {
-        id: 4,
+        id: "product4",
         image: 'https://i.pinimg.com/564x/22/80/8d/22808d88ada424962f2e064f3075b2d1.jpg',
         title: 'Hand Painted Blue Kaushalam Tea Pot in Aluminium',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -40,7 +40,7 @@ const productData = [
         quantity: 1,
     },
     {
-        id: 1,
+        id: "product5",
         image: 'https://i.pinimg.com/564x/3e/05/ce/3e05cefbc7eec79ac175ea8490a67939.jpg',
         title: 'Hand Painted Blue Kaushalam Tea Pot in Aluminium',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -49,7 +49,7 @@ const productData = [
         quantity: 1,
     },
     {
-        id: 2,
+        id: "product6",
         image: 'https://i.pinimg.com/736x/e4/61/f2/e461f2246b6ad93e2099d98780626396.jpg',
         title: 'Kaushalam kalash Copper Pot',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -58,7 +58,7 @@ const productData = [
         quantity: 1,
     },
     {
-        id: 3,
+        id: "product7",
         image: 'https://i.pinimg.com/564x/fd/50/68/fd50688767adb47aba7204f034554cbd.jpg',
         title: 'Hand Painted Blue Kaushalam Tea Pot in Aluminium',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -67,7 +67,7 @@ const productData = [
         quantity: 1,
     },
     {
-        id: 4,
+        id: "product8",
         image: 'https://i.pinimg.com/564x/22/80/8d/22808d88ada424962f2e064f3075b2d1.jpg',
         title: 'Hand Painted Blue Kaushalam Tea Pot in Aluminium',
         desc: 'Shop Hand Painted Blue Kaushalam Tea Pot in Aluminium, handmade by Mrinalika Jain. Fair pricing. Ethically made. Positive impact.',
@@ -87,7 +87,7 @@ const AllProduct = () => {
       <section className="text-gray-600 body-font ">
         <div className="container px-5 py-5 mx-auto">
           <div className="flex flex-wrap -m-4">
-            {productData.map((item, index) => {
+            {productData.map((item) => {
               const { image, title, price, id } = item;
               return (
                 <div key={id} className="p-4 w-full md:w-1/4">
