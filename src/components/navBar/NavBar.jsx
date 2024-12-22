@@ -111,7 +111,7 @@ const NavBar = () => {
   return (
     <>
       <div style={BannerImg} className=" border-b-white border-b-4 dark:text-white transition-all duration-200 z-40 sticky top-0">
-        <div className="py-2 md:py-4 px-2">
+        <div className="py-2 lg:py-4 px-2">
           {/* dekstop view */}
           <div className="hidden lg:flex justify-between items-center">
             {/* Logo and link section */}
@@ -155,7 +155,7 @@ const NavBar = () => {
               </div>
             </div>
             {/* Navbar right section */}
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex justify-between items-center gap-2">
               {/* Search Bar section */}
               <SearchBar />
               {/* cart icon section */}
@@ -172,7 +172,7 @@ const NavBar = () => {
           {/* Mobile view */}
           <div className="lg:hidden flex flex-col justify-between items-center gap-2">
             {/* Logo, cart and dark mode section */}
-            <div className="flex flex-row justify-between items-center w-full gap-20 sm:space-x-60">
+            <div className="flex flex-row justify-between items-center w-full  sm:space-x-60">
               <div className="flex justify-between items-center">
                 <GiHamburgerMenu
                   onClick={() => {
