@@ -1,55 +1,55 @@
-import React, { useState } from 'react';
-import SearchBar from './SearchBar';
-import DarkMode from './DarkMode';
-import navbarImg from '../../assets/navbarImg.png';
-import { FaCartShopping } from 'react-icons/fa6';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { Link } from 'react-router-dom';
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '../ui/navigation-menu';
-import SideBar from './SideBar';
-import Login from '@/pages/registration/Login';
-import Signup from '@/pages/registration/Signup';
+import React, { useState } from "react";
+import SearchBar from "./SearchBar";
+import DarkMode from "./DarkMode";
+import navbarImg from "../../assets/navbarImg.png";
+import { FaCartShopping } from "react-icons/fa6";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
+import SideBar from "./SideBar";
+import Login from "@/pages/registration/Login";
+import Signup from "@/pages/registration/Signup";
 
-const MenuLinks = [
-  // {
-  //   id: 1,
-  //   name: "Login",
-  //   link: "/login",
-  // },
-  // {
-  //   id: 2,
-  //   name: "SignUp",
-  //   link: "/signup",
-  // },
-  // {
-  //   id: 3,
-  //   name: "Home",
-  //   link: "/",
-  // },
-  // {
-  //   id: 4,
-  //   name: "User Dashboard",
-  //   link: "/user-dashboard",
-  // },
-  // {
-  //   id: 5,
-  //   name: "Shop",
-  //   link: "/#shop",
-  // },
-  {
-    id: 6,
-    name: 'About',
-    link: '/#about',
-  },
-];
+// const MenuLinks = [
+//   // {
+//   //   id: 1,
+//   //   name: "Login",
+//   //   link: "/login",
+//   // },
+//   {
+//     id: 2,
+//     name: "Admin",
+//     link: "/admin-dashboard",
+//   },
+//   // {
+//   //   id: 3,
+//   //   name: "Home",
+//   //   link: "/",
+//   // },
+//   {
+//     id: 4,
+//     name: "All Products",
+//     link: "/allproduct",
+//   },
+//   // {
+//   //   id: 5,
+//   //   name: "Shop",
+//   //   link: "/#shop",
+//   // },
+//   {
+//     id: 6,
+//     name: "About",
+//     link: "/#about",
+//   },
+// ];
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
-  backgroundPosition: 'bottom',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  height: '100%',
-  width: '100%',
+  backgroundPosition: "bottom",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  height: "100%",
+  width: "100%",
 };
 
 const NavBar = () => {
@@ -59,51 +59,61 @@ const NavBar = () => {
 
   const DropdownMenu = [
     {
-      id: 'Fashion',
-      title: 'Fashion',
+      id: "fashion",
+      title: "Fashion",
       list: [
-        { id: 'Mens wear', name: 'Mens wear', to: '/menswear' },
-        { id: 'Womens wear', name: 'Womens wear', to: '/womenswear' },
-        { id: 'Kids wear', name: 'Kids wear', to: '/kidswear' },
+        { id: "mens-wear", name: "Mens wear", to: "/menswear" },
+        { id: "womens-wear", name: "Womens wear", to: "/womenswear" },
+        { id: "kids-wear", name: "Kids wear", to: "/kidswear" },
       ],
     },
     {
-      id: 'Electronics',
-      title: 'Electronics',
+      id: "electronics",
+      title: "Electronics",
       list: [
-        { id: 'Laptops', name: 'Laptops', to: '/laptop' },
-        { id: 'Mobiles', name: 'Mobiles', to: '/mobiles' },
-        { id: 'Home Appliences', name: 'Home Appliences', to: '/homeappliences' },
+        { id: "laptops", name: "Laptops", to: "/laptop" },
+        { id: "mobiles", name: "Mobiles", to: "/mobiles" },
+        { id: "home-appliences", name: "Home Appliences", to: "/homeappliences" },
       ],
     },
     {
-      id: 'Furnitures',
-      title: 'Furnitures',
+      id: "furnitures",
+      title: "Furnitures",
       list: [
-        { id: 'Sofas', name: 'Sofas', to: '/sofas' },
-        { id: 'Tables', name: 'Dinning Tables', to: '/tables' },
-        { id: 'Beds', name: 'Beds', to: '/beds' },
+        { id: "sofas", name: "Sofas", to: "/sofas" },
+        { id: "tables", name: "Dinning Tables", to: "/tables" },
+        { id: "beds", name: "Beds", to: "/beds" },
       ],
     },
     {
-      id: 'user',
+      id: "all-products",
+      title: "Store",
+      link: "/allproduct",
+    },
+    {
+      id: "admin",
+      title: "Admin",
+      link: "/admin-dashboard",
+    },
+    {
+      id: "user",
       title: <img src="https://www.svgrepo.com/show/192244/man-user.svg" alt="" className="w-8 h-8" />,
       list: [
         {
-          id: 'LogIn',
-          name: 'LogIn',
+          id: "LogIn",
+          name: "LogIn",
           onClick: () => {
             setShowLogIn(!showLogIn);
           },
         },
         {
-          id: 'SignUp',
-          name: 'SignUp',
+          id: "SignUp",
+          name: "SignUp",
           onClick: () => {
             setShowSignUp(!showSignUp);
           },
         },
-        { id: 'Userdashboard', name: 'User Dashboard', to: '/user-dashboard' },
+        { id: "Userdashboard", name: "User Dashboard", to: "/user-dashboard" },
       ],
     },
   ];
@@ -116,36 +126,47 @@ const NavBar = () => {
           <div className="hidden lg:flex justify-between items-center">
             {/* Logo and link section */}
             <div className="flex items-center gap-4">
-              <Link to={'/'} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl ">
+              <Link to={"/"} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl ">
                 TrendTrove
               </Link>
               {/* Menu Items */}
               <div className="hidden md:block">
-                <ul className="flex items-center gap-4">
-                  {MenuLinks.map((data, index) => (
-                    <li key={index}>
-                      <a href={data.link} className="inline-block px-4 font-semibold text-gray-200 hover:text-amber-400 transition-all duration-200">
-                        {' '}
+                <ul className="flex items-center mt-2 gap-2 xl:gap-6">
+                  {/* {MenuLinks.map((data) => (
+                    <li key={data.name}>
+                      <Link to={data.link} className="inline-block px-4 font-semibold text-gray-200 hover:text-amber-400 transition-all duration-200">
+                        {" "}
                         {data.name}
-                      </a>
+                      </Link>
                     </li>
-                  ))}
+                  ))} */}
                   {/* Dropdown */}
                   {DropdownMenu.map((category) => {
                     return (
                       <NavigationMenu key={category.id}>
                         <NavigationMenuList>
                           <NavigationMenuItem>
-                            <NavigationMenuTrigger className="px-2 text-gray-200 hover:text-amber-400 duration-200">{category.title}</NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                              <ul className="grid w-[400px] gap-2 md:w-[200px] md:grid-rows-3 lg:w-max ">
-                                {category.list.map((item) => (
-                                  <Link key={item.id} {...item} className="hover:bg-amber-100 p-2 dark:hover:text-black">
-                                    {item.name}
-                                  </Link>
-                                ))}
-                              </ul>
-                            </NavigationMenuContent>
+                            {category?.link ? (
+                              <li key={category?.id}>
+                                <Link to={category?.link} className="inline-block px-2 font-semibold text-gray-200 hover:text-amber-400 transition-all duration-200">
+                                  {" "}
+                                  {category?.title}
+                                </Link>
+                              </li>
+                            ) : (
+                              <>
+                                <NavigationMenuTrigger className="px-2 text-gray-200 hover:text-amber-400 duration-200">{category.title}</NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                  <ul className="grid w-[400px] gap-2 md:w-[200px] md:grid-rows-3 lg:w-max ">
+                                    {category.list.map((item) => (
+                                      <Link key={item.id} {...item} className="hover:bg-amber-100 p-2 dark:hover:text-black">
+                                        {item.name}
+                                      </Link>
+                                    ))}
+                                  </ul>
+                                </NavigationMenuContent>
+                              </>
+                            )}
                           </NavigationMenuItem>
                         </NavigationMenuList>
                       </NavigationMenu>
@@ -180,7 +201,7 @@ const NavBar = () => {
                   }}
                   className="text-white text-2xl mr-2 mt-1 cursor-pointer"
                 />
-                <Link to={'/'} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">
+                <Link to={"/"} className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">
                   TrendTrove
                 </Link>
               </div>
