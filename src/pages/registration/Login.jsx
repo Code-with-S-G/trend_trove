@@ -1,16 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Link } from 'react-router-dom';
-import navbarImg from '../../assets/navbarImg.png';
-import logo from '../../assets/logo.png';
-import { RxCross1 } from 'react-icons/rx';
+import { Link } from "react-router-dom";
+import navbarImg from "../../assets/navbarImg.png";
+import logo from "../../assets/logo.png";
+import { RxCross1 } from "react-icons/rx";
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
-  backgroundPosition: 'bottom',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  height: '10%',
-  width: '100%',
+  backgroundPosition: "bottom",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  height: "10%",
+  width: "100%",
 };
 
 const Login = ({ setShowLogIn, setShowSignUp }) => {
@@ -26,13 +26,9 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
         <div style={BannerImg} className="flex justify-center items-center gap-2 py-2 px-4 rounded-t-xl relative">
           <img src={logo} alt="logo" className="h-10 w-10 ml-2" />
           <h1 className="text-white group-hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl transition-colors duration-300 ease-in-out">TrendTrove</h1>
-          <RxCross1
-            size={28}
-            onClick={() => setShowLogIn(false)}
-            className="absolute right-4 transition-transform duration-300 ease-in-out group-hover:translate-x-[-10px] group-hover:text-amber-400 cursor-pointer"
-          />
+          <RxCross1 size={28} onClick={() => setShowLogIn(false)} className="absolute text-black right-4 transition-transform duration-300 ease-in-out group-hover:translate-x-[-10px] group-hover:text-amber-400 cursor-pointer" />
         </div>
-        <div className="login_Form px-5 lg:px-8 py-6 border border-amber-100 shadow-md rounded-b-xl">
+        <div className="login_Form bg-white px-5 lg:px-8 py-6 border border-amber-100 shadow-md rounded-b-xl">
           {/* Top Heading */}
           <div className="mb-3 text-center">
             <h2 className="text-2xl font-bold text-black">Login</h2>
@@ -43,7 +39,7 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
             <label htmlFor="email" className="block text-gray-700 font-semibold mb-1">
               Email Address
             </label>
-            <input id="email" type="email" placeholder="Email Address" className="bg-gray-50 border border-amber-200 px-2 py-2 w-full rounded-md outline-none placeholder-gray-300" />
+            <input id="email" type="email" placeholder="Email Address" className="bg-gray-50 border text-black border-amber-200 px-2 py-2 w-full rounded-md outline-none placeholder-gray-300" />
           </div>
 
           {/* Password Input */}
@@ -51,7 +47,7 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
             <label htmlFor="password" className="block text-gray-700 font-semibold mb-1">
               Password
             </label>
-            <input id="password" type="password" placeholder="Password" className="bg-gray-50 border border-amber-200 px-2 py-2 w-full rounded-md outline-none placeholder-gray-300" />
+            <input id="password" type="password" placeholder="Password" className="bg-gray-50 text-black border border-amber-200 px-2 py-2 w-full rounded-md outline-none placeholder-gray-300" />
           </div>
 
           {/* Login Button */}
@@ -64,7 +60,7 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
           {/* Signup Prompt */}
           <div>
             <h2 className="text-black text-center">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <p
                 className="text-amber-500 font-bold cursor-pointer"
                 onClick={() => {

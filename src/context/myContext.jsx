@@ -1,4 +1,9 @@
 import { createContext } from "react";
 
-const myContext = createContext();
+// Define default values (optional)
+const myContext = createContext({
+  loading: false,
+  setLoading: () => {},
+});
+
 export default myContext;

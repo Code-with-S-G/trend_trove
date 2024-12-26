@@ -17,12 +17,14 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AddProductPage from "./pages/admin/AddProductPage";
 import UpdateProductPage from "./pages/admin/UpdateProductPage";
 import MyState from "./context/myState";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <MyState>
       <BrowserRouter>
         <ScrollTop />
+        <Toaster/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/*" element={<NoPage />} />
