@@ -5,6 +5,8 @@ import Layout from "@/components/Layout/Layout";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
 const AdminDashboard = () => {
+  const user = JSON.parse(localStorage.getItem("users"));
+
   return (
     <Layout>
       <div className="w-full px-10 py-5 lg:py-8 dark:bg-[#2c2c2c]">
@@ -26,10 +28,20 @@ const AdminDashboard = () => {
             {/* Profile Details */}
             <div className="text-center mt-3">
               <h1 className="text-lg text-gray-900 dark:text-gray-100">
-                <span className="font-bold">Name:</span> Kamal Nayan Upadhyay
+                <span className="font-bold">Name:</span> {user?.name}
               </h1>
               <h1 className="text-lg text-gray-900 dark:text-gray-100">
-                <span className="font-bold">Email:</span> test@gmail.com
+                <span className="font-bold">Email:</span> {user?.email}
+              </h1>
+              {/* Date  */}
+              <h1 className=" text-center text-lg">
+                <span className=" font-bold">Date : </span>
+                {user?.date}
+              </h1>
+              {/* Role  */}
+              <h1 className=" text-center text-lg">
+                <span className=" font-bold">Role : </span>
+                {user?.role}
               </h1>
             </div>
           </div>
