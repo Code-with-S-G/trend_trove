@@ -8,7 +8,7 @@ import myContext from "@/context/myContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { auth, fireDB } from "@/firebase/FirebaseConfig";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ScaleLoader } from "react-spinners";
 
@@ -62,15 +62,15 @@ const Signup = ({ setShowLogIn, setShowSignUp }) => {
         }),
       };
 
-      const userRef = collection(fireDB, "users");
-      await addDoc(userRef, userObject);
+      const userRef = doc(fireDB, "users", userSignup.email);
+      await setDoc(userRef, userObject);
 
       setUserSignup({
         name: "",
         email: "",
         password: "",
       });
-
+      setShowSignUp(false);
       toast.success("Signup Successfully!", { id: toastId }); // Update existing toast
     } catch (error) {
       toast.error(error.message || "An error occurred during signup", { id: toastId }); // Update existing toast
