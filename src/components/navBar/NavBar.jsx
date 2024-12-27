@@ -4,7 +4,7 @@ import DarkMode from "./DarkMode";
 import navbarImg from "../../assets/navbarImg.png";
 import { FaCartShopping } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
 import SideBar from "./SideBar";
 import Login from "@/pages/registration/Login";
@@ -56,6 +56,10 @@ const NavBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
   const [showLogIn, setShowLogIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  // get user from localStorage
+  const user = JSON.parse(localStorage.getItem("users"));
+  // navigate
+  const navigate = useNavigate();
 
   const DropdownMenu = [
     {
@@ -91,30 +95,37 @@ const NavBar = () => {
       link: "/allproduct",
     },
     {
-      id: "admin",
-      title: "Admin",
-      link: "/admin-dashboard",
-    },
-    {
       id: "user",
       title: <img src="https://www.svgrepo.com/show/192244/man-user.svg" alt="" className="w-8 h-8" />,
       list: [
-        {
-          id: "LogIn",
-          name: "LogIn",
-          onClick: () => {
-            setShowLogIn(!showLogIn);
-          },
-        },
-        {
-          id: "SignUp",
-          name: "SignUp",
-          onClick: () => {
-            setShowSignUp(!showSignUp);
-          },
-        },
-        { id: "Userdashboard", name: "User Dashboard", to: "/user-dashboard" },
-      ],
+        user
+          ? {
+              id: "Logout",
+              name: "Logout",
+              onClick: () => {
+                localStorage.removeItem("users"); // Remove the user from localStorage
+                window.location.reload(); // Reload the page
+              },
+            }
+          : [
+              {
+                id: "LogIn",
+                name: "LogIn",
+                onClick: () => {
+                  setShowLogIn(!showLogIn);
+                },
+              },
+              {
+                id: "SignUp",
+                name: "SignUp",
+                onClick: () => {
+                  setShowSignUp(!showSignUp);
+                },
+              },
+            ],
+        user?.role === "Customer" && { id: "Userdashboard", name: "User Dashboard", to: "/user-dashboard" },
+        user?.role === "Admin" && { id: "admin", name: "Admin Dashboard", to: "/admin-dashboard" },
+      ].flat().filter(Boolean),
     },
   ];
 
@@ -157,7 +168,7 @@ const NavBar = () => {
                               <>
                                 <NavigationMenuTrigger className="px-2 text-gray-200 hover:text-amber-400 duration-200">{category.title}</NavigationMenuTrigger>
                                 <NavigationMenuContent>
-                                  <ul className="grid w-[400px] gap-2 md:w-[200px] md:grid-rows-3 lg:w-max ">
+                                  <ul className="grid w-[400px] gap-2 md:w-[200px] lg:w-max ">
                                     {category.list.map((item) => (
                                       <Link key={item.id} {...item} className="hover:bg-amber-100 p-2 dark:hover:text-black">
                                         {item.name}

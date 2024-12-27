@@ -64,7 +64,7 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
           console.log(user);
           
           if (user.role === "Customer") {
-            navigate("/user-dashboard");
+            navigate("/");
           } else {
             navigate("/admin-dashboard");
           }
