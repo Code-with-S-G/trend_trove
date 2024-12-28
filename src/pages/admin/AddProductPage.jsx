@@ -23,7 +23,7 @@ const AddProductPage = () => {
     stock: "",
     category: "",
     description: "",
-    images: ["", "", "", ""],
+    images: [],
     time: Timestamp.now(),
     date: new Date().toLocaleString("en-US", {
       month: "short",
@@ -49,19 +49,23 @@ const AddProductPage = () => {
     }));
   };
 
+  const addImageField = () => {
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, ""],
+    }));
+  };
+
+  const removeImageField = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
+  };
+
   const addProductFunction = async (e) => {
     e.preventDefault();
-    if (
-      formData.title == "" ||
-      formData.price == "" ||
-      formData.stock == "" ||
-      formData.category == "" ||
-      formData.description == "" ||
-      formData.images[0] == "" ||
-      formData.images[1] == "" ||
-      formData.images[2] == "" ||
-      formData.images[3] == "" 
-    ) {
+    if (formData.title == "" || formData.price == "" || formData.stock == "" || formData.category == "" || formData.description == "" || formData.images[0] == "" || formData.images[1] == "" || formData.images[2] == "" || formData.images[3] == "") {
       return toast.error("all fields are required");
     }
     setLoading(true);
@@ -126,7 +130,7 @@ const AddProductPage = () => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-2 text-gray-500 dark:text-gray-400">$</span>
+                    <span className="absolute left-3 top-2 text-gray-500 dark:text-gray-400">₹</span>
                     <input
                       type="number"
                       name="price"
@@ -166,24 +170,28 @@ const AddProductPage = () => {
 
               {/* Image URLs Section */}
               <div className="space-y-4">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Product Images</label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Product Images</label>
+                  <button type="button" onClick={addImageField} className="flex items-center gap-2 px-3 py-1 text-sm bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors">
+                    <Plus size={16} />
+                    Add Image
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 gap-4">
                   {formData.images.map((url, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={url}
-                          onChange={(e) => handleImageChange(index, e.target.value)}
-                          className="flex-1 p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
-                          placeholder={`Image URL ${index + 1}`}
-                        />
-                        {url && (
-                          <button type="button" onClick={() => handleImageChange(index, "")} className="p-2 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400">
-                            <X size={20} />
-                          </button>
-                        )}
-                      </div>
+                    <div key={index} className="flex gap-2">
+                      <input
+                        type="text"
+                        value={url}
+                        onChange={(e) => handleImageChange(index, e.target.value)}
+                        className="flex-1 p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
+                        placeholder={`Image URL ${index + 1}`}
+                      />
+                      {formData.images.length > 0 && (
+                        <button type="button" onClick={() => removeImageField(index)} className="p-2 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400">
+                          <X size={20} />
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>
