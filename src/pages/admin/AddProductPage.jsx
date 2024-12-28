@@ -1,114 +1,211 @@
-import React from 'react';
+import React, { useContext, useState } from "react";
+import { Plus, X } from "lucide-react";
+import Layout from "@/components/Layout/Layout";
+import myContext from "@/context/myContext";
+import { useNavigate } from "react-router-dom";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import toast from "react-hot-toast";
+import { fireDB } from "@/firebase/FirebaseConfig";
 
-const categoryList = [
-  { name: 'Mens wear' },
-  { name: 'Womens wear' },
-  { name: 'Kids wear' },
-  { name: 'Laptops' },
-  { name: 'Mobiles' },
-  { name: 'Home Appliences' },
-  { name: 'Sofas' },
-  { name: 'Dinning Tables' },
-  { name: 'Beds' },
-];
+const categoryList = [{ name: "Mens wear" }, { name: "Womens wear" }, { name: "Kids wear" }, { name: "Laptops" }, { name: "Mobiles" }, { name: "Home Appliences" }, { name: "Sofas" }, { name: "Dinning Tables" }, { name: "Beds" }];
 
 const AddProductPage = () => {
+  const context = useContext(myContext);
+  const { loading, setLoading } = context;
+
+  // navigate
+  const navigate = useNavigate();
+
+  // product state
+  const [formData, setFormData] = useState({
+    title: "",
+    price: "",
+    stock: "",
+    category: "",
+    description: "",
+    images: ["", "", "", ""],
+    time: Timestamp.now(),
+    date: new Date().toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }),
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleImageChange = (index, value) => {
+    const newImages = [...formData.images];
+    newImages[index] = value;
+    setFormData((prev) => ({
+      ...prev,
+      images: newImages,
+    }));
+  };
+
+  const addProductFunction = async (e) => {
+    e.preventDefault();
+    if (
+      formData.title == "" ||
+      formData.price == "" ||
+      formData.stock == "" ||
+      formData.category == "" ||
+      formData.description == "" ||
+      formData.images[0] == "" ||
+      formData.images[1] == "" ||
+      formData.images[2] == "" ||
+      formData.images[3] == "" 
+    ) {
+      return toast.error("all fields are required");
+    }
+    setLoading(true);
+
+    try {
+      const productRef = collection(fireDB, formData.category);
+      await addDoc(productRef, formData);
+      toast.success("Add product successfully");
+      navigate("/admin-dashboard");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Add product failed");
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      {/* Add product Form */}
-      <div className="w-full max-w-xl mx-2 bg-white px-4 py-2 md:px-10 md:py-8 border border-gray-200 shadow-lg rounded-2xl">
-        {/* Top Heading */}
-        <div className="mb-1 sm:mb-4 text-center">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">Add Product</h2>
-          <p className="text-gray-500 text-xs sm:text-sm mt-0 sm:mt-1">
-            Fill in the details below to add a new product.
-          </p>
-        </div>
+    <Layout>
+      <div className="min-h-screen py-8 px-4 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-800 dark:to-gray-900">
+        <form onSubmit={addProductFunction} className="max-w-4xl mx-auto">
+          <div className="bg-white dark:bg-[#1c1c1c] rounded-xl border border-slate-300 dark:border-slate-600 overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-6">
+              <h2 className="text-3xl font-bold text-white">Add New Product</h2>
+              <p className="mt-2 text-white opacity-90">Complete the form below to add a product to your inventory</p>
+            </div>
 
-        {/* Input One */}
-        <div className="mb-1 sm:mb-4">
-          <label htmlFor="title" className="block text-sm text-gray-600 font-medium">
-            Product Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Enter product title"
-            className="w-full mt-1 px-3 py-0.5 sm:py-2 bg-gray-50 text-gray-800 border border-amber-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-200 text-sm sm:text-base"
-          />
-        </div>
+            {/* Form Content */}
+            <div className="p-6 space-y-6">
+              {/* Basic Info Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Product Title</label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
+                    placeholder="Enter product name"
+                  />
+                </div>
 
-        {/* Input Two */}
-        <div className="mb-1 sm:mb-4">
-          <label htmlFor="price" className="block text-sm text-gray-600 font-medium">
-            Product Price
-          </label>
-          <input
-            type="number"
-            id="price"
-            placeholder="Enter product price"
-            className="w-full mt-1 px-3 py-0.5 sm:py-2 bg-gray-50 text-gray-800 border border-amber-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-200 text-sm sm:text-base"
-          />
-        </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
+                  <select
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
+                  >
+                    <option value="">Select a category</option>
+                    {categoryList.map((cat) => (
+                      <option key={cat.name} value={cat.name}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-        {/* Input Three */}
-        <div className="mb-1 sm:mb-4">
-          <label htmlFor="image-url" className="block text-sm text-gray-600 font-medium">
-            Product Image URL
-          </label>
-          <input
-            type="text"
-            id="image-url"
-            placeholder="Enter product image URL"
-            className="w-full mt-1 px-3 py-0.5 sm:py-2 bg-gray-50 text-gray-800 border border-amber-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-200 text-sm sm:text-base"
-          />
-        </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-2 text-gray-500 dark:text-gray-400">$</span>
+                    <input
+                      type="number"
+                      name="price"
+                      value={formData.price}
+                      onChange={handleChange}
+                      className="w-full p-2 pl-8 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
 
-        {/* Input Four */}
-        <div className="mb-1 sm:mb-4">
-          <label htmlFor="category" className="block text-sm text-gray-600 font-medium">
-            Product Category
-          </label>
-          <select
-            id="category"
-            defaultValue=""
-            className="w-full mt-1 px-3 py-0.5 sm:py-2 bg-gray-50 text-gray-800 border border-amber-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-200 text-sm sm:text-base"
-          >
-            <option value="" disabled>Select Product Category</option>
-            {categoryList.map((value) => (
-              <option key={value.name} value={value.name} className="capitalize">
-                {value.name}
-              </option>
-            ))}
-          </select>
-        </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Stock Quantity</label>
+                  <input
+                    type="number"
+                    name="stock"
+                    value={formData.stock}
+                    onChange={handleChange}
+                    className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
+                    placeholder="Enter stock quantity"
+                  />
+                </div>
+              </div>
 
-        {/* Input Five */}
-        <div className="mb-1 sm:mb-4">
-          <label htmlFor="description" className="block text-sm text-gray-600 font-medium">
-            Product Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Enter product description"
-            rows="4"
-            className="w-full mt-1 px-3 py-0.5 sm:py-2 bg-gray-50 text-gray-800 border border-amber-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-200 text-sm sm:text-base"
-          ></textarea>
-        </div>
+              {/* Description Section */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Product Description</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows="4"
+                  className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
+                  placeholder="Describe your product..."
+                />
+              </div>
 
-        {/* Add Product Button */}
-        <div>
-          <button
-            type="button"
-            className="w-full py-0.5 sm:py-2 px-4 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] text-white font-semibold text-lg rounded-md hover:opacity-90 transition duration-200 focus:outline-none focus:ring-4 focus:ring-amber-300"
-          >
-            Add Product
-          </button>
-        </div>
+              {/* Image URLs Section */}
+              <div className="space-y-4">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Product Images</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {formData.images.map((url, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={url}
+                          onChange={(e) => handleImageChange(index, e.target.value)}
+                          className="flex-1 p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-400 text-gray-900 dark:text-white"
+                          placeholder={`Image URL ${index + 1}`}
+                        />
+                        {url && (
+                          <button type="button" onClick={() => handleImageChange(index, "")} className="p-2 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400">
+                            <X size={20} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="p-6 bg-gray-50 dark:bg-gray-700">
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg focus:outline-none focus:ring-4 focus:ring-amber-200 transition duration-300"
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <Plus size={20} />
+                  <span>Add Product</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-    </div>
+    </Layout>
   );
 };
 
