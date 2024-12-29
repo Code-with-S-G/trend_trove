@@ -3,7 +3,6 @@ import { Navigate } from "react-router"
 
 export const ProtectedRouteForAdmin = ({children}) => {
     const user = JSON.parse(localStorage.getItem('users'))
-    console.log("admin");
     if (user?.role === "Admin") {
       return children
     }

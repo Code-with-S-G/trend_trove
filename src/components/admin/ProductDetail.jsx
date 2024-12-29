@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import myContext from "@/context/myContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { PacmanLoader, PropagateLoader } from "react-spinners";
 
 const ProductDetail = () => {
   const context = useContext(myContext);
   const { loading, getAllProduct } = context;
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   // Filter products based on search term
   const filteredProducts = getAllProduct.filter((product) => product.title.toLowerCase().includes(searchTerm.toLowerCase()) || product.category.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -80,7 +82,7 @@ const ProductDetail = () => {
       {/* Loading State */}
       {loading ? (
         <div className="text-center py-10">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500 mx-auto"></div>
+          <PropagateLoader color="#ec4899" />
         </div>
       ) : (
         <>
@@ -169,7 +171,7 @@ const ProductDetail = () => {
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2">
-                          <button className="p-2 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/50">
+                          <button onClick={()=> navigate(`/updateproduct/${product.id}`)} className="p-2 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/50">
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>

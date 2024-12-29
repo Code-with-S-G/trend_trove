@@ -41,7 +41,7 @@ function App() {
           <Route path="/user-dashboard" element={<ProtectedRouteForUser><UserDashboard /></ProtectedRouteForUser>} />
           <Route path="/admin-dashboard" element={<ProtectedRouteForAdmin><AdminDashboard /></ProtectedRouteForAdmin>} />
           <Route path="/addproduct" element={<ProtectedRouteForAdmin><AddProductPage /></ProtectedRouteForAdmin>} />
-          <Route path="/updateproduct" element={<ProtectedRouteForAdmin><UpdateProductPage /></ProtectedRouteForAdmin>} />
+          <Route path="/updateproduct/:id" element={<ProtectedRouteForAdmin><UpdateProductPage /></ProtectedRouteForAdmin>} />
         </Routes>
       </BrowserRouter>
     </MyState>

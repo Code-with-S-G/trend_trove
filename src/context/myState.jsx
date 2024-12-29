@@ -1,9 +1,19 @@
-import { useEffect, useState } from "react";
-import MyContext from "./myContext";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { fireDB } from "../firebase/FirebaseConfig";
+import { useEffect, useState } from 'react';
+import MyContext from './myContext';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { fireDB } from '../firebase/FirebaseConfig';
 
-const categoryList = [{ name: "Mens wear" }, { name: "Womens wear" }, { name: "Kids wear" }, { name: "Laptops" }, { name: "Mobiles" }, { name: "Home Appliences" }, { name: "Sofas" }, { name: "Dinning Tables" }, { name: "Beds" }];
+const categoryList = [
+  { name: 'Mens wear' },
+  { name: 'Womens wear' },
+  { name: 'Kids wear' },
+  { name: 'Laptops' },
+  { name: 'Mobiles' },
+  { name: 'Home Appliences' },
+  { name: 'Sofas' },
+  { name: 'Dinning Tables' },
+  { name: 'Beds' },
+];
 
 function MyState({ children }) {
   const [loading, setLoading] = useState(false);
@@ -11,12 +21,13 @@ function MyState({ children }) {
 
   const getAllProductFunction = async () => {
     setLoading(true);
+
     try {
       const unsubscribers = [];
       let allProducts = [];
 
-      categoryList.forEach((item) => {
-        const q = query(collection(fireDB, item.name), orderBy("time"));
+      categoryList.forEach((item, index) => {
+        const q = query(collection(fireDB, item.name), orderBy('time'));
         const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
           const categoryProducts = QuerySnapshot.docs.map((doc) => ({
             ...doc.data(),
@@ -30,12 +41,14 @@ function MyState({ children }) {
 
           // Update state with all products
           setGetAllProduct(allProducts);
+          // Set loading to false when all data is loaded
+          if (index + 1 === categoryList.length) {
+            setLoading(false);
+          }
         });
 
         unsubscribers.push(unsubscribe);
       });
-
-      setLoading(false);
 
       // Cleanup function
       return () => {
@@ -46,8 +59,7 @@ function MyState({ children }) {
       setLoading(false);
     }
   };
-  console.log(getAllProduct);
-  
+  console.log(getAllProduct, loading);
 
   useEffect(() => {
     const unsubscribe = getAllProductFunction();
