@@ -1,11 +1,16 @@
-import OrderDetail from "@/components/admin/OrderDetail";
-import ProductDetail from "@/components/admin/ProductDetail";
-import UserDetail from "@/components/admin/UserDetail";
-import Layout from "@/components/Layout/Layout";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import OrderDetail from '@/components/admin/OrderDetail';
+import ProductDetail from '@/components/admin/ProductDetail';
+import UserDetail from '@/components/admin/UserDetail';
+import Layout from '@/components/Layout/Layout';
+import myContext from '@/context/myContext';
+import { useContext } from 'react';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 const AdminDashboard = () => {
-  const user = JSON.parse(localStorage.getItem("users"));
+  const user = JSON.parse(localStorage.getItem('users'));
+
+  const context = useContext(myContext);
+  const { getAllProduct } = context;
 
   return (
     <Layout>
@@ -57,7 +62,18 @@ const AdminDashboard = () => {
                 <div className="border bg-slate-100 dark:bg-[#1c1c1c] hover:bg-slate-200 dark:hover:bg-[#323232] border-slate-300 px-4 py-3 rounded-xl">
                   <div className="text-pink-500 w-12 h-12 mb-3 inline-block">
                     {/* Icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-basket">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={50}
+                      height={50}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-shopping-basket"
+                    >
                       <path d="m5 11 4-7" />
                       <path d="m19 11-4-7" />
                       <path d="M2 11h20" />
@@ -67,7 +83,7 @@ const AdminDashboard = () => {
                       <path d="m15 11-1 9" />
                     </svg>
                   </div>
-                  <h2 className="title-font font-medium text-3xl text-gray-900 dark:text-gray-100">10</h2>
+                  <h2 className="title-font font-medium text-3xl text-gray-900 dark:text-gray-100">{getAllProduct.length}</h2>
                   <p className="text-pink-500 font-bold">Total Products</p>
                 </div>
               </Tab>
@@ -77,7 +93,18 @@ const AdminDashboard = () => {
                 <div className="border bg-slate-100 dark:bg-[#1c1c1c] hover:bg-slate-200 dark:hover:bg-[#323232] border-slate-300 px-4 py-3 rounded-xl">
                   <div className="text-pink-500 w-12 h-12 mb-3 inline-block">
                     {/* Icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-list-ordered">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={50}
+                      height={50}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-list-ordered"
+                    >
                       <line x1={10} x2={21} y1={6} y2={6} />
                       <line x1={10} x2={21} y1={12} y2={12} />
                       <line x1={10} x2={21} y1={18} y2={18} />
@@ -96,7 +123,18 @@ const AdminDashboard = () => {
                 <div className="border bg-slate-100 dark:bg-[#1c1c1c] hover:bg-slate-200 dark:hover:bg-[#323232] border-slate-300 px-4 py-3 rounded-xl">
                   <div className="text-pink-500 w-12 h-12 mb-3 inline-block">
                     {/* Icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={50}
+                      height={50}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-users"
+                    >
                       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                       <circle cx={9} cy={7} r={4} />
                       <path d="M22 21v-2a4 4 0 0 0-3-3.87" />

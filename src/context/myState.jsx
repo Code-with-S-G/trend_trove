@@ -27,7 +27,7 @@ function MyState({ children }) {
       let allProducts = [];
 
       categoryList.forEach((item, index) => {
-        const q = query(collection(fireDB, item.name), orderBy('time'));
+        const q = query(collection(fireDB, item.name), orderBy('time', 'desc'));
         const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
           const categoryProducts = QuerySnapshot.docs.map((doc) => ({
             ...doc.data(),
@@ -38,6 +38,11 @@ function MyState({ children }) {
           // Update products for this category in the allProducts array
           allProducts = allProducts.filter((p) => p.category !== item.name);
           allProducts = [...allProducts, ...categoryProducts];
+
+          // Sort all products by time before updating state
+          const sortedProducts = allProducts.sort((a, b) => {
+            return b.time - a.time; // Sort in descending order (newest first)
+          });
 
           // Update state with all products
           setGetAllProduct(allProducts);

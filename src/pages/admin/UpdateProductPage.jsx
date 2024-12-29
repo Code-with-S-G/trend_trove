@@ -3,7 +3,7 @@ import { Plus, RefreshCw, X } from "lucide-react";
 import Layout from "@/components/Layout/Layout";
 import myContext from "@/context/myContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { deleteDoc, doc, setDoc, Timestamp } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { fireDB } from "@/firebase/FirebaseConfig";
 
@@ -12,6 +12,7 @@ const categoryList = [{ name: "Mens wear" }, { name: "Womens wear" }, { name: "K
 const UpdateProductPage = () => {
   const context = useContext(myContext);
   const { loading, setLoading, getAllProduct } = context;
+  const [prevCategory, setPrevCategory] = useState("");
 
   // navigate
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const UpdateProductPage = () => {
     category: "",
     description: "",
     images: [],
+
     time: Timestamp.now(),
     date: new Date().toLocaleString("en-US", {
       month: "short",
@@ -73,6 +75,7 @@ const UpdateProductPage = () => {
     setLoading(true);
 
     try {
+      await deleteDoc(doc(fireDB, prevCategory, id));
       await setDoc(doc(fireDB, formData.category, id), formData)
       toast.success("Product updated successfully!");
       navigate("/admin-dashboard");
@@ -104,6 +107,7 @@ const UpdateProductPage = () => {
           year: "numeric",
         }),
       });
+      setPrevCategory(getProduct[0]?.category || "")
     }
   }, [getAllProduct, id]);
   
