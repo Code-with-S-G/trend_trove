@@ -10,24 +10,40 @@ const HomePageProductCard = () => {
 
   return (
     <div className="bg-slate-100 dark:bg-slate-900 pt-5 mt-10">
-      {/* heading */}
-      <h1 className="text-center mb-2 text-2xl font-bold">Bestselling Products</h1>
+      {/* Heading */}
+      <h1 className="text-center text-2xl font-bold text-gray-800 dark:text-gray-200">
+        Bestselling Products
+      </h1>
 
-      {/* main */}
-      <section className="text-gray-600 body-font ">
-        <div className="container px-5 py-5 mx-auto">
+      {/* Main Section */}
+      <section className="text-gray-600 body-font">
+        <div className="px-5 py-5 mx-auto">
           <div className="text-center">{loading && <PropagateLoader color="#ec4899" />}</div>
-          <div className="flex flex-wrap -m-4">
-            {getAllProduct.slice(0, 8).map((item) => {
+          <div className="flex flex-wrap -mx-4">
+            {getAllProduct.slice(0, 10).map((item) => {
               const { images, title, price, id } = item;
               return (
-                <div key={id} className="p-4 w-full md:w-1/4">
-                  <div className="border border-gray-300 h-full rounded-xl overflow-hidden shadow-md cursor-pointer">
+                <div
+                  key={id}
+                  className="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+                >
+                  <div className="border border-gray-300 rounded-lg shadow-md h-full bg-white dark:bg-gray-800 dark:border-gray-700">
                     {images?.length > 0 ? (
-                      <img onClick={() => navigate('/productinfo')} src={images[0]} className="lg:h-80 h-96 w-full" alt="blog" />
+                      <img
+                        onClick={() => navigate('/productinfo')}
+                        src={images[0]}
+                        className="h-60 md:h-48 lg:h-56 xl:h-64 w-full object-cover rounded-t-lg cursor-pointer"
+                        alt={title}
+                      />
                     ) : (
-                      <div className="lg:h-80 h-96 w-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
-                        <svg className="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="h-60 md:h-48 lg:h-56 xl:h-64 w-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-t-lg">
+                        <svg
+                          className="w-24 h-24 text-gray-400 cursor-pointer"
+                          onClick={() => navigate('/productinfo')}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -37,16 +53,29 @@ const HomePageProductCard = () => {
                         </svg>
                       </div>
                     )}
-                    <div className="p-6 dark:bg-gray-900/80">
-                      <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 dark:text-gray-300/80 mb-1">TrendTrove</h2>
-                      <h1 onClick={() => navigate('/productinfo')} className="title-font text-lg font-medium text-gray-900 mb-6 line-clamp-1 dark:text-gray-300/90">
-                        {title}
+
+                    <div className="p-4">
+                      <h2 className="tracking-widest text-xs text-gray-500 font-medium mb-2 dark:text-gray-300">
+                        TrendTrove
+                      </h2>
+                      <h1 className="text-md font-semibold text-gray-900 dark:text-gray-200 truncate">
+                        <span
+                          onClick={() => navigate('/productinfo')}
+                          className="cursor-pointer"
+                        >
+                          {title}
+                        </span>
                       </h1>
-                      <div className="flex justify-between  items-center">
-                        <h1 onClick={() => navigate('/productinfo')} className="title-font text-lg font-medium text-gray-900 dark:text-gray-300/90">
+
+                      <div className="mt-4 flex justify-between items-center">
+                        <h1
+                          className="text-lg font-bold text-gray-900 dark:text-gray-200"
+                        >
                           ₹{parseFloat(price).toLocaleString()}
                         </h1>
-                        <button className="bg-yellow-500 text-lg hover:bg-amber-500  text-white py-[5px] rounded-lg font-semibold px-3">Add To Cart</button>
+                        <button className="bg-yellow-500 hover:bg-amber-500 text-white text-sm font-medium py-2 px-3 rounded-lg">
+                          Add To Cart
+                        </button>
                       </div>
                     </div>
                   </div>
