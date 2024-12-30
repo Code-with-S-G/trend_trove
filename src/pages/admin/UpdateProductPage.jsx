@@ -1,40 +1,49 @@
-import React, { useContext, useMemo, useState } from "react";
-import { Plus, RefreshCw, X } from "lucide-react";
-import Layout from "@/components/Layout/Layout";
-import myContext from "@/context/myContext";
-import { useNavigate, useParams } from "react-router-dom";
-import { deleteDoc, doc, setDoc, Timestamp } from "firebase/firestore";
-import toast from "react-hot-toast";
-import { fireDB } from "@/firebase/FirebaseConfig";
+import React, { useContext, useMemo, useState } from 'react';
+import { Plus, RefreshCw, X } from 'lucide-react';
+import Layout from '@/components/Layout/Layout';
+import myContext from '@/context/myContext';
+import { useNavigate, useParams } from 'react-router-dom';
+import { deleteDoc, doc, setDoc, Timestamp } from 'firebase/firestore';
+import toast from 'react-hot-toast';
+import { fireDB } from '@/firebase/FirebaseConfig';
 
-const categoryList = [{ name: "Mens wear" }, { name: "Womens wear" }, { name: "Kids wear" }, { name: "Laptops" }, { name: "Mobiles" }, { name: "Home Appliences" }, { name: "Sofas" }, { name: "Dinning Tables" }, { name: "Beds" }];
+const categoryList = [
+  { name: 'Mens wear' },
+  { name: 'Womens wear' },
+  { name: 'Kids wear' },
+  { name: 'Laptops' },
+  { name: 'Mobiles' },
+  { name: 'Home Appliences' },
+  { name: 'Sofas' },
+  { name: 'Dinning Tables' },
+  { name: 'Beds' },
+];
 
 const UpdateProductPage = () => {
   const context = useContext(myContext);
   const { loading, setLoading, getAllProduct } = context;
-  const [prevCategory, setPrevCategory] = useState("");
+  const [prevCategory, setPrevCategory] = useState('');
 
   // navigate
   const navigate = useNavigate();
-  const { id } = useParams()
+  const { id } = useParams();
 
   // product state
   const [formData, setFormData] = useState({
-    title: "",
-    price: "",
-    stock: "",
-    category: "",
-    description: "",
+    title: '',
+    price: '',
+    stock: '',
+    category: '',
+    description: '',
     images: [],
 
     time: Timestamp.now(),
-    date: new Date().toLocaleString("en-US", {
-      month: "short",
-      day: "2-digit",
-      year: "numeric",
+    date: new Date().toLocaleString('en-US', {
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric',
     }),
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +65,7 @@ const UpdateProductPage = () => {
   const addImageField = () => {
     setFormData((prev) => ({
       ...prev,
-      images: [...prev.images, ""],
+      images: [...prev.images, ''],
     }));
   };
 
@@ -69,48 +78,59 @@ const UpdateProductPage = () => {
 
   const updateProductFunction = async (e) => {
     e.preventDefault();
-    if (formData.title == "" || formData.price == "" || formData.stock == "" || formData.category == "" || formData.description == "" || formData.images[0] == "" || formData.images[1] == "" || formData.images[2] == "" || formData.images[3] == "") {
-      return toast.error("all fields are required");
+    if (
+      formData.title == '' ||
+      formData.price == '' ||
+      formData.stock == '' ||
+      formData.category == '' ||
+      formData.description == '' ||
+      formData.images[0] == '' ||
+      formData.images[1] == '' ||
+      formData.images[2] == '' ||
+      formData.images[3] == ''
+    ) {
+      return toast.error('all fields are required');
     }
     setLoading(true);
 
     try {
       await deleteDoc(doc(fireDB, prevCategory, id));
-      await setDoc(doc(fireDB, formData.category, id), formData)
-      toast.success("Product updated successfully!");
-      navigate("/admin-dashboard");
+      await setDoc(doc(fireDB, formData.category, id), formData);
+      toast.success('Product updated successfully!');
+      navigate('/admin-dashboard');
       setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
-      toast.error("Failed to update the product. Please try again!");
+      toast.error('Failed to update the product. Please try again!');
     }
   };
 
   useMemo(() => {
     if (!getAllProduct.length) return;
-    
-    const getProduct = getAllProduct.filter(item => item.id === id);
-  
+
+    const getProduct = getAllProduct.filter((item) => item.id === id);
+
     if (getProduct.length > 0) {
       setFormData({
-        title: getProduct[0]?.title || "",
-        price: getProduct[0]?.price || "",
+        title: getProduct[0]?.title || '',
+        price: getProduct[0]?.price || '',
         images: getProduct[0]?.images || [],
-        category: getProduct[0]?.category || "",
-        description: getProduct[0]?.description || "",
-        stock: getProduct[0]?.stock || "",
+        category: getProduct[0]?.category || '',
+        description: getProduct[0]?.description || '',
+        stock: getProduct[0]?.stock || '',
         time: getProduct[0]?.time || Timestamp.now(),
-        date: getProduct[0]?.date || new Date().toLocaleString("en-US", {
-          month: "short",
-          day: "2-digit",
-          year: "numeric",
-        }),
+        date:
+          getProduct[0]?.date ||
+          new Date().toLocaleString('en-US', {
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+          }),
       });
-      setPrevCategory(getProduct[0]?.category || "")
+      setPrevCategory(getProduct[0]?.category || '');
     }
   }, [getAllProduct, id]);
-  
 
   return (
     <Layout>
@@ -244,6 +264,6 @@ const UpdateProductPage = () => {
       </div>
     </Layout>
   );
-}
+};
 
 export default UpdateProductPage;
