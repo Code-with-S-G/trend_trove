@@ -16,7 +16,7 @@ const categoryList = [
 ];
 
 function MyState({ children }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [getAllProduct, setGetAllProduct] = useState([]);
 
   const getAllProductFunction = async () => {
