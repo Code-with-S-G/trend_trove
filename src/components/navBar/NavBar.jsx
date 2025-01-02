@@ -9,6 +9,7 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import SideBar from "./SideBar";
 import Login from "@/pages/registration/Login";
 import Signup from "@/pages/registration/Signup";
+import { useSelector } from "react-redux";
 
 // const MenuLinks = [
 //   // {
@@ -60,6 +61,8 @@ const NavBar = () => {
   const user = JSON.parse(localStorage.getItem("users"));
   // navigate
   const navigate = useNavigate();
+  // CartItems
+  const cartItems = useSelector((state) => state.cart);
 
   const DropdownMenu = [
     {
@@ -193,7 +196,7 @@ const NavBar = () => {
               {/* cart icon section */}
               <button className="relative p-3">
                 <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
-                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">4</div>
+                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItems.length}</div>
               </button>
               {/* Dark Mode secttion */}
               <div>
