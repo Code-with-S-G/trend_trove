@@ -14,11 +14,13 @@ const BannerImg = {
 };
 const SideBar = ({ setShowSideBar, setShowLogIn, setShowSignUp }) => {
 
+  const user = JSON.parse(localStorage.getItem("users"));
+
   const SideBarMenu = [
     {
-      id: 'sUserdashboard',
-      name: 'User Dashboard',
-      to: '/user-dashboard',
+      id: 'sStore',
+      name: 'Store',
+      to: '/allproduct',
     },
     {
       id: 'sMen Wear',
@@ -65,7 +67,7 @@ const SideBar = ({ setShowSideBar, setShowLogIn, setShowSignUp }) => {
       name: 'Beds',
       to: '/beds',
     },
-    {
+    !user &&  {
       id: 'sLogIn',
       name: 'LogIn',
       onClick: () => {
@@ -73,7 +75,7 @@ const SideBar = ({ setShowSideBar, setShowLogIn, setShowSignUp }) => {
         setShowSideBar(false);
       },
     },
-    {
+    !user &&  {
       id: 'sSignUp',
       name: 'SignUp',
       onClick: () => {
@@ -81,7 +83,25 @@ const SideBar = ({ setShowSideBar, setShowLogIn, setShowSignUp }) => {
         setShowSideBar(false);
       },
     },
-  ];
+    user?.role === "Customer" && {
+      id: 'sUserdashboard',
+      name: 'User Dashboard',
+      to: '/user-dashboard',
+    },
+    user?.role === "Admin" && {
+      id: 'sAdmindashboard',
+      name: 'Admin Dashboard',
+      to: '/admin-dashboard',
+    },
+    user &&{
+      id: 'sLogout',
+      name: 'Logout',
+      onClick: () => {
+        localStorage.removeItem("users"); // Remove the user from localStorage
+        window.location.reload(); // Reload the page
+      }
+    }
+  ].filter(Boolean);
 
   return (
     <>
