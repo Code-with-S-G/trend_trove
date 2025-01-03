@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
+import nocart from "@/assets/nocart.png";
 
 const products = [
   {
@@ -90,7 +91,7 @@ const CartPage = () => {
                 Items in your shopping cart
               </h2>
               <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-400 divide-dashed ">
-                {cartItems.map((product) => (
+               {cartItems.length>0 ? <> {cartItems.map((product) => (
                   <div key={product.id} className="">
                     <li className="py-6 flex sm:py-8 px-4">
                       <div className="flex-shrink-0">
@@ -152,14 +153,19 @@ const CartPage = () => {
                         </button>
                       </div>
                       <div className="flex text-sm ml-6">
-                        <button type="button" className="flex items-center space-x-1 px-2 py-1">
+                        <button onClick={() => deleteCart(product)} type="button" className="flex items-center space-x-1 px-2 py-1">
                           <Trash size={12} className="text-red-500" />
                           <span className="text-xs font-medium text-red-500">Remove</span>
                         </button>
                       </div>
                     </div>
                   </div>
-                ))}
+                ))}</>:<div>
+                <div className="flex flex-col justify-center items-center">
+                  <img className=" mb-2" src={nocart} alt="" />
+                  <h1 className=" text-black text-xl">No  product found</h1>
+                </div>
+              </div>}
               </ul>
             </section>
             {/* Order summary */}

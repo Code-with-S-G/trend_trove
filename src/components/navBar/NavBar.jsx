@@ -68,6 +68,8 @@ const NavBar = () => {
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  const cartItemTotal = cartItems.map((item) => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
+
   const DropdownMenu = [
     {
       id: "fashion",
@@ -145,7 +147,6 @@ const NavBar = () => {
         if (cartDoc.exists()) {
           dispatch(setCart(cartDoc.data().cart || []));
           console.log(cartDoc.data().cart);
-          
         } else {
           dispatch(setCart([]));
         }
@@ -218,9 +219,9 @@ const NavBar = () => {
               {/* Search Bar section */}
               <SearchBar />
               {/* cart icon section */}
-              <button className="relative p-3">
+              <button onClick={() => navigate("/cart")} className="relative p-3">
                 <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
-                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItems.length}</div>
+                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItemTotal}</div>
               </button>
               {/* Dark Mode secttion */}
               <div>
@@ -246,9 +247,9 @@ const NavBar = () => {
 
               <div className="flex justify-between items-center">
                 {/* cart icon section */}
-                <button className="relative p-3">
+                <button onClick={() => navigate("/cart")} className="relative p-3">
                   <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
-                  <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItems.length}</div>
+                  <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItemTotal}</div>
                 </button>
                 {/* Dark Mode secttion */}
                 <div>

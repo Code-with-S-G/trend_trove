@@ -1,16 +1,24 @@
-import Layout from '@/components/Layout/Layout';
-import myContext from '@/context/myContext';
-import { ShoppingCart } from 'lucide-react';
-import React, { useContext, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Slider from 'react-slick';
-import { PropagateLoader } from 'react-spinners';
+import Layout from "@/components/Layout/Layout";
+import myContext from "@/context/myContext";
+import { fireDB } from "@/firebase/FirebaseConfig";
+import { addToCart, deleteFromCart } from "@/redux/cartSlice";
+import { doc, setDoc } from "firebase/firestore";
+import { ShoppingCart } from "lucide-react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import Slider from "react-slick";
+import { PropagateLoader } from "react-spinners";
 
 const ProductInfo = () => {
   const context = useContext(myContext);
   const { loading, setLoading, getAllProduct } = context;
+  const [isInitial, setIsInitial] = useState(true);
+  const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
-  const [product, setProduct] = useState('');
+  const [product, setProduct] = useState("");
 
   const { id } = useParams();
 
@@ -37,7 +45,7 @@ const ProductInfo = () => {
       </svg>
     </div>
   ));
-  const productImg = [...(product?.images || '')];
+  const productImg = [...(product?.images || "")];
 
   const settings = {
     customPaging: function (i) {
@@ -50,22 +58,33 @@ const ProductInfo = () => {
     appendDots: (dots) => (
       <div
         style={{
-          backgroundColor: '#dddddd56',
-          borderRadius: '10px',
-          padding: '10px',
+          backgroundColor: "#dddddd56",
+          borderRadius: "10px",
+          padding: "10px",
         }}
       >
-        <ul style={{ margin: 'auto', display: 'flex', alignItems: 'center', overflow: "hidden" }}> {dots} </ul>
+        <ul style={{ margin: "auto", display: "flex", alignItems: "center", overflow: "hidden" }}> {dots} </ul>
       </div>
     ),
     dots: true,
-    dotsClass: 'slick-dots slick-thumb',
+    dotsClass: "slick-dots slick-thumb",
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     nextArrow: <CustomNextArrow />,
     prevArrow: <CustomPrevArrow />,
+  };
+
+  const addCart = (item) => {
+    // console.log(item)
+    dispatch(addToCart(item));
+    toast.success("Add to cart");
+  };
+
+  const deleteCart = (item) => {
+    dispatch(deleteFromCart(item));
+    toast.success("Delete cart");
   };
 
   useMemo(() => {
@@ -75,12 +94,14 @@ const ProductInfo = () => {
 
     if (getProduct.length > 0) {
       setProduct({
-        title: getProduct[0]?.title || '',
-        price: getProduct[0]?.price || '',
+        title: getProduct[0]?.title || "",
+        id: getProduct[0].id,
+        quantity: getProduct[0].quantity,
+        price: getProduct[0]?.price || "",
         images: getProduct[0]?.images || [],
-        category: getProduct[0]?.category || '',
-        description: getProduct[0]?.description || '',
-        stock: getProduct[0]?.stock || '',
+        category: getProduct[0]?.category || "",
+        description: getProduct[0]?.description || "",
+        stock: getProduct[0]?.stock || "",
         time: getProduct[0]?.time,
         date: getProduct[0]?.date,
       });
@@ -88,12 +109,22 @@ const ProductInfo = () => {
     }
   }, [getAllProduct, id]);
 
+  useEffect(() => {
+    async function cartHandler() {
+      // get user from localStorage
+      const user = JSON.parse(localStorage.getItem("users"));
+      await setDoc(doc(fireDB, "cart", user.email), { cart: cartItems });
+    }
+    if (!isInitial) cartHandler();
+    setIsInitial(false);
+  }, [cartItems]);
+
   return (
     <Layout>
       <section className="py-5 lg:py-16 dark:bg-[#2c2c2c]">
         {loading ? (
           <div className="text-center">
-            {' '}
+            {" "}
             <PropagateLoader color="#ec4899" />
           </div>
         ) : (
@@ -126,10 +157,23 @@ const ProductInfo = () => {
                   </div>
                   <div className="mb-6 " />
                   <div className="flex flex-wrap items-center mb-6">
-                    <button className="w-full flex items-center justify-center gap-2 px-4 py-3 text-center bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-200 transition duration-300">
-                      <ShoppingCart size={20} />
-                      Add to Cart
-                    </button>
+                    {cartItems.some((p) => p.id === product.id) ? (
+                      <button
+                        onClick={() => deleteCart(product)}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 text-center bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-200 transition duration-300"
+                      >
+                        <ShoppingCart size={20} />
+                        Delete from Cart
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => addCart(product)}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 text-center bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-200 transition duration-300"
+                      >
+                        <ShoppingCart size={20} />
+                        Add to Cart
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
