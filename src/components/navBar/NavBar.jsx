@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import DarkMode from "./DarkMode";
 import navbarImg from "../../assets/navbarImg.png";
@@ -9,7 +9,10 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import SideBar from "./SideBar";
 import Login from "@/pages/registration/Login";
 import Signup from "@/pages/registration/Signup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { doc, getDoc } from "firebase/firestore";
+import { fireDB } from "@/firebase/FirebaseConfig";
+import { setCart } from "@/redux/cartSlice";
 
 // const MenuLinks = [
 //   // {
@@ -63,6 +66,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   // CartItems
   const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   const DropdownMenu = [
     {
@@ -128,9 +132,29 @@ const NavBar = () => {
             ],
         user?.role === "Customer" && { id: "Userdashboard", name: "User Dashboard", to: "/user-dashboard" },
         user?.role === "Admin" && { id: "admin", name: "Admin Dashboard", to: "/admin-dashboard" },
-      ].flat().filter(Boolean),
+      ]
+        .flat()
+        .filter(Boolean),
     },
   ];
+
+  useEffect(() => {
+    const fetchCart = async (userEmail) => {
+      try {
+        const cartDoc = await getDoc(doc(fireDB, "cart", userEmail));
+        if (cartDoc.exists()) {
+          dispatch(setCart(cartDoc.data().cart || []));
+          console.log(cartDoc.data().cart);
+          
+        } else {
+          dispatch(setCart([]));
+        }
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    };
+    fetchCart(user.email);
+  }, []);
 
   return (
     <>
@@ -224,7 +248,7 @@ const NavBar = () => {
                 {/* cart icon section */}
                 <button className="relative p-3">
                   <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
-                  <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">4</div>
+                  <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItems.length}</div>
                 </button>
                 {/* Dark Mode secttion */}
                 <div>

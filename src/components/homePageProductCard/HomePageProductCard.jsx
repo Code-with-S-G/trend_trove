@@ -1,6 +1,8 @@
 import myContext from "@/context/myContext";
+import { fireDB } from "@/firebase/FirebaseConfig";
 import { addToCart, deleteFromCart } from "@/redux/cartSlice";
-import React, { useContext, useEffect } from "react";
+import { doc, setDoc } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +12,9 @@ const HomePageProductCard = () => {
   const navigate = useNavigate();
   const context = useContext(myContext);
   const { getAllProduct, loading } = context;
+  const [isInitial, setIsInitial] = useState(true);
+  // get user from localStorage
+  const user = JSON.parse(localStorage.getItem("users"));
 
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -28,7 +33,11 @@ const HomePageProductCard = () => {
   // console.log(cartItems)
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+    async function cartHandler() {
+      await setDoc(doc(fireDB, "cart", user.email), { cart: cartItems });
+    }
+    if (!isInitial) cartHandler();
+    setIsInitial(false);
   }, [cartItems]);
 
   return (
