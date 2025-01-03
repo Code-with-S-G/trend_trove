@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Trash } from "lucide-react";
 import Layout from "@/components/Layout/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { decrementQuantity, deleteFromCart, incrementQuantity } from "@/redux/cartSlice";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+import { fireDB } from "@/firebase/FirebaseConfig";
 
 const products = [
   {
@@ -39,6 +45,40 @@ const products = [
 ];
 
 const CartPage = () => {
+  const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const [isInitial, setIsInitial] = useState(true);
+  const navigate = useNavigate();
+
+  const deleteCart = (item) => {
+    dispatch(deleteFromCart(item));
+    toast.success("Item deleted from your cart successfully!");
+  };
+
+  const handleIncrement = (id) => {
+    dispatch(incrementQuantity(id));
+  };
+
+  const handleDecrement = (id) => {
+    dispatch(decrementQuantity(id));
+  };
+
+  // const cartQuantity = cartItems.length;
+
+  const cartItemTotal = cartItems.map((item) => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
+
+  const cartTotal = cartItems.map((item) => item.price * item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
+
+  useEffect(() => {
+    async function cartHandler() {
+      // get user from localStorage
+      const user = JSON.parse(localStorage.getItem("users"));
+      await setDoc(doc(fireDB, "cart", user.email), { cart: cartItems });
+    }
+    if (!isInitial) cartHandler();
+    setIsInitial(false);
+  }, [cartItems, cartItemTotal]);
+
   return (
     <Layout>
       <div className="container px-4 max-w-full lg:px-0 bg-stone-50 dark:bg-[#2c2c2c]">
@@ -50,31 +90,44 @@ const CartPage = () => {
                 Items in your shopping cart
               </h2>
               <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-400 divide-dashed ">
-                {products.map((product) => (
+                {cartItems.map((product) => (
                   <div key={product.id} className="">
                     <li className="py-6 flex sm:py-8 px-4">
                       <div className="flex-shrink-0">
-                        <img src={product.imageSrc} alt={product.name} className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center" />
+                        {product.images.length > 0 ? (
+                          <img onClick={() => navigate(`/productinfo/${product.id}`)} src={product.images[0]} alt={product.name} className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center" />
+                        ) : (
+                          <div onClick={() => navigate(`/productinfo/${product.id}`)} className="sm:h-38 sm:w-38 h-24 w-24 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-t-lg">
+                            <svg className="w-12 h-12 text-gray-400 cursor-pointer" onClick={() => navigate(`/productinfo/${id}`)} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                          </div>
+                        )}
                       </div>
                       <div className="flex ml-4 flex-1 flex-col justify-between sm:ml-6">
                         <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                           <div>
                             <div className="flex justify-between">
                               <h3 className="text-sm">
-                                <a href={product.href} className="font-semibold text-black dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-200 transition ">
-                                  {product.name}
-                                </a>
+                                <p onClick={() => navigate(`/productinfo/${product.id}`)} className="font-semibold line-clamp-1 text-black dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-200 transition cursor-pointer">
+                                  {product.title}
+                                </p>
                               </h3>
                             </div>
                             <div className="flex mt-1 text-sm">
-                              <p className="text-gray-500 dark:text-gray-400 text-sm">{product.color}</p>
+                              <p className="text-gray-500 dark:text-gray-400 text-sm">{product.category}</p>
                               {product.size ? <p className="ml-4 border-l border-gray-200 dark:border-gray-600 pl-4 text-sm text-gray-500 dark:text-gray-400">{product.size}</p> : null}
                             </div>
                             <div className="flex mt-1 items-end">
-                              <p className="text-xs font-medium line-through text-gray-500 dark:text-gray-600">{product.originalPrice}</p>
-                              <p className="ml-2 text-sm font-medium text-gray-900 dark:text-white"> &nbsp;&nbsp;{product.price}</p>
+                              <p className="text-xs font-medium line-through text-gray-500 dark:text-gray-600">₹{parseFloat(product.price).toLocaleString()}</p>
+                              <p className="ml-2 text-sm font-medium text-gray-900 dark:text-white"> &nbsp;&nbsp;₹{parseFloat(product.price * 0.8).toLocaleString()}</p>
                               &nbsp;&nbsp;
-                              <p className="ml-2 text-sm font-medium text-green-500">{product.discount}</p>
+                              <p className="ml-2 text-sm font-medium text-green-500">20% Off</p>
                             </div>
                           </div>
                         </div>
@@ -82,11 +135,19 @@ const CartPage = () => {
                     </li>
                     <div className="flex mb-2">
                       <div className="flex min-w-24 px-3">
-                        <button type="button" className="h-7 w-7 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 flex items-center justify-center">
+                        <button
+                          onClick={() => handleDecrement(product.id)}
+                          type="button"
+                          className="h-7 w-7 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 flex items-center justify-center"
+                        >
                           -
                         </button>
-                        <input type="text" className="mx-1 h-7 w-9 rounded-md border border-gray-300 dark:border-gray-600 text-center text-black dark:text-gray-100 dark:bg-gray-800" defaultValue={1} />
-                        <button type="button" className="h-7 w-7 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 flex items-center justify-center">
+                        <input type="text" className="mx-1 h-7 w-9 rounded-md border border-gray-300 dark:border-gray-600 text-center text-black dark:text-gray-100 dark:bg-gray-800" value={product.quantity} />
+                        <button
+                          onClick={() => handleIncrement(product.id)}
+                          type="button"
+                          className="h-7 w-7 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 flex items-center justify-center"
+                        >
                           +
                         </button>
                       </div>
@@ -109,14 +170,14 @@ const CartPage = () => {
               <div>
                 <dl className="space-y-1 px-4 py-4 text-gray-800 dark:text-gray-300">
                   <div className="flex items-center justify-between">
-                    <dt className="text-sm">Price (3 item)</dt>
-                    <dd className="text-sm font-medium">₹ 52,398</dd>
+                    <dt className="text-sm">Price ({cartItemTotal} item)</dt>
+                    <dd className="text-sm font-medium">₹{parseFloat(cartTotal).toLocaleString()}</dd>
                   </div>
                   <div className="flex items-center justify-between pt-4">
                     <dt className="flex items-center text-sm">
                       <span>Discount</span>
                     </dt>
-                    <dd className="text-sm font-medium text-green-500">- ₹ 3,431</dd>
+                    <dd className="text-sm font-medium text-green-500">- ₹{parseFloat(cartTotal * 0.2).toLocaleString()}</dd>
                   </div>
                   <div className="flex items-center justify-between py-4">
                     <dt className="flex text-sm">
@@ -126,7 +187,7 @@ const CartPage = () => {
                   </div>
                   <div className="flex items-center justify-between border-y border-dashed border-gray-400 dark:border-gray-200 py-4 ">
                     <dt className="text-base font-medium ">Total Amount</dt>
-                    <dd className="text-base font-medium ">₹ 48,967</dd>
+                    <dd className="text-base font-medium ">₹{parseFloat(cartTotal*0.8).toLocaleString()}</dd>
                   </div>
                 </dl>
                 <div className="px-4 pb-4 font-medium text-green-700">

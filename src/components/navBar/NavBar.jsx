@@ -153,7 +153,7 @@ const NavBar = () => {
         console.error("Error fetching cart:", error);
       }
     };
-    fetchCart(user.email);
+    fetchCart(user?.email);
   }, []);
 
   return (

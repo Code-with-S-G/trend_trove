@@ -23,6 +23,7 @@ const AddProductPage = () => {
     stock: "",
     category: "",
     description: "",
+    quantity: 1,
     images: [],
     time: Timestamp.now(),
     date: new Date().toLocaleString("en-US", {

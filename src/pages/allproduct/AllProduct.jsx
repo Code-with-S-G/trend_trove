@@ -21,12 +21,12 @@ const AllProduct = () => {
   const addCart = (item) => {
     // console.log(item)
     dispatch(addToCart(item));
-    toast.success("Add to cart");
+    toast.success("Item added to your cart successfully!");
   };
 
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item));
-    toast.success("Delete cart");
+    toast.success("Item deleted from your cart successfully!");
   };
 
   // console.log(cartItems)
