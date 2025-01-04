@@ -25,47 +25,47 @@ const SideBar = ({ setShowSideBar, setShowLogIn, setShowSignUp }) => {
     {
       id: 'sMen Wear',
       name: 'Men Wear',
-      to: '/menswear',
+      to: '/category/Mens wear',
     },
     {
       id: 'sWomen Wear',
       name: 'Women Wear',
-      to: '/womenswear',
+      to: '/category/Womens wear',
     },
     {
       id: 'sKids Wear',
       name: 'Kids Wear',
-      to: '/kidswear',
+      to: '/category/Kids wear',
     },
     {
       id: 'slaptops',
       name: 'Laptops',
-      to: '/laptop',
+      to: '/category/Laptops',
     },
     {
       id: 'smobiles',
       name: 'Mobiles',
-      to: '/mobiles',
+      to: '/category/Mobiles',
     },
     {
       id: 'shomeappliences',
       name: 'Home Appliences',
-      to: '/homeappliences',
+      to: '/category/Home Appliences',
     },
     {
       id: 'ssofas',
       name: 'Sofas',
-      to: '/sofas',
+      to: '/category/Sofas',
     },
     {
       id: 'stables',
       name: 'Dinning Tables',
-      to: '/tables',
+      to: '/category/Dinning Tables',
     },
     {
       id: 'sbeds',
       name: 'Beds',
-      to: '/beds',
+      to: '/category/Beds',
     },
     !user &&  {
       id: 'sLogIn',

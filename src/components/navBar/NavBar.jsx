@@ -75,27 +75,27 @@ const NavBar = () => {
       id: "fashion",
       title: "Fashion",
       list: [
-        { id: "mens-wear", name: "Mens wear", to: "/menswear" },
-        { id: "womens-wear", name: "Womens wear", to: "/womenswear" },
-        { id: "kids-wear", name: "Kids wear", to: "/kidswear" },
+        { id: "mens-wear", name: "Mens wear", to: "/category/Mens wear" },
+        { id: "womens-wear", name: "Womens wear", to: "/category/Womens wear" },
+        { id: "kids-wear", name: "Kids wear", to: "/category/Kids wear" },
       ],
     },
     {
       id: "electronics",
       title: "Electronics",
       list: [
-        { id: "laptops", name: "Laptops", to: "/laptop" },
-        { id: "mobiles", name: "Mobiles", to: "/mobiles" },
-        { id: "home-appliences", name: "Home Appliences", to: "/homeappliences" },
+        { id: "laptops", name: "Laptops", to: "/category/Laptops" },
+        { id: "mobiles", name: "Mobiles", to: "/category/Mobiles" },
+        { id: "home-appliences", name: "Home Appliences", to: "/category/Home Appliences" },
       ],
     },
     {
       id: "furnitures",
       title: "Furnitures",
       list: [
-        { id: "sofas", name: "Sofas", to: "/sofas" },
-        { id: "tables", name: "Dinning Tables", to: "/tables" },
-        { id: "beds", name: "Beds", to: "/beds" },
+        { id: "sofas", name: "Sofas", to: "/category/Sofas" },
+        { id: "tables", name: "Dinning Tables", to: "/category/Dinning Tables" },
+        { id: "beds", name: "Beds", to: "/category/Beds" },
       ],
     },
     {

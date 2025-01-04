@@ -125,7 +125,7 @@ const CartPage = () => {
                               {product.size ? <p className="ml-4 border-l border-gray-200 dark:border-gray-600 pl-4 text-sm text-gray-500 dark:text-gray-400">{product.size}</p> : null}
                             </div>
                             <div className="flex mt-1 items-end">
-                              <p className="text-xs font-medium line-through text-gray-500 dark:text-gray-600">₹{parseFloat(product.price).toLocaleString()}</p>
+                              <p className="text-xs font-medium line-through pb-0.5 text-gray-500 dark:text-gray-600">₹{parseFloat(product.price).toLocaleString()}</p>
                               <p className="ml-2 text-sm font-medium text-gray-900 dark:text-white"> &nbsp;&nbsp;₹{parseFloat(product.price * 0.8).toLocaleString()}</p>
                               &nbsp;&nbsp;
                               <p className="ml-2 text-sm font-medium text-green-500">20% Off</p>
@@ -162,8 +162,9 @@ const CartPage = () => {
                   </div>
                 ))}</>:<div>
                 <div className="flex flex-col justify-center items-center">
-                  <img className=" mb-2" src={nocart} alt="" />
-                  <h1 className=" text-black text-xl">No  product found</h1>
+                  <img className="mt-4 mb-2" src={nocart} alt="" />
+                  <h1 className=" text-black dark:text-gray-300 font-bold mb-1 text-xl">Your cart is empty</h1>
+                  <p className="text-black dark:text-gray-300 mb-6 text-center">Looks like you have not added anything to your cart. Go ahead and explore top categories.</p>
                 </div>
               </div>}
               </ul>
