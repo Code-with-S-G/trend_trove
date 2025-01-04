@@ -1,3 +1,25 @@
 .hide-scroll-bar::-webkit-scrollbar {
     display: none; /* For Chrome, Safari, and Opera */
   }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Slightly wider to make roundness more visible */
+  }
+   
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 10px; /* Rounds the track's edges */
+    margin: 2px; /* Adds some spacing around the scrollbar */
+  }
+   
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e8c547;
+    border-radius: 10px; /* Creates round edges on the thumb */
+    border: 2px solid transparent; /* Creates padding inside the thumb */
+    background-clip: content-box; /* Ensures the border doesn't cover the entire thumb */
+  }
+   
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #e8c547;
+    border-radius: 10px;
+  }
