@@ -18,6 +18,8 @@ const CartPage = () => {
   const navigate = useNavigate();
   const [showAddAddress, setShowAddAddress] = useState(false);
   const [showSelectAddress, setShowSelectAddress] = useState(false);
+  // get user from localStorage
+  const user = JSON.parse(localStorage.getItem("users"));
 
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item));
@@ -40,8 +42,6 @@ const CartPage = () => {
 
   useEffect(() => {
     async function cartHandler() {
-      // get user from localStorage
-      const user = JSON.parse(localStorage.getItem("users"));
       await setDoc(doc(fireDB, "cart", user.email), { cart: cartItems });
     }
     if (!isInitial) cartHandler();
@@ -185,7 +185,21 @@ const CartPage = () => {
                 <div>
                   <dl className="space-y-1 px-4 py-4 text-gray-800 dark:text-gray-300">
                     <div className="flex items-center justify-between">
-                      <dt className="text-sm">Johnathan Alexander Doe Suite #456, Building 12, Block A Green Valley Apartments 12345 Elmwood Avenue Extension Near Central Park Mall Springfield, IL 62704 United States of America</dt>
+                      {user?.address && (
+                        <div key={user.address.id} className="rounded-lg w-full">
+                          <div className="flex flex-col space-y-1">
+                            {user.address.house && <span className="font-medium">{user.address.house}</span>}
+                            {user.building && <span>{user.address.building}</span>}
+                            {user.address.landmark && <span className="">Near {user.address.landmark}</span>}
+                            <div className="flex gap-2 mt-1 text-sm">
+                              {user.address.pincode && <span>{user.address.pincode}</span>}
+                              {user.address.number && <span>•</span>}
+                              {user.address.number && <span>{user.address.number}</span>}
+                            </div>
+                            {user.address.addressLabel && <span className="mt-2 text-sm font-medium text-blue-600">{user.address.addressLabel}</span>}
+                          </div>
+                        </div>
+                      )}
                       {/* <dd className="text-sm font-medium">₹{parseFloat(cartTotal).toLocaleString()}</dd> */}
                     </div>
                     {/* <div className="flex items-center justify-between pt-4">
@@ -195,13 +209,15 @@ const CartPage = () => {
                       <dd className="text-sm font-medium text-green-500">- ₹{parseFloat(cartTotal * 0.2).toLocaleString()}</dd>
                     </div> */}
                     <div className="flex items-center justify-end py-2">
-                      <dt className="flex text-md text-pink-400">
+                      <dt onClick={() => setShowSelectAddress(true)} className="flex text-md text-pink-400 cursor-pointer">
                         <span>Select Address</span>
                       </dt>
                       {/* <dd className="text-sm font-medium text-green-500">Free</dd> */}
                     </div>
                     <div className="flex items-center justify-end border-y border-dashed border-gray-400 dark:border-gray-200 py-4 ">
-                      <dt onClick={()=> setShowAddAddress(true)} className="text-base font-medium text-pink-500 cursor-pointer">+ Add Address</dt>
+                      <dt onClick={() => setShowAddAddress(true)} className="text-base font-medium text-pink-500 cursor-pointer">
+                        + Add Address
+                      </dt>
                       {/* <dd className="text-base font-medium ">₹{parseFloat(cartTotal * 0.8).toLocaleString()}</dd> */}
                     </div>
                   </dl>
@@ -216,8 +232,8 @@ const CartPage = () => {
           </form>
         </div>
       </div>
-      {showAddAddress && <AddAddressModal setShowAddAddress={setShowAddAddress} setShowSelectAddress={setShowSelectAddress}/>}
-      {showSelectAddress && <SelectAddressModal/>}
+      {showAddAddress && <AddAddressModal setShowAddAddress={setShowAddAddress} setShowSelectAddress={setShowSelectAddress} />}
+      {showSelectAddress && <SelectAddressModal setShowSelectAddress={setShowSelectAddress} setShowAddAddress={setShowAddAddress} />}
     </Layout>
   );
 };

@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import navbarImg from "../../assets/navbarImg.png";
 import logo from "../../assets/logo.png";
 import { RxCross1 } from "react-icons/rx";
 import { ScaleLoader } from "react-spinners";
 import myContext from "@/context/myContext";
 import toast from "react-hot-toast";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
 
 const BannerImg = {
@@ -20,9 +20,12 @@ const BannerImg = {
 const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
   const context = useContext(myContext);
   const { loading, setLoading } = context;
+  // get user from localStorage
+  const user = JSON.parse(localStorage.getItem("users"));
 
   // Address State
   const [address, setAddress] = useState({
+    id: Math.random() * 100000000,
     house: "",
     building: "",
     landmark: "",
@@ -42,13 +45,15 @@ const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
     setLoading(true);
 
     try {
-      // get user from localStorage
-      const user = JSON.parse(localStorage.getItem("users"));
-      await setDoc(doc(fireDB, "address", user.email), {address : [address]});
+      const addressDoc = await getDoc(doc(fireDB, "address", user.email));
+      const addressArray = addressDoc.data().address || [];
+      await setDoc(doc(fireDB, "address", user.email), { address: [...addressArray, address] });
+      await updateDoc(doc(fireDB, "users", user.email), { address: address });
 
       toast.success("Address added successfully!");
       setLoading(false);
       setAddress({
+        id: Math.random() * 100000000,
         house: "",
         building: "",
         landmark: "",

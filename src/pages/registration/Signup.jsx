@@ -54,6 +54,7 @@ const Signup = ({ setShowLogIn, setShowSignUp }) => {
         email: users?.user?.email,
         role: userSignup.role,
         uid: users?.user?.uid,
+        address:"",
         time: Timestamp.now(),
         date: new Date().toLocaleString("en-US", {
           month: "short",

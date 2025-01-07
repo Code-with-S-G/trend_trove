@@ -8,7 +8,7 @@ import myContext from "@/context/myContext";
 import toast from "react-hot-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, fireDB } from "@/firebase/FirebaseConfig";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
@@ -29,7 +29,7 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
     password: "",
   });
 
-  // navigate 
+  // navigate
   const navigate = useNavigate();
 
   /**========================================================================
@@ -48,33 +48,29 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
       // console.log(users.user)
 
       try {
-        const q = query(collection(fireDB, "users"), where("uid", "==", users?.user?.uid));
-        const data = onSnapshot(q, (QuerySnapshot) => {
-          let user;
-          console.log(QuerySnapshot);
-          
-          QuerySnapshot.docs.forEach((doc) => (user = doc.data()));
-          localStorage.setItem("users", JSON.stringify(user));
-          setUserLogin({
-            email: "",
-            password: "",
-          });
-          toast.success("Login Successfully", { id: toastId });
-          setLoading(false);
-          console.log(user);
-          
-          if (user.role === "Customer") {
+        const userDoc = await getDoc(doc(fireDB, "users", userLogin.email));
+
+        if (userDoc.exists()) {
+          const updatedUserData = userDoc.data();
+          localStorage.setItem("users", JSON.stringify(updatedUserData));
+          if (updatedUserData.role === "Customer") {
             navigate("/");
           } else {
             navigate("/admin-dashboard");
           }
+          toast.success("Login Successfully", { id: toastId });
+          setShowLogIn(false);
+        }
+        setUserLogin({
+          email: "",
+          password: "",
         });
+        setLoading(false);
         // return () => data;
       } catch (error) {
         console.log(error);
         setLoading(false);
       }
-      setShowLogIn(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
