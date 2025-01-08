@@ -54,7 +54,7 @@ const CartPage = () => {
         <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">Shopping Cart</h1>
           <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-            <section aria-labelledby="cart-heading" className="rounded-lg bg-white shadow-md dark:bg-[#1c1c1c] lg:col-span-8">
+            <section aria-labelledby="cart-heading" className=" max-h-[42rem] custom-scrollbar overflow-y-auto rounded-lg bg-white shadow-md dark:bg-[#1c1c1c] lg:col-span-8">
               <h2 id="cart-heading" className="border-b border-gray-400 dark:border-gray-300 px-4 py-3 text-lg font-medium text-gray-900 dark:text-gray-300  sm:p-4">
                 Items in your shopping cart
               </h2>
@@ -145,8 +145,8 @@ const CartPage = () => {
               </ul>
             </section>
             {/* Order summary */}
-            <section className="bg-stone-200 dark:bg-gray-800 rounded-md shadow-md p-4 mt-4 lg:col-span-4 lg:mt-0 lg:p-0">
-              <section aria-labelledby="summary-heading" className="mt-16 rounded-lg bg-white shadow-sm dark:bg-[#1c1c1c] lg:col-span-4 lg:mt-0 lg:p-0">
+            <section className="rounded-md py-4 mt-4 lg:col-span-4 lg:mt-0 lg:p-0">
+              <section aria-labelledby="summary-heading" className="mt-16 rounded-lg bg-white shadow-md dark:bg-[#1c1c1c] lg:col-span-4 lg:mt-0 lg:p-0">
                 <h2 id="summary-heading" className="border-b border-gray-400 dark:border-gray-300 px-4 py-3 text-lg font-medium text-gray-900 dark:text-gray-100 sm:p-4">
                   Order summary
                 </h2>
@@ -173,15 +173,15 @@ const CartPage = () => {
                       <dd className="text-base font-medium ">₹{parseFloat(cartTotal * 0.8).toLocaleString()}</dd>
                     </div>
                   </dl>
-                  <div className="px-4 pb-4 font-medium text-green-700">
+                  {/* <div className="px-4 pb-4 font-medium text-green-700">
                     <div className="flex gap-4 mb-1">
                       <button className="w-full px-4 py-3 text-center text-gray-100 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] border border-transparent hover:opacity-90 shadow-sm rounded-xl">Buy now</button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </section>
               {/* address */}
-              <section aria-labelledby="summary-heading" className="mt-16 rounded-lg bg-white shadow-sm dark:bg-[#1c1c1c] lg:col-span-4 lg:mt-10 lg:p-0">
+              <section aria-labelledby="summary-heading" className="mt-16 rounded-lg bg-white shadow-md dark:bg-[#1c1c1c] lg:col-span-4 lg:mt-10 lg:p-0">
                 <div>
                   <dl className="space-y-1 px-4 py-4 text-gray-800 dark:text-gray-300">
                     <div className="flex items-center justify-between">

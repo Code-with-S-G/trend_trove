@@ -43,7 +43,7 @@ const AllProduct = () => {
 
   return (
     <Layout>
-      <div className="bg-slate-100 dark:bg-slate-900 pt-5">
+      <div className="bg-stone-50 dark:bg-slate-900 pt-5">
         {/* Heading */}
         <h1 className="text-center text-2xl font-bold text-gray-800 dark:text-gray-200">All Products</h1>
 
@@ -82,7 +82,7 @@ const AllProduct = () => {
                         <div className="mt-4 flex justify-between items-center">
                           <h1 className="text-lg font-bold text-gray-900 dark:text-gray-200">₹{parseFloat(price).toLocaleString()}</h1>
                           {cartItems.some((p) => p.id === item.id) ? (
-                            <button onClick={() => deleteCart(item)} className="bg-yellow-500 hover:bg-amber-500 text-white text-sm font-medium py-2 px-3 rounded-lg">
+                            <button onClick={() => deleteCart(item)} className="bg-yellow-500 hover:bg-amber-500 text-white text-xs font-bold py-3 px-3 rounded-lg">
                               Delete From Cart
                             </button>
                           ) : (

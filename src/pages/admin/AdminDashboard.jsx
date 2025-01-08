@@ -14,7 +14,7 @@ const AdminDashboard = () => {
 
   return (
     <Layout>
-      <div className="w-full px-10 py-5 lg:py-8 dark:bg-[#2c2c2c]">
+      <div className="w-full px-5 sm:px-10 py-5 lg:py-8 dark:bg-[#2c2c2c]">
         {/* Top */}
         <div className="top mb-5">
           <div className="bg-slate-100 dark:bg-[#1c1c1c] py-5 rounded-xl border border-slate-300">

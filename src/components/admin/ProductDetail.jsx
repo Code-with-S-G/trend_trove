@@ -56,7 +56,7 @@ const ProductDetail = () => {
   return (
     <div className="py-5">
       {/* Header Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-pink-500">All Products</h1>
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Manage your product inventory</p>
@@ -67,7 +67,7 @@ const ProductDetail = () => {
             placeholder="Search products..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full sm:w-64 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-pink-500"
+            className="w-full sm:w-96 md:w-64 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-pink-500"
           />
           <Link to={"/addproduct"}>
             <button className="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition duration-200 flex items-center justify-center gap-2">

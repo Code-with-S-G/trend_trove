@@ -128,8 +128,8 @@ const ProductInfo = () => {
             <PropagateLoader color="#ec4899" />
           </div>
         ) : (
-          <div className="max-w-6xl px-4 mx-auto">
-            <div className="flex flex-wrap mb-24 -mx-4">
+          <div className="max-w-6xl px-8 lg:px-4 mx-auto">
+            <div className="flex flex-wrap mb-24">
               <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
                 <div className="">
                   <div className="slider-container">
@@ -143,7 +143,7 @@ const ProductInfo = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-20 md:mt-0 w-full px-4 md:w-1/2">
+              <div className="mt-20 h-screen overflow-x-auto md:mt-0 w-full px-4 md:w-1/2">
                 <div className="lg:pl-20">
                   <div className="mb-3 md:mb-6">
                     <h2 className="max-w-xl mb-3 md:mb-6 text-lg font-semibold text-gray-700 md:text-xl dark:text-gray-300">{product?.title}</h2>
