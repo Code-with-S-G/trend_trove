@@ -21,9 +21,10 @@ const BannerImg = {
   width: "100%",
 };
 
-const Signup = ({ setShowLogIn, setShowSignUp }) => {
+const Signup = ({ setShowSignUp }) => {
   const context = useContext(myContext);
   const { loading, setLoading } = context;
+  const {showLogIn, setShowLogIn} = context;
 
   // User Signup State
   const [userSignup, setUserSignup] = useState({

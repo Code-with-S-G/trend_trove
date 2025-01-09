@@ -18,6 +18,7 @@ const categoryList = [
 function MyState({ children }) {
   const [loading, setLoading] = useState(true);
   const [getAllProduct, setGetAllProduct] = useState([]);
+  const [showLogIn, setShowLogIn] = useState(false);
 
   const getAllProductFunction = async () => {
     setLoading(true);
@@ -81,6 +82,8 @@ function MyState({ children }) {
         loading,
         setLoading,
         getAllProduct,
+        showLogIn,
+        setShowLogIn,
       }}
     >
       {children}

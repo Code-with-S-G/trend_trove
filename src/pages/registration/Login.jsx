@@ -19,9 +19,10 @@ const BannerImg = {
   width: "100%",
 };
 
-const Login = ({ setShowLogIn, setShowSignUp }) => {
+const Login = ({ setShowSignUp }) => {
   const context = useContext(myContext);
   const { loading, setLoading } = context;
+  const { showLogIn, setShowLogIn } = context;
 
   // User Signup State
   const [userLogin, setUserLogin] = useState({
@@ -66,6 +67,7 @@ const Login = ({ setShowLogIn, setShowSignUp }) => {
           password: "",
         });
         setLoading(false);
+        window.location.reload();
         // return () => data;
       } catch (error) {
         console.log(error);

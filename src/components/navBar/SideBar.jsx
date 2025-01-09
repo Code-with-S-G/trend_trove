@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../../assets/logo.png';
 import navbarImg from '../../assets/navbarImg.png';
 import { Link } from 'react-router-dom';
 import { RxCross1 } from 'react-icons/rx';
+import myContext from '@/context/myContext';
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
@@ -12,9 +13,11 @@ const BannerImg = {
   height: '10%',
   width: '100%',
 };
-const SideBar = ({ setShowSideBar, setShowLogIn, setShowSignUp }) => {
+const SideBar = ({ setShowSideBar, setShowSignUp }) => {
 
   const user = JSON.parse(localStorage.getItem("users"));
+  const context = useContext(myContext);
+  const { showLogIn, setShowLogIn} = context;
 
   const SideBarMenu = [
     {

@@ -12,8 +12,10 @@ import { PropagateLoader } from "react-spinners";
 const CategoryPage = () => {
   const { categoryname } = useParams();
   const context = useContext(myContext);
-  const { getAllProduct, loading } = context;
+  const { getAllProduct, loading, setShowLogIn } = context;
   const [isInitial, setIsInitial] = useState(true);
+  // get user from localStorage
+  const user = JSON.parse(localStorage.getItem("users"));
 
   const navigate = useNavigate();
 
@@ -26,8 +28,13 @@ const CategoryPage = () => {
 
   const addCart = (item) => {
     // console.log(item)
-    dispatch(addToCart(item));
+    if(user) {
+      dispatch(addToCart(item));
     toast.success("Item added to your cart successfully!");
+    }
+    else {
+      setShowLogIn(true);
+    }
   };
 
   const deleteCart = (item) => {

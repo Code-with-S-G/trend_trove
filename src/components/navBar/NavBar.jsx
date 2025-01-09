@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import DarkMode from "./DarkMode";
 import navbarImg from "../../assets/navbarImg.png";
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { doc, getDoc } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
 import { setCart } from "@/redux/cartSlice";
+import myContext from "@/context/myContext";
 
 // const MenuLinks = [
 //   // {
@@ -58,8 +59,12 @@ const BannerImg = {
 
 const NavBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
-  const [showLogIn, setShowLogIn] = useState(false);
+  // const [showLogIn, setShowLogIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+
+  const context = useContext(myContext);
+  const {showLogIn, setShowLogIn} = context;
+
   // get user from localStorage
   const user = JSON.parse(localStorage.getItem("users"));
   // navigate
@@ -219,7 +224,7 @@ const NavBar = () => {
               {/* Search Bar section */}
               <SearchBar />
               {/* cart icon section */}
-              <button onClick={() => navigate("/cart")} className="relative p-3">
+              <button onClick={() => user? navigate("/cart"): setShowLogIn(true)} className="relative p-3">
                 <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
                 <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItemTotal}</div>
               </button>
@@ -247,7 +252,7 @@ const NavBar = () => {
 
               <div className="flex justify-between items-center">
                 {/* cart icon section */}
-                <button onClick={() => navigate("/cart")} className="relative p-3">
+                <button onClick={() => user? navigate("/cart"): setShowLogIn(true)} className="relative p-3">
                   <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
                   <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItemTotal}</div>
                 </button>
@@ -263,9 +268,9 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      {showSideBar && <SideBar setShowSideBar={setShowSideBar} setShowLogIn={setShowLogIn} setShowSignUp={setShowSignUp} />}
-      {showLogIn && <Login setShowLogIn={setShowLogIn} setShowSignUp={setShowSignUp} />}
-      {showSignUp && <Signup setShowLogIn={setShowLogIn} setShowSignUp={setShowSignUp} />}
+      {showSideBar && <SideBar setShowSideBar={setShowSideBar} setShowSignUp={setShowSignUp} />}
+      {showLogIn && <Login setShowSignUp={setShowSignUp} />}
+      {showSignUp && <Signup setShowSignUp={setShowSignUp} />}
     </>
   );
 };

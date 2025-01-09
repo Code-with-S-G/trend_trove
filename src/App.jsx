@@ -21,6 +21,7 @@ import { Toaster } from "react-hot-toast";
 import { ProtectedRouteForUser } from "./protectedRoute/ProtectedRouteForUser";
 import { ProtectedRouteForAdmin } from "./protectedRoute/ProtectedRouteForAdmin";
 import CategoryPage from "./pages/category/CategoryPage";
+import { ProtectedRouteForCart } from "./protectedRoute/ProtectedRouteForCart";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
           <Route path="/womenswear" element={<WomensWear />} />
           <Route path="/kidswear" element={<KidsWear />} /> */}
           <Route path="/productinfo/:id" element={<ProductInfo />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={<ProtectedRouteForCart><CartPage /></ProtectedRouteForCart>} />
           <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/category/:categoryname" element={<CategoryPage />} />  {/* category Page route  */}
           {/* <Route path="/signup" element={<Signup />} />

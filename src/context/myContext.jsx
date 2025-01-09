@@ -5,6 +5,8 @@ const myContext = createContext({
   loading: false,
   getAllProduct:[],
   setLoading: () => {},
+  showLogIn: false,
+  setShowLogIn: () => {},
 });
 
 export default myContext;

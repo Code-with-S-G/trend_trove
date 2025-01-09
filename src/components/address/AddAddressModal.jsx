@@ -46,7 +46,7 @@ const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
 
     try {
       const addressDoc = await getDoc(doc(fireDB, "address", user.email));
-      const addressArray = addressDoc.data().address || [];
+      const addressArray = addressDoc.data()?.address || [];
       await setDoc(doc(fireDB, "address", user.email), { address: [...addressArray, address] });
       await updateDoc(doc(fireDB, "users", user.email), { address: address });
 
