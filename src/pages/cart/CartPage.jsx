@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrementQuantity, deleteFromCart, incrementQuantity } from "@/redux/cartSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
 import nocart from "@/assets/nocart.png";
 import AddAddressModal from "@/components/address/AddAddressModal";
@@ -19,7 +19,7 @@ const CartPage = () => {
   const [showAddAddress, setShowAddAddress] = useState(false);
   const [showSelectAddress, setShowSelectAddress] = useState(false);
   // get user from localStorage
-  const user = JSON.parse(localStorage.getItem("users"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("users")));
 
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item));
@@ -35,6 +35,7 @@ const CartPage = () => {
   };
 
   // const cartQuantity = cartItems.length;
+  console.log("cart", showSelectAddress, user);
 
   const cartItemTotal = cartItems.map((item) => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
 
@@ -47,6 +48,22 @@ const CartPage = () => {
     if (!isInitial) cartHandler();
     setIsInitial(false);
   }, [cartItems, cartItemTotal]);
+
+  useEffect(() => {
+    async function addressHandler() {
+      // Fetch the updated user document
+      const userDoc = await getDoc(doc(fireDB, "users", user.email));
+
+      if (userDoc.exists()) {
+        const updatedUserData = userDoc.data();
+
+        // Store the updated user data in localStorage
+        localStorage.setItem("users", JSON.stringify(updatedUserData));
+        setUser(updatedUserData);
+      }
+    }
+    addressHandler();
+  }, [showSelectAddress, showAddAddress]);
 
   return (
     <Layout>
@@ -173,11 +190,6 @@ const CartPage = () => {
                       <dd className="text-base font-medium ">₹{parseFloat(cartTotal * 0.8).toLocaleString()}</dd>
                     </div>
                   </dl>
-                  {/* <div className="px-4 pb-4 font-medium text-green-700">
-                    <div className="flex gap-4 mb-1">
-                      <button className="w-full px-4 py-3 text-center text-gray-100 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] border border-transparent hover:opacity-90 shadow-sm rounded-xl">Buy now</button>
-                    </div>
-                  </div> */}
                 </div>
               </section>
               {/* address */}
@@ -189,7 +201,7 @@ const CartPage = () => {
                         <div key={user.address.id} className="rounded-lg w-full">
                           <div className="flex flex-col space-y-1">
                             {user.address.house && <span className="font-medium">{user.address.house}</span>}
-                            {user.building && <span>{user.address.building}</span>}
+                            {user.address.building && <span>{user.address.building}</span>}
                             {user.address.landmark && <span className="">Near {user.address.landmark}</span>}
                             <div className="flex gap-2 mt-1 text-sm">
                               {user.address.pincode && <span>{user.address.pincode}</span>}
@@ -200,30 +212,24 @@ const CartPage = () => {
                           </div>
                         </div>
                       )}
-                      {/* <dd className="text-sm font-medium">₹{parseFloat(cartTotal).toLocaleString()}</dd> */}
+                     
                     </div>
-                    {/* <div className="flex items-center justify-between pt-4">
-                      <dt className="flex items-center text-sm">
-                        <span>Discount</span>
-                      </dt>
-                      <dd className="text-sm font-medium text-green-500">- ₹{parseFloat(cartTotal * 0.2).toLocaleString()}</dd>
-                    </div> */}
-                    <div className="flex items-center justify-end py-2">
-                      <dt onClick={() => setShowSelectAddress(true)} className="flex text-md text-pink-400 cursor-pointer">
-                        <span>Select Address</span>
-                      </dt>
-                      {/* <dd className="text-sm font-medium text-green-500">Free</dd> */}
-                    </div>
+                    {user?.address && (
+                      <div className="flex items-center justify-end py-2">
+                        <dt onClick={() => setShowSelectAddress(true)} className="flex text-md text-pink-400 cursor-pointer">
+                          <span>Select Address</span>
+                        </dt>
+                      </div>
+                    )}
                     <div className="flex items-center justify-end border-y border-dashed border-gray-400 dark:border-gray-200 py-4 ">
                       <dt onClick={() => setShowAddAddress(true)} className="text-base font-medium text-pink-500 cursor-pointer">
                         + Add Address
                       </dt>
-                      {/* <dd className="text-base font-medium ">₹{parseFloat(cartTotal * 0.8).toLocaleString()}</dd> */}
                     </div>
                   </dl>
                   <div className="px-4 pb-4 font-medium text-green-700">
                     <div className="flex gap-4 mb-1">
-                      <button className="w-full px-4 py-3 text-center text-gray-100 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] border border-transparent hover:opacity-90 shadow-sm rounded-xl">Buy now</button>
+                      <button disabled={!user?.address} className="w-full px-4 py-3 text-center text-gray-100 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] border border-transparent hover:opacity-90 shadow-sm rounded-xl disabled:opacity-40">Buy now</button>
                     </div>
                   </div>
                 </div>

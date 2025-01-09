@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import navbarImg from "../../assets/navbarImg.png";
 import logo from "../../assets/logo.png";
 import { RxCross1 } from "react-icons/rx";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { arrayRemove, doc, getDoc, updateDoc } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
 import toast from "react-hot-toast";
+import { Trash } from "lucide-react";
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
@@ -30,24 +31,33 @@ const SelectAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
       // Update the user's address in Firestore
       await updateDoc(doc(fireDB, "users", user.email), { address });
 
-      // Fetch the updated user document
-      const userDoc = await getDoc(doc(fireDB, "users", user.email));
-
-      if (userDoc.exists()) {
-        const updatedUserData = userDoc.data();
-
-        // Store the updated user data in localStorage
-        localStorage.setItem("users", JSON.stringify(updatedUserData));
-        console.log("Updated User Data:", updatedUserData);
-
-        toast.success("Address selected successfully!");
-        setShowSelectAddress(false);
-      } else {
-        toast.error("Failed to retrieve updated user data.");
-      }
+      toast.success("Address selected successfully!");
+      setShowSelectAddress(false);
     } catch (error) {
       console.error("Error selecting address:", error);
       toast.error("Failed to select the address. Please try again later!");
+    }
+  };
+
+  const deleteAddress = async (address) => {
+
+    if (!user || !user.email) {
+      toast.error("User information is missing. Please log in again.");
+      return;
+    }
+    if (user.address.id === address.id) {
+      await updateDoc(doc(fireDB, "users", user.email), { address: "" });
+    }
+
+    try {
+      const newAddressArray = addressesArray.filter((item) => item.id !== address.id);
+      await updateDoc(doc(fireDB, "address", user.email), { address: arrayRemove(address) });
+
+      toast.success("Address removed successfully!");
+      setAddressesArray(newAddressArray);
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      toast.error("Failed to remove the address. Please try again later!");
     }
   };
 
@@ -88,7 +98,7 @@ const SelectAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
           </div>
 
           {addressesArray.map((address) => (
-            <div onClick={() => selectAddressHandler(address)} key={address.id} className="mb-4 p-3 rounded-lg bg-stone-100 shadow-sm hover:shadow-md hover:bg-stone-200 transition-all cursor-pointer">
+            <div onClick={() => selectAddressHandler(address)} key={address.id} className="flex items-start justify-between mb-4 p-3 rounded-lg bg-stone-100 shadow-sm hover:shadow-md hover:bg-stone-200 transition-all cursor-pointer">
               <div className="flex flex-col text-gray-800 space-y-1">
                 {address.house && <span className="font-medium">{address.house}</span>}
                 {address.building && <span>{address.building}</span>}
@@ -100,21 +110,32 @@ const SelectAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
                 </div>
                 {address.addressLabel && <span className="mt-2 text-sm font-medium text-blue-600">{address.addressLabel}</span>}
               </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteAddress(address);
+                }}
+                type="button"
+                className="flex items-center space-x-1 px-2 py-1 hover:bg-red-100"
+              >
+                <Trash size={12} className="text-red-500" />
+                <span className="text-xs font-medium text-red-500">Remove</span>
+              </button>
             </div>
           ))}
 
           {/* Select Address Prompt */}
           <div>
             <h2 className="text-black text-center">
-              Address already saved?{" "}
+              Want to add a new Address?{" "}
               <p
                 className="text-amber-500 font-bold cursor-pointer"
                 onClick={() => {
-                  setShowAddAddress(false);
-                  setShowSelectAddress(true);
+                  setShowAddAddress(true);
+                  setShowSelectAddress(false);
                 }}
               >
-                Select Address
+                Add Address
               </p>
             </h2>
           </div>

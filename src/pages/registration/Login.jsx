@@ -46,7 +46,6 @@ const Login = ({ setShowSignUp }) => {
     const toastId = toast.loading("Authenticating... Please wait."); // Store the toast ID
     try {
       const users = await signInWithEmailAndPassword(auth, userLogin.email, userLogin.password);
-      // console.log(users.user)
 
       try {
         const userDoc = await getDoc(doc(fireDB, "users", userLogin.email));
@@ -67,7 +66,7 @@ const Login = ({ setShowSignUp }) => {
           password: "",
         });
         setLoading(false);
-        window.location.reload();
+        //window.location.reload();
         // return () => data;
       } catch (error) {
         console.log(error);

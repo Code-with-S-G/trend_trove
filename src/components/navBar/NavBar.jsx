@@ -74,7 +74,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   const cartItemTotal = cartItems.map((item) => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
-
+  
   const DropdownMenu = [
     {
       id: "fashion",
@@ -151,7 +151,6 @@ const NavBar = () => {
         const cartDoc = await getDoc(doc(fireDB, "cart", userEmail));
         if (cartDoc.exists()) {
           dispatch(setCart(cartDoc.data().cart || []));
-          console.log(cartDoc.data().cart);
         } else {
           dispatch(setCart([]));
         }
@@ -160,7 +159,7 @@ const NavBar = () => {
       }
     };
     fetchCart(user?.email);
-  }, []);
+  }, [showLogIn]);
 
   return (
     <>

@@ -52,6 +52,7 @@ const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
 
       toast.success("Address added successfully!");
       setLoading(false);
+      setShowAddAddress(false);
       setAddress({
         id: Math.random() * 100000000,
         house: "",

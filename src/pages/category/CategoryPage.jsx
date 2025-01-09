@@ -21,13 +21,11 @@ const CategoryPage = () => {
 
   // filter product
   const filterProduct = getAllProduct.filter((obj) => obj.category.includes(categoryname));
-  console.log(filterProduct);
 
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const addCart = (item) => {
-    // console.log(item)
     if(user) {
       dispatch(addToCart(item));
     toast.success("Item added to your cart successfully!");

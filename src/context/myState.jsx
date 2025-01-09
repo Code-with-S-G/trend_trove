@@ -65,7 +65,6 @@ function MyState({ children }) {
       setLoading(false);
     }
   };
-  console.log(getAllProduct, loading);
 
   useEffect(() => {
     const unsubscribe = getAllProductFunction();

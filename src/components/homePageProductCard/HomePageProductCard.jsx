@@ -20,7 +20,6 @@ const HomePageProductCard = () => {
   const dispatch = useDispatch();
 
   const addCart = (item) => {
-    // console.log(item)
     if(user) {
       dispatch(addToCart(item));
     toast.success("Item added to your cart successfully!");
@@ -34,8 +33,6 @@ const HomePageProductCard = () => {
     dispatch(deleteFromCart(item));
     toast.success("Item deleted from your cart successfully!");
   };
-
-  // console.log(cartItems)
 
   useEffect(() => {
     async function cartHandler() {
