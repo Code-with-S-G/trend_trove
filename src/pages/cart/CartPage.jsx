@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrementQuantity, deleteFromCart, incrementQuantity } from "@/redux/cartSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
 import nocart from "@/assets/nocart.png";
 import AddAddressModal from "@/components/address/AddAddressModal";
@@ -34,28 +34,11 @@ const CartPage = () => {
     dispatch(decrementQuantity(id));
   };
 
-  // const cartQuantity = cartItems.length;
-  console.log("cart", showSelectAddress, user);
-
   const cartItemTotal = cartItems.map((item) => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
 
   const cartTotal = cartItems.map((item) => item.price * item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
 
   const buyNow = async () => {
-    // // validation
-    // if (name === "" || address == "" || pincode == "" || phoneNumber == "") {
-    //   return toast.error("All fields are required", {
-    //     position: "top-center",
-    //     autoClose: 1000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "colored",
-    //   });
-    // }
-    console.log("buy now");
 
     const addressInfo = {
       ...user.address,
@@ -89,6 +72,7 @@ const CartPage = () => {
             day: "2-digit",
             year: "numeric",
           }),
+           time: Timestamp.now(),
           email: user?.email,
           userid: user?.uid,
           paymentId,

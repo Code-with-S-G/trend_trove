@@ -19,6 +19,7 @@ function MyState({ children }) {
   const [loading, setLoading] = useState(true);
   const [getAllProduct, setGetAllProduct] = useState([]);
   const [showLogIn, setShowLogIn] = useState(false);
+  const [getAllOrder, setGetAllOrder] = useState([]);
 
   const getAllProductFunction = async () => {
     setLoading(true);
@@ -66,8 +67,33 @@ function MyState({ children }) {
     }
   };
 
+  const getAllOrderFunction = async () => {
+    setLoading(true);
+    try {
+        const q = query(
+            collection(fireDB, "orders"),
+            orderBy('time', 'desc')
+        );
+        const data = onSnapshot(q, (QuerySnapshot) => {
+            let orderArray = [];
+            QuerySnapshot.docs.forEach((doc) => {
+                orderArray.push({ ...doc.data(), id: doc.id });
+            });
+            setGetAllOrder(orderArray);
+            setLoading(false);
+        });
+        // return () => data;
+    } catch (error) {
+        console.log(error);
+        setLoading(false);
+    }
+}
+
+console.log(getAllOrder);
+
   useEffect(() => {
     const unsubscribe = getAllProductFunction();
+    getAllOrderFunction();
     return () => {
       if (unsubscribe) {
         unsubscribe();
