@@ -26,6 +26,7 @@ const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
   // Address State
   const [address, setAddress] = useState({
     id: Math.random() * 100000000,
+    name: "",
     house: "",
     building: "",
     landmark: "",
@@ -39,7 +40,7 @@ const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
    *========================================================================**/
 
   const addAddressFunction = async (e) => {
-    if (address.house == "" || address.building == "" || address.landmark == "" || address.number == "" || address.addressLabel == "" || address.pincode == "") {
+    if (address.name == "" || address.house == "" || address.building == "" || address.landmark == "" || address.number == "" || address.addressLabel == "" || address.pincode == "") {
       return toast.error("all fields are required");
     }
     setLoading(true);
@@ -55,6 +56,7 @@ const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
       setShowAddAddress(false);
       setAddress({
         id: Math.random() * 100000000,
+        name: "",
         house: "",
         building: "",
         landmark: "",
@@ -87,6 +89,21 @@ const AddAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
           {/* Top Heading */}
           <div className="mb-3 text-center">
             <h2 className="text-2xl font-bold text-black">Add Address</h2>
+          </div>
+
+          {/* Name */}
+          <div className="mb-3">
+            <label htmlFor="name" className="block text-gray-700 font-semibold mb-1">
+              Name
+            </label>
+            <input
+              value={address.name}
+              onChange={(e) => setAddress({ ...address, name: e.target.value })}
+              id="name"
+              type="text"
+              placeholder="Name"
+              className="bg-gray-50 text-black border border-amber-200 px-2 py-2 w-full rounded-md outline-none placeholder-gray-300"
+            />
           </div>
 
           {/* House Number & Floor Input */}

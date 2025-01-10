@@ -40,7 +40,6 @@ const SelectAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
   };
 
   const deleteAddress = async (address) => {
-
     if (!user || !user.email) {
       toast.error("User information is missing. Please log in again.");
       return;
@@ -91,7 +90,7 @@ const SelectAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
           <h1 className="text-white hover:text-[#e8c547] font-semibold tracking-widest text-2xl sm:text-3xl">TrendTrove</h1>
           <RxCross1 size={28} onClick={() => setShowSelectAddress(false)} className="absolute text-black right-4 transition-transform duration-300 ease-in-out group-hover:translate-x-[-10px] group-hover:text-amber-400 cursor-pointer" />
         </div>
-        <div className="h-96 overflow-y-auto custom-scrollbar bg-white px-5 lg:px-8 pt-2 pb-4 border border-amber-100 shadow-md rounded-b-xl">
+        <div className="flex flex-col justify-between h-96 overflow-y-auto custom-scrollbar bg-white px-5 lg:px-8 pt-2 pb-4 border border-amber-100 shadow-md rounded-b-xl">
           {/* Top Heading */}
           <div className="mb-3 text-center">
             <h2 className="text-2xl font-bold text-black">Select Address</h2>
@@ -100,13 +99,14 @@ const SelectAddressModal = ({ setShowSelectAddress, setShowAddAddress }) => {
           {addressesArray.map((address) => (
             <div onClick={() => selectAddressHandler(address)} key={address.id} className="flex items-start justify-between mb-4 p-3 rounded-lg bg-stone-100 shadow-sm hover:shadow-md hover:bg-stone-200 transition-all cursor-pointer">
               <div className="flex flex-col text-gray-800 space-y-1">
-                {address.house && <span className="font-medium">{address.house}</span>}
-                {address.building && <span>{address.building}</span>}
-                {address.landmark && <span className="text-gray-600">Near {address.landmark}</span>}
+                {address?.name && <span className="font-medium">{address.name}</span>}
+                {address?.house && <span className="font-medium">{address.house}</span>}
+                {address?.building && <span>{address.building}</span>}
+                {address?.landmark && <span className="text-gray-600">Near {address.landmark}</span>}
                 <div className="flex gap-2 mt-1 text-sm text-gray-500">
-                  {address.pincode && <span>{address.pincode}</span>}
-                  {address.number && <span>•</span>}
-                  {address.number && <span>{address.number}</span>}
+                  {address?.pincode && <span>{address.pincode}</span>}
+                  {address?.number && <span>•</span>}
+                  {address?.number && <span>{address.number}</span>}
                 </div>
                 {address.addressLabel && <span className="mt-2 text-sm font-medium text-blue-600">{address.addressLabel}</span>}
               </div>

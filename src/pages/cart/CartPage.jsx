@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrementQuantity, deleteFromCart, incrementQuantity } from "@/redux/cartSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
 import nocart from "@/assets/nocart.png";
 import AddAddressModal from "@/components/address/AddAddressModal";
@@ -40,6 +40,75 @@ const CartPage = () => {
   const cartItemTotal = cartItems.map((item) => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
 
   const cartTotal = cartItems.map((item) => item.price * item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
+
+  const buyNow = async () => {
+    // // validation
+    // if (name === "" || address == "" || pincode == "" || phoneNumber == "") {
+    //   return toast.error("All fields are required", {
+    //     position: "top-center",
+    //     autoClose: 1000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "colored",
+    //   });
+    // }
+    console.log("buy now");
+
+    const addressInfo = {
+      ...user.address,
+      date: new Date().toLocaleString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    };
+    console.log(addressInfo);
+
+    var options = {
+      key: "rzp_test_7qtduPycmxtO6Z",
+      key_secret: "k63dCAUHR9bu2WDEOC7Gq9x9",
+      amount: parseInt(cartTotal * 0.8 * 100),
+      currency: "INR",
+      order_receipt: "order_rcptid_" + user?.address?.name || "order_rcptid_" + user?.name,
+      name: "TrendTrove",
+      description: "for testing purpose",
+      handler: function (response) {
+        // console.log(response)
+        toast.success("Payment Successful");
+        const paymentId = response.razorpay_payment_id;
+        // store in firebase
+        const orderInfo = {
+          cartItems,
+          addressInfo,
+          orderStatus: "placed",
+          date: new Date().toLocaleString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+          }),
+          email: user?.email,
+          userid: user?.uid,
+          paymentId,
+        };
+
+        try {
+          const result = addDoc(collection(fireDB, "orders"), orderInfo);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      theme: {
+        color: "#ff930f",
+      },
+    };
+    var pay = new window.Razorpay(options);
+    pay.open();
+    console.log(pay);
+  };
 
   useEffect(() => {
     async function cartHandler() {
@@ -200,19 +269,19 @@ const CartPage = () => {
                       {user?.address && (
                         <div key={user.address.id} className="rounded-lg w-full">
                           <div className="flex flex-col space-y-1">
-                            {user.address.house && <span className="font-medium">{user.address.house}</span>}
-                            {user.address.building && <span>{user.address.building}</span>}
-                            {user.address.landmark && <span className="">Near {user.address.landmark}</span>}
+                            {user?.address?.name && <span className="font-medium">{user.address.name}</span>}
+                            {user?.address?.house && <span className="font-medium">{user.address.house}</span>}
+                            {user?.address?.building && <span>{user.address.building}</span>}
+                            {user?.address?.landmark && <span className="">Near {user.address.landmark}</span>}
                             <div className="flex gap-2 mt-1 text-sm">
-                              {user.address.pincode && <span>{user.address.pincode}</span>}
-                              {user.address.number && <span>•</span>}
-                              {user.address.number && <span>{user.address.number}</span>}
+                              {user?.address?.pincode && <span>{user.address.pincode}</span>}
+                              {user?.address?.number && <span>•</span>}
+                              {user?.address?.number && <span>{user.address.number}</span>}
                             </div>
-                            {user.address.addressLabel && <span className="mt-2 text-sm font-medium text-blue-600">{user.address.addressLabel}</span>}
+                            {user?.address?.addressLabel && <span className="mt-2 text-sm font-medium text-blue-600">{user.address.addressLabel}</span>}
                           </div>
                         </div>
                       )}
-                     
                     </div>
                     {user?.address && (
                       <div className="flex items-center justify-end py-2">
@@ -229,7 +298,14 @@ const CartPage = () => {
                   </dl>
                   <div className="px-4 pb-4 font-medium text-green-700">
                     <div className="flex gap-4 mb-1">
-                      <button disabled={!user?.address} className="w-full px-4 py-3 text-center text-gray-100 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] border border-transparent hover:opacity-90 shadow-sm rounded-xl disabled:opacity-40">Buy now</button>
+                      <button
+                        onClick={buyNow}
+                        disabled={!user?.address}
+                        type="button"
+                        className="w-full px-4 py-3 text-center text-gray-100 bg-gradient-to-r from-[#ff930f] to-[#e0da2f] border border-transparent hover:opacity-90 shadow-sm rounded-xl disabled:opacity-40"
+                      >
+                        Buy now
+                      </button>
                     </div>
                   </div>
                 </div>
