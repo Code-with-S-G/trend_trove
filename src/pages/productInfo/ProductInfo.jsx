@@ -82,7 +82,7 @@ const ProductInfo = () => {
   const addCart = (item) => {
     // console.log(item)
     if(user) {
-      dispatch(addToCart(item));
+      dispatch(addToCart({ ...item, orderId: crypto.randomUUID() }));
     toast.success("Item added to your cart successfully!");
     }
     else {

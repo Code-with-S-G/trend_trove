@@ -21,11 +21,10 @@ const AllProduct = () => {
   const dispatch = useDispatch();
 
   const addCart = (item) => {
-    if(user) {
-      dispatch(addToCart(item));
-    toast.success("Item added to your cart successfully!");
-    }
-    else {
+    if (user) {
+      dispatch(addToCart({ ...item, orderId: crypto.randomUUID() }));
+      toast.success("Item added to your cart successfully!");
+    } else {
       setShowLogIn(true);
     }
   };
