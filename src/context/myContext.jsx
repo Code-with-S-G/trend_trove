@@ -7,6 +7,7 @@ const myContext = createContext({
   setLoading: () => {},
   showLogIn: false,
   setShowLogIn: () => {},
+  getAllOrder:[],
 });
 
 export default myContext;

@@ -109,6 +109,7 @@ console.log(getAllOrder);
         getAllProduct,
         showLogIn,
         setShowLogIn,
+        getAllOrder,
       }}
     >
       {children}
