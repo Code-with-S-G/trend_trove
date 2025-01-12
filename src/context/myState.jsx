@@ -20,6 +20,7 @@ function MyState({ children }) {
   const [getAllProduct, setGetAllProduct] = useState([]);
   const [showLogIn, setShowLogIn] = useState(false);
   const [getAllOrder, setGetAllOrder] = useState([]);
+  const [getAllUser, setGetAllUser] = useState([]);
 
   const getAllProductFunction = async () => {
     setLoading(true);
@@ -89,11 +90,32 @@ function MyState({ children }) {
     }
 }
 
-console.log(getAllOrder);
+const getAllUserFunction = async () => {
+  setLoading(true);
+  try {
+      const q = query(
+          collection(fireDB, "users"),
+          orderBy('time', 'desc')
+      );
+      const data = onSnapshot(q, (QuerySnapshot) => {
+          let userArray = [];
+          QuerySnapshot.docs.forEach((doc) => {
+              userArray.push({ ...doc.data(), id: doc.id });
+          });
+          setGetAllUser(userArray);
+          setLoading(false);
+      });
+      // return () => data;
+  } catch (error) {
+      console.log(error);
+      setLoading(false);
+  }
+}
 
   useEffect(() => {
     const unsubscribe = getAllProductFunction();
     getAllOrderFunction();
+    getAllUserFunction();
     return () => {
       if (unsubscribe) {
         unsubscribe();
@@ -110,6 +132,7 @@ console.log(getAllOrder);
         showLogIn,
         setShowLogIn,
         getAllOrder,
+        getAllUser,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ const myContext = createContext({
   showLogIn: false,
   setShowLogIn: () => {},
   getAllOrder:[],
+  getAllUser:[],
 });
 
 export default myContext;
