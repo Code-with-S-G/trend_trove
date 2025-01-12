@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import myContext from "@/context/myContext";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 // Search Data
 const searchData = [
@@ -37,9 +39,14 @@ const SearchBar = () => {
   //Search State
   const [search, setSearch] = useState("");
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+
+  const context = useContext(myContext);
+  const { getAllProduct } = context;
 
   //Filter search data
-  const filterSearchData = searchData.filter((obj) => obj.name.toLowerCase().includes(search)).slice(0, 8);
+  const filterSearchData = getAllProduct.filter((obj) => obj.title.toLowerCase().includes(search)).slice(0, 8);
+  // console.log(filterSearchData);
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -58,21 +65,39 @@ const SearchBar = () => {
     <div className="w-full lg:w-auto" ref={dropdownRef}>
       {/* search input */}
       <div className="relative group sm:block w-full lg:w-auto">
-        <input type="text" placeholder="Search" onChange={(e) => setSearch(e.target.value)} value={search} onBlur={() => {setSearch("")}} className="search-bar focus:pr-10 focus:text-black focus:dark:text-black hover:placeholder-[#f42c37] duration-200" />
+        <input
+          type="text"
+          placeholder="Search"
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+          onBlur={() => {
+            setTimeout(() => setSearch(""), 100);
+          }}
+          className="search-bar focus:pr-10 focus:text-black focus:dark:text-black hover:placeholder-[#f42c37] duration-200"
+        />
         <IoMdSearch className="text-xl text-gray-500 lg:text-gray-100 group-hover:text-[#f42c37] absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
       </div>
       {/* search drop-down */}
       <div className="flex justify-center">
         {search && (
-          <div className="absolute block lg:right-[6rem] xl:right-[7.5rem] lg:top-14 bg-gray-200 w-full lg:w-[250px] xl:w-[300px] z-50 -m-1 lg:m-auto rounded-lg px-2 py-2 dark-text-black">
+          <div className="absolute block lg:right-[6rem] xl:right-[4.5rem] lg:top-16 bg-white w-full lg:w-[250px] xl:w-[400px] z-50  lg:m-auto rounded-lg px-2 py-2 dark-text-black max-h-60 custom-scrollbar overflow-y-auto">
             {filterSearchData.length > 0 ? (
               <>
                 {filterSearchData.map((item) => {
                   return (
-                    <div key={item.name} className="py-2 px-2">
-                      <div className="flex items-center gap-2">
-                        <img src={item.image} alt="image" className="w-10" />
-                        {item.name}
+                    <div
+                      key={item.title}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log(item.id);
+                        setSearch("");
+                        navigate(`/productinfo/${item.id}`);
+                      }}
+                      className="py-2 px-2 border-b-2 border-dashed border-amber-200 cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2 font-semibold text-xs">
+                        <img src={item.images[0]} alt="image" className="w-10" />
+                        {item.title}
                       </div>
                     </div>
                   );
