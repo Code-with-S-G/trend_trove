@@ -19,8 +19,6 @@ const UserDashboard = () => {
   const user = JSON.parse(localStorage.getItem("users"));
   const context = useContext(myContext);
   const { loading, getAllOrder } = context;
-  // const ans = getAllOrder.filter((obj) => obj.userid === user?.uid);
-  // console.log(ans);
 
   return (
     <Layout>
@@ -75,7 +73,7 @@ const UserDashboard = () => {
                       return (
                         <div key={orderId} className="mt-5 flex flex-col overflow-hidden rounded-xl border border-slate-300 md:flex-row">
                           {/* main 3  */}
-                          <div className="w-full border-r border-slate-300 bg-slate-100 dark:bg-[#1c1c1c] md:max-w-xs">
+                          <div className="w-full border-r border-slate-300 bg-slate-100 dark:bg-[#1c1c1c] md:max-w-[21rem]">
                             {/* left  */}
                             <div className="p-2 sm:p-8">
                               <div className="mb-4">
@@ -114,12 +112,13 @@ const UserDashboard = () => {
                                       <div className="flex-1">
                                         <p className="text-xs md:text-sm font-bold text-gray-900 dark:text-gray-100">{title}</p>
                                         <p className="mt-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">{category}</p>
-                                        <p className="mt-1 text-sm font-medium text-gray-500 dark:text-gray-400">x {quantity}</p>
+                                        <p className="hidden lg:inline-block mt-1 text-sm font-medium text-gray-500 dark:text-gray-400">x {quantity}</p>
                                       </div>
                                     </div>
                                   </div>
 
-                                  <div className="ml-auto flex flex-col items-end justify-between">
+                                  <div className="ml-auto flex flex-row lg:flex-col items-end justify-between">
+                                  <p className="mt-1 text-sm font-medium text-gray-500 dark:text-gray-400 lg:hidden">x {quantity}</p>
                                     <p className="text-right text-sm font-bold text-gray-900 dark:text-gray-100">₹{parseFloat(price * 0.8).toLocaleString()}</p>
                                   </div>
                                 </li>
