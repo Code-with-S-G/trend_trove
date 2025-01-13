@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import Image1 from "@/assets/heroSection/girl.png";
 import Image2 from "@/assets/heroSection/heroImage2.png";
-import Image3 from "@/assets/heroSection/heroImage3.png";
+import Image3 from "@/assets/heroSection/heroimage3.png";
 import { useNavigate } from "react-router-dom";
 
 const ImageList = [
