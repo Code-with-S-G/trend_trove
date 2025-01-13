@@ -111,11 +111,11 @@ const OrderDetail = () => {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50 dark:bg-[#2c2c2c] border-b border-slate-300 dark:border-slate-600">
-                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100">Payment ID</th>
-                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100">Status</th>
-                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100">Customer Name</th>
-                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100">Email</th>
-                <th className="min-w-[135px] px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100">Date</th>
+                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100 text-center">Payment ID</th>
+                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100 text-center">Status</th>
+                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100 text-center">Customer Name</th>
+                <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100 text-center">Email</th>
+                <th className="min-w-[135px] px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100 text-center">Date</th>
                 <th className="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100 text-center">Actions</th>
               </tr>
             </thead>
@@ -125,7 +125,7 @@ const OrderDetail = () => {
 
                 return (
                   <>
-                    <tr key={paymentId} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors duration-200">
+                    <tr key={paymentId} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors duration-200 text-center">
                       <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-300">{paymentId}</td>
                       <td className="px-6 py-4">
                         {editOrderStatus !== paymentId && <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">{orderStatus}</span>}
@@ -171,7 +171,7 @@ const OrderDetail = () => {
                           <button
                             onClick={() => setOrderEditStatus(paymentId)}
                             id="edit-order-details"
-                            className="inline-flex items-center justify-center w-8 h-8 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200"
+                            className="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200"
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
