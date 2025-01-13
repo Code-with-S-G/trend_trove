@@ -1,5 +1,5 @@
-import React from 'react';
-import Slider from 'react-slick';
+import React from "react";
+import Slider from "react-slick";
 
 const testimonialData = [
   {
@@ -34,18 +34,17 @@ const testimonialData = [
   },
 ];
 
-
 const Testimonials = () => {
   var settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 800,
     arrows: false,
     // slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
-    cssEase: 'linear',
+    autoplaySpeed: 5000,
+    cssEase: "linear",
     pauseOnHover: true,
     pauseOnFocus: true,
     responsive: [
@@ -81,28 +80,24 @@ const Testimonials = () => {
         <div className="text-center mb-5 max-w-[600px] mx-auto">
           <p className="text-sm text-amber-400">What Our Customers Say</p>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Testimonials</h1>
-          <p className="text-xs text-gray-400 mt-2">
-          See why our customers love us! Real experiences, honest reviews, and happy shoppers from all over the world.
-          </p>
+          <p className="text-xs scale-110 text-gray-400 mt-2">See why our customers love us! Real experiences, honest reviews, and happy shoppers from all over the world.</p>
         </div>
         {/* testimonial cards */}
         <div>
           <Slider {...settings}>
             {testimonialData.map((testimonial) => (
-              <div key={testimonial.id} className='my-6'>
-                <div
-                  className="flex flex-col gap-4 shadow-lg py-8 px-6 mx-4 rounded-xl dark:bg-gray-800 bg-amber-500/10 relative md:min-h-[300px] lg:min-h-[270px] hover:scale-105 transition-all"
-                >
+              <div key={testimonial.id} className="my-6">
+                <div className="flex flex-col gap-4 shadow-lg py-8 px-6 mx-4 rounded-xl dark:bg-gray-800 bg-amber-500/10 relative md:min-h-[300px] lg:min-h-[270px] hover:scale-105 transition-all duration-300 ease-in-out">
                   <div className="mb-4">
                     <img src={testimonial.image} alt="" className="rounded-full w-20 h-20" />
                   </div>
                   <div className="flex flex-col items-center gap-4">
                     <div className="space-y-3">
-                      <p className="text-xs text-gray-500">{testimonial.text}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.text}</p>
                       <h1 className="text-xl font-bold text-black/80 dark:text-white">{testimonial.name}</h1>
                     </div>
                   </div>
-                  <p className='text-black/20 text-9xl font-serif absolute top-0 right-0'>,,</p>
+                  <p className="text-black/20 text-9xl font-serif absolute top-0 right-0 dark:text-gray-500">,,</p>
                 </div>
               </div>
             ))}

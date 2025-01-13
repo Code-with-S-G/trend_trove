@@ -1,8 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
-import Image1 from "../../assets/heroSection/girl.png";
-import Image2 from "../../assets/heroSection/heroImage2.png";
-import Image3 from "../../assets/heroSection/heroImage3.png";
+import Image1 from "@/assets/heroSection/girl.png";
+import Image2 from "@/assets/heroSection/heroImage2.png";
+import Image3 from "@/assets/heroSection/heroImage3.png";
 import { useNavigate } from "react-router-dom";
 
 const ImageList = [
@@ -61,10 +61,10 @@ const HeroSection = () => {
     dots: false,
     arrows: true,
     infinite: true,
-    speed: 800,
+    speed: 1200,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 6000,
     cssEase: "ease-in-out",
     pauseOnHover: false,
     pauseOnFocus: true,
@@ -93,7 +93,9 @@ const HeroSection = () => {
                   <p className="text-xs sm:text-sm dark:text-gray-300"> {data.description} </p>
                   <div>
                     {" "}
-                    <button onClick={() => navigate(data.to)} className="bg-[#f42c37] text-white px-4 py-2 rounded-full hover:scale-105 transition-all duration-200 dark:bg-[#ff6b6b]">Order now</button>
+                    <button onClick={() => navigate(data.to)} className="bg-[#f42c37] text-white px-4 py-2 rounded-full hover:scale-105 transition-all duration-200 dark:bg-[#ff6b6b]">
+                      Order now
+                    </button>
                   </div>
                 </div>
                 {/* img section */}

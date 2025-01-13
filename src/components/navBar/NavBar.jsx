@@ -15,39 +15,6 @@ import { fireDB } from "@/firebase/FirebaseConfig";
 import { setCart } from "@/redux/cartSlice";
 import myContext from "@/context/myContext";
 
-// const MenuLinks = [
-//   // {
-//   //   id: 1,
-//   //   name: "Login",
-//   //   link: "/login",
-//   // },
-//   {
-//     id: 2,
-//     name: "Admin",
-//     link: "/admin-dashboard",
-//   },
-//   // {
-//   //   id: 3,
-//   //   name: "Home",
-//   //   link: "/",
-//   // },
-//   {
-//     id: 4,
-//     name: "All Products",
-//     link: "/allproduct",
-//   },
-//   // {
-//   //   id: 5,
-//   //   name: "Shop",
-//   //   link: "/#shop",
-//   // },
-//   {
-//     id: 6,
-//     name: "About",
-//     link: "/#about",
-//   },
-// ];
-
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
   backgroundPosition: "bottom",
@@ -63,7 +30,7 @@ const NavBar = () => {
   const [showSignUp, setShowSignUp] = useState(false);
 
   const context = useContext(myContext);
-  const {showLogIn, setShowLogIn} = context;
+  const { showLogIn, setShowLogIn } = context;
 
   // get user from localStorage
   const user = JSON.parse(localStorage.getItem("users"));
@@ -74,7 +41,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   const cartItemTotal = cartItems.map((item) => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
-  
+
   const DropdownMenu = [
     {
       id: "fashion",
@@ -175,14 +142,6 @@ const NavBar = () => {
               {/* Menu Items */}
               <div className="hidden md:block">
                 <ul className="flex items-center mt-2 gap-2 xl:gap-6">
-                  {/* {MenuLinks.map((data) => (
-                    <li key={data.name}>
-                      <Link to={data.link} className="inline-block px-4 font-semibold text-gray-200 hover:text-amber-400 transition-all duration-200">
-                        {" "}
-                        {data.name}
-                      </Link>
-                    </li>
-                  ))} */}
                   {/* Dropdown */}
                   {DropdownMenu.map((category) => {
                     return (
@@ -223,8 +182,8 @@ const NavBar = () => {
               {/* Search Bar section */}
               <SearchBar />
               {/* cart icon section */}
-              <button onClick={() => user? navigate("/cart"): setShowLogIn(true)} className="relative p-3">
-                <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
+              <button onClick={() => (user ? navigate("/cart") : setShowLogIn(true))} className="relative p-3 transition-all ease-in-out duration-200 hover:scale-105">
+                <FaCartShopping className="text-xl text-gray-100 hover:text-amber-200 transition-all ease-in-out duration-200" />
                 <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItemTotal}</div>
               </button>
               {/* Dark Mode secttion */}
@@ -251,8 +210,8 @@ const NavBar = () => {
 
               <div className="flex justify-between items-center">
                 {/* cart icon section */}
-                <button onClick={() => user? navigate("/cart"): setShowLogIn(true)} className="relative p-3">
-                  <FaCartShopping className="text-xl text-gray-100 dark:text-gray-100" />
+                <button onClick={() => (user ? navigate("/cart") : setShowLogIn(true))} className="relative p-3 transition-all ease-in-out duration-200 hover:scale-105">
+                  <FaCartShopping className="text-xl text-gray-100 hover:text-amber-200 transition-all ease-in-out duration-200" />
                   <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">{cartItemTotal}</div>
                 </button>
                 {/* Dark Mode secttion */}

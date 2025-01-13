@@ -129,7 +129,7 @@ const ProductInfo = () => {
 
   return (
     <Layout>
-      <section className="py-5 lg:py-16 dark:bg-[#2c2c2c]">
+      <section className="py-5 overflow-hidden lg:py-16 dark:bg-[#2c2c2c]">
         {loading ? (
           <div className="text-center">
             {" "}
@@ -151,7 +151,7 @@ const ProductInfo = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-20 h-screen overflow-x-auto md:mt-0 w-full px-4 md:w-1/2">
+              <div className="mt-20 md:mt-0 w-full px-4 md:w-1/2">
                 <div className="lg:pl-20">
                   <div className="mb-3 md:mb-6">
                     <h2 className="max-w-xl mb-3 md:mb-6 text-lg font-semibold text-gray-700 md:text-xl dark:text-gray-300">{product?.title}</h2>
@@ -161,7 +161,7 @@ const ProductInfo = () => {
                   </div>
                   <div className="mb-6">
                     <h2 className="mb-2 text-lg font-bold text-gray-700 dark:text-gray-400"> Description:</h2>
-                    <p>{product?.description}</p>
+                    <p className="h-96 custom-scrollbar overflow-auto">{product?.description}</p>
                   </div>
                   <div className="mb-6 " />
                   <div className="flex flex-wrap items-center mb-6">

@@ -115,7 +115,7 @@ const CategoryPage = () => {
                   <div>
                     <div className="flex flex-col justify-center items-center">
                       <img className=" mb-2" src="https://cdn-icons-png.flaticon.com/128/2748/2748614.png" alt="" />
-                      <h1 className=" text-black text-xl">No {categoryname} product found</h1>
+                      <h1 className=" text-black text-xl dark:text-gray-400">No {categoryname} product found</h1>
                     </div>
                   </div>
                 )}
