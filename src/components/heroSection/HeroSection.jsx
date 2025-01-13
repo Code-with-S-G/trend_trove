@@ -1,13 +1,16 @@
 import React from "react";
 import Slider from "react-slick";
 import Image1 from "../../assets/heroSection/girl.png";
-import Image2 from "../../assets/heroSection/menShopping.png";
+import Image2 from "../../assets/heroSection/heroImage2.png";
+import Image3 from "../../assets/heroSection/heroImage3.png";
+import { useNavigate } from "react-router-dom";
 
 const ImageList = [
   {
     id: "heroImage1",
     img: "https://www.pngkey.com/png/full/284-2844044_fashion-toys-electrical-items-and-more-girl-with.png",
     title: "Your Wardrobe, Reimagined",
+    to: "/category/Womens wear",
     description:
       "Discover a collection that blends timeless elegance with modern trends. From everyday essentials to statement pieces, we bring you styles that reflect your unique personality. Shop now and elevate your wardrobe with fashion designed to inspire confidence and redefine your look.",
   },
@@ -15,19 +18,22 @@ const ImageList = [
     id: "heroImage2",
     img: Image2,
     title: "Smart Choices for Smart Living",
+    to: "/category/Home Appliences",
     description:
       "Upgrade your lifestyle with cutting-edge gadgets and innovative solutions designed to simplify your everyday life. From smart home devices to the latest tech essentials, discover products that combine functionality with modern design. Start living smarter today!",
   },
   {
     id: "heroImage3",
-    img: "Image3",
+    img: Image3,
     title: "Turn Your House into a Home",
+    to: "/category/Sofas",
     description:
       "Transform your living space into a cozy sanctuary with our curated collection of home essentials. From elegant décor to practical furnishings, find everything you need to create a space that reflects your style and feels truly yours. Start building your dream home today!",
   },
 ];
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   // Custom Next Arrow Component
   const CustomNextArrow = React.memo(({ onClick }) => (
     <div
@@ -70,27 +76,28 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="relative overflow-hidden min-h-[550px] sm:min-h-[550px] bg-gray-100 dark:bg-gray-900 flex justify-center items-center dark:text-white transition-all duration-200">
+    <div className="relative overflow-hidden min-h-[450px] sm:min-h-[450px] bg-gray-100 dark:bg-gray-900 flex justify-center items-center dark:text-white transition-all duration-200">
       {/* background pattern */}
-      <div className="h-[600px] w-[600px] bg-[#FFDDA9] absolute -top-1/2 right-0 rounded-3xl rotate-45 -z-9"></div>
+      <div className="hidden sm:inline-block h-[600px] w-[600px] bg-[#FFDDA9] absolute -top-1/2 right-0 rounded-3xl rotate-45 -z-9"></div>
+      <div className="sm:hidden h-[500px] w-[500px] bg-[#FFDDA9] absolute -top-1/2 rounded-3xl rotate-45 -z-9"></div>
 
       {/* hero section */}
       <div className="w-full pb-8 sm:pb-0">
         <Slider {...settings}>
           {ImageList.map((data) => (
             <div key={data.id}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 mx-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 mx-10">
                 {/* text content section */}
-                <div className="flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
-                  <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold"> {data.title} </h1>
-                  <p className="text-sm dark:text-gray-300"> {data.description} </p>
+                <div className="flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center md:text-left order-2 md:order-1 relative z-10">
+                  <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold"> {data.title} </h1>
+                  <p className="text-xs sm:text-sm dark:text-gray-300"> {data.description} </p>
                   <div>
                     {" "}
-                    <button className="bg-[#f42c37] text-white px-4 py-2 rounded-full hover:scale-105 transition-all duration-200 dark:bg-[#ff6b6b]">Order now</button>
+                    <button onClick={() => navigate(data.to)} className="bg-[#f42c37] text-white px-4 py-2 rounded-full hover:scale-105 transition-all duration-200 dark:bg-[#ff6b6b]">Order now</button>
                   </div>
                 </div>
                 {/* img section */}
-                <div className="order-1 sm:order-2">
+                <div className="order-1 md:order-2">
                   <div className="relative z-10">
                     <img src={data.img} alt="carousel-img" className="w-[300px] h-[300px] sm:h-[450px] sm:w-[450px] sm:scale-100 lag:scale-100 object-contain mx-auto" />
                   </div>

@@ -39,16 +39,16 @@ const OrderDetailsModal = ({ showOrderDetails, setShowOrderDetails, cartItems, a
                 </div>
                 <div className="h-96 overflow-y-auto custom-scrollbar bg-white px-5 lg:px-8 pt-2 pb-4 border border-amber-100 shadow-md rounded-b-xl">
                     {/* Top Heading */}
-                    <div className="mb-3 text-center border-b-2 border-dashed pb-2">
+                    <div className="mb-3 text-center border-b-2 border-dashed dark:border-gray-300 pb-2">
                         <h2 className="text-2xl font-bold text-black">Cart Details</h2>
                     </div>
 
                     {cartItems.map((item) => {
                         const { orderId, date, quantity, price, title, images, category } = item;
                         return (
-                            <div key={orderId} className="flex-1 border-dashed border-b-2">
+                            <div key={orderId} className="flex-1 border-dashed border-b-2 dark:border-gray-300">
                                 <div className="p-2 sm:p-8">
-                                    <ul className="-my-7 divide-y divide-gray-200 dark:divide-gray-400">
+                                    <ul className="-my-7 divide-y divide-gray-200">
                                         <li className="flex flex-col justify-between space-x-5 py-7">
                                             <div className="flex flex-col sm:flex-row sm:flex-1 items-stretch">
                                                 <div className="flex sm:flex-shrink-0 mb-2 lg:mb-0 justify-center sm:justify-normal">
@@ -57,16 +57,16 @@ const OrderDetailsModal = ({ showOrderDetails, setShowOrderDetails, cartItems, a
 
                                                 <div className="ml-1 md:ml-5 flex flex-col justify-between">
                                                     <div className="flex-1">
-                                                        <p className="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100">{title}</p>
-                                                        <p className="mt-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">{category}</p>
+                                                        <p className="text-xs sm:text-sm font-bold text-gray-900">{title}</p>
+                                                        <p className="mt-1.5 text-xs font-medium text-gray-500">{category}</p>
 
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div className="ml-auto flex flex-row justify-between">
-                                                <p className="mt-1 text-sm font-medium text-gray-500 dark:text-gray-400">x {quantity}</p>
-                                                <p className="text-right text-sm font-bold text-gray-900 dark:text-gray-100">₹{parseFloat(price * quantity * 0.8).toLocaleString()}</p>
+                                                <p className="mt-1 text-sm font-medium text-gray-500">x {quantity}</p>
+                                                <p className="text-right text-sm font-bold text-gray-900">₹{parseFloat(price * quantity * 0.8).toLocaleString()}</p>
                                             </div>
                                         </li>
                                     </ul>

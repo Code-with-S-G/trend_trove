@@ -8,6 +8,7 @@ import {
   FaLocationArrow,
   FaMobileAlt,
 } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const BannerImg = {
   backgroundImage: `url(${Banner})`,
@@ -18,24 +19,51 @@ const BannerImg = {
   width: "100%", 
 };
 
-const FooterLinks = [
+const topProducts = [
   {
-    title: "Home",
-    link: "/#",
+    title: "Mens Wear",
+    link: "/category/Mens wear",
   },
   {
-    title: "About",
-    link: "/#about",
+    title: "Womens wear",
+    link: "/category/Womens wear",
   },
   {
-    title: "Contact",
-    link: "/#contact",
+    title: "Kids wear",
+    link: "/category/Kids wear",
   },
   {
-    title: "Blog",
-    link: "/#blog",
+    title: "Laptops",
+    link: "/category/Laptops",
+  },
+  {
+    title: "Mobiles",
+    link: "/category/Mobiles",
   },
 ];
+
+const explore = [
+  {
+    title: "Home",
+    link: "/",
+  },
+  {
+    title: "Store",
+    link: "/allproduct",
+  },
+  {
+    title: "Home Appliences",
+    link: "/category/Home Appliences",
+  },
+  {
+    title: "Dinning Tables",
+    link: "/category/Dinning Tables",
+  },
+  {
+    title: "Beds",
+    link: "/category/Beds",
+  },
+]
 
 const Footer = () => {
   return (
@@ -47,20 +75,20 @@ const Footer = () => {
             <h1 className='sm:text-3xl text-xl font-bold sm:text-left text-justify mb-3 flex items-center gap-3'>
               <img src={footerLogo} alt='' className="max-w-[50px]" />
               TrendTrove</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum in
-            beatae ea recusandae blanditiis veritatis.</p>
+            <p>Your satisfaction is our priority.
+            We deliver exceptional service with every order.</p>
           </div>
           {/* Footer Links */}
           <div className="grid grid-cols-2 sm:grid-cols-3 col-span-2 md:pl-10">
             <div>
               <div className='py-8 px-4'>
-                <h1 className='sm:text-xl text-xl font-bold sm:text-left text-justify mb-3'>Important Links</h1>
+                <h1 className='sm:text-xl text-xl font-bold sm:text-left text-justify mb-3 text-[#D7AE64]'>Top Products</h1>
                 <ul className='flex flex-col gap-3'>
                   {
-                    FooterLinks.map((link) => (
-                      <li className='cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200' key={link.title}>
+                    topProducts.map((link) => (
+                      <Link to={link.link} className='cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200' key={link.title}>
                         <span>{link.title}</span>
-                      </li>
+                      </Link>
                     ))
                   }
                 </ul>
@@ -68,13 +96,13 @@ const Footer = () => {
             </div>
             <div>
               <div className='py-8 px-4'>
-                <h1 className='sm:text-xl text-xl font-bold sm:text-left text-justify mb-3'>Links</h1>
+                <h1 className='sm:text-xl text-xl font-bold sm:text-left text-justify mb-3 text-[#D7AE64]'>Explore</h1>
                 <ul className='flex flex-col gap-3'>
                   {
-                    FooterLinks.map((link) => (
-                      <li className='cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200' key={link.title}>
+                    explore.map((link) => (
+                      <Link to={link.link} className='cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200' key={link.title}>
                         <span>{link.title}</span>
-                      </li>
+                      </Link>
                     ))
                   }
                 </ul>

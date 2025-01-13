@@ -45,7 +45,7 @@ const SearchBar = () => {
   const { getAllProduct } = context;
 
   //Filter search data
-  const filterSearchData = getAllProduct.filter((obj) => obj.title.toLowerCase().includes(search)).slice(0, 8);
+  const filterSearchData = getAllProduct.filter((obj) => obj.title.toLowerCase().includes(search.toLowerCase())).slice(0, 8);
   // console.log(filterSearchData);
 
   const handleClickOutside = (event) => {
@@ -80,7 +80,7 @@ const SearchBar = () => {
       {/* search drop-down */}
       <div className="flex justify-center">
         {search && (
-          <div className="absolute block lg:right-[6rem] xl:right-[4.5rem] lg:top-16 bg-white w-full lg:w-[250px] xl:w-[400px] z-50  lg:m-auto rounded-lg px-2 py-2 dark-text-black max-h-60 custom-scrollbar overflow-y-auto">
+          <div className="absolute block lg:right-[7rem] xl:right-[7rem] lg:top-16 bg-white w-full lg:w-[250px] xl:w-[400px] z-50  lg:m-auto rounded-lg px-2 py-2 dark-text-black max-h-60 custom-scrollbar overflow-y-auto">
             {filterSearchData.length > 0 ? (
               <>
                 {filterSearchData.map((item) => {
@@ -93,9 +93,9 @@ const SearchBar = () => {
                         setSearch("");
                         navigate(`/productinfo/${item.id}`);
                       }}
-                      className="py-2 px-2 border-b-2 border-dashed border-amber-200 cursor-pointer"
+                      className="py-2 px-2 border-b-2 border-amber-200 cursor-pointer hover:bg-[#f8f2dc]"
                     >
-                      <div className="flex items-center gap-2 font-semibold text-xs">
+                      <div className="flex items-center gap-2 font-semibold text-xs dark:text-black">
                         <img src={item.images[0]} alt="image" className="w-10" />
                         {item.title}
                       </div>
