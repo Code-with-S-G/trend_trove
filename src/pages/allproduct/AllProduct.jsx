@@ -54,11 +54,11 @@ const AllProduct = () => {
         <section className="text-gray-600 body-font">
           <div className="px-5 py-5 mx-auto">
             <div className="text-center">{loading && <PropagateLoader color="#ec4899" />}</div>
-            <div className="flex flex-wrap -mx-4">
+            <div className="flex flex-wrap -mx-4 overflow-hidden">
               {getAllProduct.map((item) => {
                 const { images, title, price, id } = item;
                 return (
-                  <div key={id} className="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                  <div key={id} className="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 hover:scale-105 transition-all duration-200 ease-in-out hover:-translate-y-1">
                     <div className="border border-gray-300 rounded-lg shadow-md h-full bg-white dark:bg-gray-800 dark:border-gray-700">
                       {images?.length > 0 ? (
                         <img onClick={() => navigate(`/productinfo/${id}`)} src={images[0]} className="h-60 md:h-48 lg:h-56 xl:h-64 w-full object-cover rounded-t-lg cursor-pointer" alt={title} />
@@ -78,7 +78,7 @@ const AllProduct = () => {
                       <div className="p-4">
                         <h2 className="tracking-widest text-xs text-gray-500 font-medium mb-2 dark:text-gray-300">TrendTrove</h2>
                         <h1 className="text-md font-semibold text-gray-900 dark:text-gray-200 truncate">
-                          <span onClick={() => navigate(`/productinfo/${id}`)} className="cursor-pointer">
+                          <span onClick={() => navigate(`/productinfo/${id}`)} className="cursor-pointer hover:text-yellow-500">
                             {title}
                           </span>
                         </h1>

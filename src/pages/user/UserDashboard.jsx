@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout/Layout";
 import myContext from "@/context/myContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const products = [
   {
@@ -19,6 +20,7 @@ const UserDashboard = () => {
   const user = JSON.parse(localStorage.getItem("users"));
   const context = useContext(myContext);
   const { loading, getAllOrder } = context;
+  const navigate = useNavigate();
 
   return (
     <Layout>
@@ -69,7 +71,7 @@ const UserDashboard = () => {
                 return (
                   <div key={order.paymentId}>
                     {order.cartItems.map((item) => {
-                      const { orderId, date, quantity, price, title, images, category } = item;
+                      const { orderId, date, quantity, price, title, images, category, id } = item;
                       return (
                         <div key={orderId} className="mt-5 flex flex-col overflow-hidden rounded-xl border border-slate-300 md:flex-row">
                           {/* main 3  */}
@@ -105,12 +107,12 @@ const UserDashboard = () => {
                                 <li className="flex flex-col justify-between space-x-5 py-7 lg:flex-row">
                                   <div className="flex flex-col lg:flex-row sm:flex-1 items-stretch">
                                     <div className="flex sm:flex-shrink-0 mb-2 lg:mb-0 justify-center lg:justify-normal">
-                                      <img className="h-32 w-32 rounded-lg border border-gray-200 object-cover" src={images[0]} alt="img" />
+                                      <img className="h-32 w-32 rounded-lg border border-gray-200 object-cover cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out" src={images[0]} alt="img" onClick={() => navigate(`/productinfo/${id}`) } />
                                     </div>
 
                                     <div className="ml-1 md:ml-5 flex flex-col justify-between">
                                       <div className="flex-1">
-                                        <p className="text-xs md:text-sm font-bold text-gray-900 dark:text-gray-100">{title}</p>
+                                        <p onClick={() => navigate(`/productinfo/${id}`) } className="text-xs md:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-500 cursor-pointer">{title}</p>
                                         <p className="mt-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">{category}</p>
                                         <p className="hidden lg:inline-block mt-1 text-sm font-medium text-gray-500 dark:text-gray-400">x {quantity}</p>
                                       </div>

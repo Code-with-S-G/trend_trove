@@ -79,7 +79,7 @@ const Footer = () => {
                 <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3 text-[#D7AE64]">Top Products</h1>
                 <ul className="flex flex-col gap-3">
                   {topProducts.map((link) => (
-                    <Link to={link.link} className="cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200" key={link.title}>
+                    <Link to={link.link} className="w-fit cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200" key={link.title}>
                       <span>{link.title}</span>
                     </Link>
                   ))}
@@ -91,7 +91,7 @@ const Footer = () => {
                 <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3 text-[#D7AE64]">Explore</h1>
                 <ul className="flex flex-col gap-3">
                   {explore.map((link) => (
-                    <Link to={link.link} className="cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200" key={link.title}>
+                    <Link to={link.link} className="w-fit cursor-pointer hover:text-amber-400 hover:translate-x-1 duration-300 text-gray-200" key={link.title}>
                       <span>{link.title}</span>
                     </Link>
                   ))}

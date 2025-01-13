@@ -71,7 +71,7 @@ const SearchBar = () => {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
           onBlur={() => {
-            setTimeout(() => setSearch(""), 100);
+            setTimeout(() => setSearch(""), 300);
           }}
           className="search-bar focus:pr-10 focus:text-black focus:dark:text-black hover:placeholder-[#f42c37] duration-200"
         />
