@@ -112,7 +112,7 @@ const UserDashboard = () => {
 
                                     <div className="ml-1 md:ml-5 flex flex-col justify-between">
                                       <div className="flex-1">
-                                        <p onClick={() => navigate(`/productinfo/${id}`) } className="text-xs md:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-500 cursor-pointer">{title}</p>
+                                        <p onClick={() => navigate(`/productinfo/${id}`) } className="text-xs md:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-500 dark:hover:text-yellow-500 cursor-pointer">{title}</p>
                                         <p className="mt-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">{category}</p>
                                         <p className="hidden lg:inline-block mt-1 text-sm font-medium text-gray-500 dark:text-gray-400">x {quantity}</p>
                                       </div>

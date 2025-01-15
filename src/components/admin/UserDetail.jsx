@@ -3,12 +3,42 @@ import { fireDB } from "@/firebase/FirebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { Users, Shield } from 'lucide-react';
 
 const UserDetail = () => {
   const context = useContext(myContext);
   const { loading, getAllUser } = context;
   const [searchTerm, setSearchTerm] = useState("");
   const [editUserRole, setEditUserRole] = useState("");
+
+   // Stats data
+   const stats = [
+    {
+      title: "Customers",
+      value: getAllUser.filter((user) => user.role === "Customer").length,
+      icon: <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      bgColor: "bg-blue-100 dark:bg-blue-900"
+    },
+    {
+      title: "Admins",
+      value: getAllUser.filter((user) => user.role === "Admin").length,
+      icon: <Shield className="w-6 h-6 text-green-600 dark:text-green-400" />,
+      bgColor: "bg-green-100 dark:bg-green-900"
+    }
+  ];
+
+  // Role styles for badges
+  const roleStyles = {
+    "Customer": {
+      bg: "bg-blue-100 dark:bg-blue-900",
+      text: "text-blue-800 dark:text-blue-200"
+    },
+    "Admin": {
+      bg: "bg-green-100 dark:bg-green-900",
+      text: "text-green-800 dark:text-green-200"
+    }
+  };
+
   // Filter users based on search term
   const filteredUsers = getAllUser.filter(
     (user) =>
@@ -59,6 +89,23 @@ const UserDetail = () => {
         </div>
       </div>
 
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">
+        {stats.map((stat) => (
+          <div key={stat.title} className="bg-white dark:bg-[#1c1c1c] p-4 rounded-xl border border-slate-300 dark:border-slate-600">
+            <div className="flex items-center gap-3">
+              <div className={`p-2 ${stat.bgColor} rounded-lg`}>
+                {stat.icon}
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{stat.title}</p>
+                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{stat.value}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Table */}
       <div className="bg-white dark:bg-[#1c1c1c] rounded-xl border border-slate-300 dark:border-slate-600 overflow-hidden">
         <div className="overflow-x-auto">
@@ -76,7 +123,7 @@ const UserDetail = () => {
               {currentUsers.map((user) => {
                 const { uid, name, role, email, date } = user;
                 return (
-                  <tr key={uid} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors duration-200">
+                  <tr key={uid} className="hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors duration-200">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-pink-100 dark:bg-pink-900 flex items-center justify-center">
@@ -96,14 +143,15 @@ const UserDetail = () => {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-300">{uid}</td>
                     <td className="px-6 py-4">
-                      {editUserRole !== uid && <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">{role}</span>}
-                      {editUserRole === uid && (
+                      {editUserRole !== uid ? (
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${roleStyles[role]?.bg} ${roleStyles[role]?.text}`}>
+                          {role}
+                        </span>
+                      ) : (
                         <select
-                          onChange={(e) => {
-                            updateUserRoleFunction(e, user.id);
-                          }}
+                          onChange={(e) => updateUserRoleFunction(e, user.id)}
                           value={role}
-                          className="px-2 py-1 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-600"
+                          className="px-2 py-1 text-xs rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-600"
                         >
                           <option value="Customer">Customer</option>
                           <option value="Admin">Admin</option>

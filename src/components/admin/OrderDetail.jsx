@@ -4,6 +4,7 @@ import OrderDetailsModal from "./OrderDetailsModal";
 import { doc, updateDoc } from "firebase/firestore";
 import { fireDB } from "@/firebase/FirebaseConfig";
 import toast from "react-hot-toast";
+import { Package, CheckCircle, Clock, Box, Truck, Navigation, HomeIcon, RotateCcw, XCircle, ClipboardCheck, ShoppingCart } from 'lucide-react';
 
 const OrderDetail = () => {
   const context = useContext(myContext);
@@ -13,6 +14,122 @@ const OrderDetail = () => {
   const [selectedAddressInfo, setSelectedAddressInfo] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [editOrderStatus, setOrderEditStatus] = useState("");
+
+  const stats = [
+    {
+      title: "Order Placed",
+      value: getAllOrder.filter((order) => order.orderStatus === "placed").length,
+      icon: <ShoppingCart className="w-6 h-6 text-pink-600 dark:text-pink-400" />,
+      bgColor: "bg-pink-100 dark:bg-pink-900"
+    },
+    {
+      title: "Processing",
+      value: getAllOrder.filter((order) => order.orderStatus === "Processing").length,
+      icon: <Clock className="w-6 h-6 text-purple-600 dark:text-purple-400" />,
+      bgColor: "bg-purple-100 dark:bg-purple-900"
+    },
+    {
+      title: "Confirmed",
+      value: getAllOrder.filter((order) => order.orderStatus === "Confirmed").length,
+      icon: <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />,
+      bgColor: "bg-green-100 dark:bg-green-900"
+    },
+    {
+      title: "Packed",
+      value: getAllOrder.filter((order) => order.orderStatus === "Packed").length,
+      icon: <Box className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      bgColor: "bg-blue-100 dark:bg-blue-900"
+    },
+    {
+      title: "Shipped",
+      value: getAllOrder.filter((order) => order.orderStatus === "Shipped").length,
+      icon: <Package className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />,
+      bgColor: "bg-indigo-100 dark:bg-indigo-900"
+    },
+    {
+      title: "In Transit",
+      value: getAllOrder.filter((order) => order.orderStatus === "in Transit").length,
+      icon: <Truck className="w-6 h-6 text-orange-600 dark:text-orange-400" />,
+      bgColor: "bg-orange-100 dark:bg-orange-900"
+    },
+    {
+      title: "Out for Delivery",
+      value: getAllOrder.filter((order) => order.orderStatus === "Out for Delivery").length,
+      icon: <Navigation className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />,
+      bgColor: "bg-cyan-100 dark:bg-cyan-900"
+    },
+    {
+      title: "Delivered",
+      value: getAllOrder.filter((order) => order.orderStatus === "Delivered").length,
+      icon: <HomeIcon className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />,
+      bgColor: "bg-emerald-100 dark:bg-emerald-900"
+    },
+    {
+      title: "Returned",
+      value: getAllOrder.filter((order) => order.orderStatus === "Returned").length,
+      icon: <RotateCcw className="w-6 h-6 text-rose-600 dark:text-rose-400" />,
+      bgColor: "bg-rose-100 dark:bg-rose-900"
+    },
+    {
+      title: "Completed",
+      value: getAllOrder.filter((order) => order.orderStatus === "Completed").length,
+      icon: <ClipboardCheck className="w-6 h-6 text-teal-600 dark:text-teal-400" />,
+      bgColor: "bg-teal-100 dark:bg-teal-900"
+    },
+    {
+      title: "Cancelled",
+      value: getAllOrder.filter((order) => order.orderStatus === "Cancelled").length,
+      icon: <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />,
+      bgColor: "bg-red-100 dark:bg-red-900"
+    }
+  ];
+
+  const statusStyles = {
+    "placed": {
+      bg: "bg-pink-100 dark:bg-pink-900",
+      text: "text-pink-800 dark:text-pink-200"
+    },
+    "Processing": {
+      bg: "bg-purple-100 dark:bg-purple-900",
+      text: "text-purple-800 dark:text-purple-200"
+    },
+    "Confirmed": {
+      bg: "bg-green-100 dark:bg-green-900",
+      text: "text-green-800 dark:text-green-200"
+    },
+    "Packed": {
+      bg: "bg-blue-100 dark:bg-blue-900",
+      text: "text-blue-800 dark:text-blue-200"
+    },
+    "Shipped": {
+      bg: "bg-indigo-100 dark:bg-indigo-900",
+      text: "text-indigo-800 dark:text-indigo-200"
+    },
+    "in Transit": {
+      bg: "bg-orange-100 dark:bg-orange-900",
+      text: "text-orange-800 dark:text-orange-200"
+    },
+    "Out for Delivery": {
+      bg: "bg-cyan-100 dark:bg-cyan-900",
+      text: "text-cyan-800 dark:text-cyan-200"
+    },
+    "Delivered": {
+      bg: "bg-emerald-100 dark:bg-emerald-900",
+      text: "text-emerald-800 dark:text-emerald-200"
+    },
+    "Returned": {
+      bg: "bg-rose-100 dark:bg-rose-900",
+      text: "text-rose-800 dark:text-rose-200"
+    },
+    "Completed": {
+      bg: "bg-teal-100 dark:bg-teal-900",
+      text: "text-teal-800 dark:text-teal-200"
+    },
+    "Cancelled": {
+      bg: "bg-red-100 dark:bg-red-900",
+      text: "text-red-800 dark:text-red-200"
+    }
+  };
 
   // Filter orders based on search term
   const filteredOrders = getAllOrder.filter(
@@ -64,45 +181,19 @@ const OrderDetail = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white dark:bg-[#1c1c1c] p-4 rounded-xl border border-slate-300 dark:border-slate-600">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Orders</p>
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{getAllOrder.length}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white dark:bg-[#1c1c1c] p-4 rounded-xl border border-slate-300 dark:border-slate-600">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Completed</p>
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">845</p>
+        {stats.map((stat) => (
+          <div key={stat.title} className="bg-white dark:bg-[#1c1c1c] p-4 rounded-xl border border-slate-300 dark:border-slate-600">
+            <div className="flex items-center gap-3">
+              <div className={`p-2 ${stat.bgColor} rounded-lg`}>
+                {stat.icon}
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{stat.title}</p>
+                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{stat.value}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="bg-white dark:bg-[#1c1c1c] p-4 rounded-xl border border-slate-300 dark:border-slate-600">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Pending</p>
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">389</p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Table */}
@@ -125,17 +216,21 @@ const OrderDetail = () => {
 
                 return (
                   <>
-                    <tr key={paymentId} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors duration-200 text-center">
+                    <tr key={paymentId} className="hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors duration-200 text-center">
                       <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-300">{paymentId}</td>
                       <td className="px-6 py-4">
-                        {editOrderStatus !== paymentId && <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">{orderStatus}</span>}
-                        {editOrderStatus === paymentId && (
+                        {editOrderStatus !== paymentId ? (
+                          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${statusStyles[orderStatus]?.bg || 'bg-gray-100 dark:bg-gray-900'} ${statusStyles[orderStatus]?.text || 'text-gray-800 dark:text-gray-200'}`}>
+                            {orderStatus}
+                          </span>
+                        ) : (
                           <select
                             onChange={(e) => {
                               updateOrderStatusFunction(e, order.id);
                             }}
-                            className="px-2 py-1 rounded-lg border text-xs border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-600"
+                            className="px-2 py-1 rounded-lg border text-xs border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-600"
                           >
+                            <option value="placed">Order Placed</option>
                             <option value="Processing">Processing</option>
                             <option value="Confirmed">Confirmed</option>
                             <option value="Packed">Packed</option>
