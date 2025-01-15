@@ -3,24 +3,13 @@ import myContext from "@/context/myContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-const products = [
-  {
-    id: "userdashboard1",
-    name: "Nike Air Force 1 07 LV8",
-    imageSrc: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/54a510de-a406-41b2-8d62-7f8c587c9a7e/air-force-1-07-lv8-shoes-9KwrSk.png",
-    href: "#",
-    price: "₹61,999",
-    color: "Orange",
-    imageAlt: "Nike Air Force 1 07 LV8",
-    quantity: 1,
-  },
-];
-
 const UserDashboard = () => {
   const user = JSON.parse(localStorage.getItem("users"));
   const context = useContext(myContext);
   const { loading, getAllOrder } = context;
   const navigate = useNavigate();
+
+  const userOrders = getAllOrder.filter((obj) => obj.userid === user?.uid);
 
   return (
     <Layout>
@@ -64,10 +53,24 @@ const UserDashboard = () => {
             {/* text  */}
             <h2 className=" text-2xl lg:text-3xl font-bold">Order Details</h2>
 
-            {/* main 2 */}
-            {getAllOrder
-              .filter((obj) => obj.userid === user?.uid)
-              .map((order, index) => {
+            {/* Empty state message */}
+            {userOrders.length === 0 ? (
+              <div className="mt-5 text-center py-8 bg-slate-100 dark:bg-[#1c1c1c] rounded-xl border border-slate-300">
+                <div className="flex justify-center mb-4">
+                  <img 
+                    src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png" 
+                    alt="Empty Orders" 
+                    className="w-48 h-48 object-contain"
+                  />
+                </div>
+                <p className="text-lg font-bold mb-2">You haven't placed any order yet!</p>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Order section is empty. After placing order, You can track them from here!
+                </p>
+              </div>
+            ) : (
+              /* main 2 */
+              userOrders.map((order) => {
                 return (
                   <div key={order.paymentId}>
                     {order.cartItems.map((item) => {
@@ -107,12 +110,12 @@ const UserDashboard = () => {
                                 <li className="flex flex-col justify-between space-x-5 py-7 lg:flex-row">
                                   <div className="flex flex-col lg:flex-row sm:flex-1 items-stretch">
                                     <div className="flex sm:flex-shrink-0 mb-2 lg:mb-0 justify-center lg:justify-normal">
-                                      <img className="h-32 w-32 rounded-lg border border-gray-200 object-cover cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out" src={images[0]} alt="img" onClick={() => navigate(`/productinfo/${id}`) } />
+                                      <img className="h-32 w-32 rounded-lg border border-gray-200 object-cover cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out" src={images[0]} alt="img" onClick={() => navigate(`/productinfo/${id}`)} />
                                     </div>
 
                                     <div className="ml-1 md:ml-5 flex flex-col justify-between">
                                       <div className="flex-1">
-                                        <p onClick={() => navigate(`/productinfo/${id}`) } className="text-xs md:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-500 dark:hover:text-yellow-500 cursor-pointer">{title}</p>
+                                        <p onClick={() => navigate(`/productinfo/${id}`)} className="text-xs md:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-500 dark:hover:text-yellow-500 cursor-pointer">{title}</p>
                                         <p className="mt-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">{category}</p>
                                         <p className="hidden lg:inline-block mt-1 text-sm font-medium text-gray-500 dark:text-gray-400">x {quantity}</p>
                                       </div>
@@ -120,7 +123,7 @@ const UserDashboard = () => {
                                   </div>
 
                                   <div className="ml-auto flex flex-row lg:flex-col items-end justify-between">
-                                  <p className="mt-1 text-sm font-medium text-gray-500 dark:text-gray-400 lg:hidden">x {quantity}</p>
+                                    <p className="mt-1 text-sm font-medium text-gray-500 dark:text-gray-400 lg:hidden">x {quantity}</p>
                                     <p className="text-right text-sm font-bold text-gray-900 dark:text-gray-100">₹{parseFloat(price * 0.8).toLocaleString()}</p>
                                   </div>
                                 </li>
@@ -132,7 +135,8 @@ const UserDashboard = () => {
                     })}
                   </div>
                 );
-              })}
+              })
+            )}
           </div>
         </div>
       </div>
