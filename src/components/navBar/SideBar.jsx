@@ -1,9 +1,13 @@
 import React, { useContext } from 'react';
 import logo from '../../assets/logo.png';
 import navbarImg from '../../assets/navbarImg.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RxCross1 } from 'react-icons/rx';
 import myContext from '@/context/myContext';
+import toast from 'react-hot-toast';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, fireDB } from '@/firebase/FirebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
@@ -18,6 +22,7 @@ const SideBar = ({ setShowSideBar, setShowSignUp }) => {
   const user = JSON.parse(localStorage.getItem("users"));
   const context = useContext(myContext);
   const { showLogIn, setShowLogIn} = context;
+  const navigate = useNavigate();
 
   const SideBarMenu = [
     {
@@ -86,6 +91,22 @@ const SideBar = ({ setShowSideBar, setShowSignUp }) => {
         setShowSideBar(false);
       },
     },
+    !user &&  {
+      id: 'sGuest-User-Login',
+      name: 'Guest User Login',
+      onClick: () => {
+        guestLoginFunction("Customer");
+        setShowSideBar(false);
+      },
+    },
+    !user &&  {
+      id: 'sGuest-Admin-Login',
+      name: 'Guest Admin Login',
+      onClick: () => {
+        guestLoginFunction("Admin");
+        setShowSideBar(false);
+      },
+    },
     user?.role === "Customer" && {
       id: 'sUserdashboard',
       name: 'User Dashboard',
@@ -105,6 +126,41 @@ const SideBar = ({ setShowSideBar, setShowSignUp }) => {
       }
     }
   ].filter(Boolean);
+
+  const guestLoginFunction = async (role) => {
+    // setLoading(true);
+    const email = role === "Customer" ? "gautamranjan96@gmail.com":"gautamranjan97@gmail.com"; // Add the email of the guest user
+    const toastId = toast.loading("Authenticating... Please wait."); // Store the toast ID
+    try {
+      const users = await signInWithEmailAndPassword(auth, email, "123456");
+
+      try {
+        const userDoc = await getDoc(doc(fireDB, "users", email));
+
+        if (userDoc.exists()) {
+          const updatedUserData = userDoc.data();
+          localStorage.setItem("users", JSON.stringify(updatedUserData));
+          if (updatedUserData.role === "Customer") {
+            navigate("/");
+          } else {
+            navigate("/admin-dashboard");
+          }
+          toast.success("Login Successfully", { id: toastId });
+          setShowLogIn(false);
+        }
+        //setLoading(false);
+        //window.location.reload();
+        // return () => data;
+      } catch (error) {
+        console.log(error);
+        //setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      //setLoading(false);
+      toast.error(error.message || "An error occurred during Login", { id: toastId }); // Update existing toast
+    }
+  };
 
   return (
     <>

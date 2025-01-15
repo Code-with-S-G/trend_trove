@@ -11,9 +11,11 @@ import Login from "@/pages/registration/Login";
 import Signup from "@/pages/registration/Signup";
 import { useDispatch, useSelector } from "react-redux";
 import { doc, getDoc } from "firebase/firestore";
-import { fireDB } from "@/firebase/FirebaseConfig";
+import { auth, fireDB } from "@/firebase/FirebaseConfig";
 import { setCart } from "@/redux/cartSlice";
 import myContext from "@/context/myContext";
+import toast from "react-hot-toast";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
@@ -103,6 +105,20 @@ const NavBar = () => {
                   setShowSignUp(!showSignUp);
                 },
               },
+              {
+                id: "Guest-User-Login",
+                name: "Guest User Login",
+                onClick: () => {
+                  guestLoginFunction("Customer");
+                },
+              },
+              {
+                id: "Guest-Admin-Login",
+                name: "Guest Admin Login",
+                onClick: () => {
+                  guestLoginFunction("Admin");
+                },
+              },
             ],
         user?.role === "Customer" && { id: "Userdashboard", name: "User Dashboard", to: "/user-dashboard" },
         user?.role === "Admin" && { id: "admin", name: "Admin Dashboard", to: "/admin-dashboard" },
@@ -111,6 +127,41 @@ const NavBar = () => {
         .filter(Boolean),
     },
   ];
+
+  const guestLoginFunction = async (role) => {
+    // setLoading(true);
+    const email = role === "Customer" ? "gautamranjan96@gmail.com":"gautamranjan97@gmail.com"; // Add the email of the guest user
+    const toastId = toast.loading("Authenticating... Please wait."); // Store the toast ID
+    try {
+      const users = await signInWithEmailAndPassword(auth, email, "123456");
+
+      try {
+        const userDoc = await getDoc(doc(fireDB, "users", email));
+
+        if (userDoc.exists()) {
+          const updatedUserData = userDoc.data();
+          localStorage.setItem("users", JSON.stringify(updatedUserData));
+          if (updatedUserData.role === "Customer") {
+            navigate("/");
+          } else {
+            navigate("/admin-dashboard");
+          }
+          toast.success("Login Successfully", { id: toastId });
+          setShowLogIn(false);
+        }
+        //setLoading(false);
+        //window.location.reload();
+        // return () => data;
+      } catch (error) {
+        console.log(error);
+        //setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      //setLoading(false);
+      toast.error(error.message || "An error occurred during Login", { id: toastId }); // Update existing toast
+    }
+  };
 
   useEffect(() => {
     const fetchCart = async (userEmail) => {
