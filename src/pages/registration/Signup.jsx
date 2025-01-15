@@ -155,7 +155,7 @@ const Signup = ({ setShowSignUp }) => {
               aria-label="Sign up button"
               disabled={loading} // Prevents multiple submissions
             >
-              {loading ? <ScaleLoader height={21} color="#ffffff"/> : "SignUp"}
+              {loading ? <ScaleLoader height={20} color="#ffffff"/> : "SignUp"}
             </button>
           </div>
 

@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, fireDB } from "@/firebase/FirebaseConfig";
 import { collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
+import { ScaleLoader } from "react-spinners";
 
 const BannerImg = {
   backgroundImage: `url(${navbarImg})`,
@@ -141,8 +142,8 @@ const Login = ({ setShowSignUp }) => {
 
           {/* Login Button */}
           <div className="mb-5">
-            <button onClick={userLoginFunction} type="button" className="bg-gradient-to-r from-[#ff930f] to-[#e0da2f] hover:opacity-90 w-full text-white text-center py-2 shadow-2xl font-bold rounded-md">
-              Login
+            <button onClick={userLoginFunction} disabled={loading} type="button" className="bg-gradient-to-r from-[#ff930f] to-[#e0da2f] hover:opacity-90 w-full text-white text-center flex items-center justify-center py-2 shadow-2xl font-bold rounded-md">
+              {loading ? <ScaleLoader height={20} color="#ffffff" /> : "Login"}
             </button>
           </div>
 
