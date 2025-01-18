@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Trash } from "lucide-react";
 import Layout from "@/components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
-import { decrementQuantity, deleteFromCart, incrementQuantity } from "@/redux/cartSlice";
+import { decrementQuantity, deleteFromCart, incrementQuantity, setCart } from "@/redux/cartSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { addDoc, collection, doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
@@ -72,7 +72,7 @@ const CartPage = () => {
             day: "2-digit",
             year: "numeric",
           }),
-           time: Timestamp.now(),
+          time: Timestamp.now(),
           email: user?.email,
           userid: user?.uid,
           paymentId,
@@ -80,6 +80,8 @@ const CartPage = () => {
 
         try {
           const result = addDoc(collection(fireDB, "orders"), orderInfo);
+          dispatch(setCart([]));
+          navigate('/');
         } catch (error) {
           console.log(error);
         }
