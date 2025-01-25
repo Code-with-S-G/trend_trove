@@ -32,9 +32,6 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/*" element={<NoPage />} />
-          {/* <Route path="/menswear" element={<MensWear />} />
-          <Route path="/womenswear" element={<WomensWear />} />
-          <Route path="/kidswear" element={<KidsWear />} /> */}
           <Route path="/productinfo/:id" element={<ProductInfo />} />
           <Route path="/cart" element={<ProtectedRouteForCart><CartPage /></ProtectedRouteForCart>} />
           <Route path="/allproduct" element={<AllProduct />} />
