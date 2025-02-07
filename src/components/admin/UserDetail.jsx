@@ -130,7 +130,7 @@ const UserDetail = () => {
                           <span className="text-sm font-medium text-pink-600 dark:text-pink-400">
                             {name
                               .split(" ") // Split the name into parts by space
-                              .map((part) => part[0].toUpperCase()) // Take the first character of each part and uppercase it
+                              .map((part) => part[0]?.toUpperCase()) // Take the first character of each part and uppercase it
                               .join("")}{" "}
                             {/* Join the initials */}
                           </span>
