@@ -62,7 +62,7 @@ const UserDetail = () => {
     console.log(id);
     try {
       await updateDoc(doc(fireDB, "users", id), { role: e.target.value });
-      toast.success("Order Status updated successfully!");
+      toast.success("User Status updated successfully!");
       setEditUserRole("");
     } catch (error) {
       console.log(error);
